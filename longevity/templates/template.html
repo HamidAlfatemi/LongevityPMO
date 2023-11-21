@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>The queryset object:</p>
+{{ theoriesofaging }}
+
+<table border='1'>
+  <tr>
+    <th>ID</th>
+    <th>Theories</th>
+<!--    <th>Subjects</th> -->
+  </tr>
+  {% for x in theoriesofaging %}
+    <tr>
+      <td>{{ x.id }}</td>
+      <td>{{ x.theorytitle }}</td>
+<!--      <td>{{ x.subjects }}</td> -->
+    </tr>
+  {% endfor %}
+</table>
+</body>
+</html>

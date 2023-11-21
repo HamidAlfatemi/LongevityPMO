@@ -1,0 +1,299 @@
+node_id,ref_num,nodecaption,nodeshape,dash,nodecolor,container,degree,out_edge,in_edge,start_point,end_point
+1,001,"Lysosomes digest Junk, until they become filled with LF",3,1,5,5,6,2,4,FALSE,FALSE
+2,002,ROS oxidize proteins & lipids,1,1,8,5,3,1,2,FALSE,FALSE
+3,003,"Free Fe, released by digestion, or trapped in LF, reacts with H2O2 to make HO*",1,1,8,5,6,3,3,FALSE,FALSE
+4,004,"LF - filled Lysosoms have reduced capacity & reduced rate of digesting Junk. They demand more lytic enzymes from Golgi, so less enzymes go to functional Lysosomes. Apgy becomes inhibited when Lysms cannot accept more junk.",1,1,5,5,4,3,1,FALSE,FALSE
+5,005,Lamp2a imports tagged soluble cytoplasmic proteins to digest.,3,0,5,1,3,1,2,FALSE,FALSE
+6,006,"Oxidized lipids, proteins, & Fe crosslink to form Lipofuscin",1,1,8,5,5,1,4,FALSE,FALSE
+7,007,LF - filled Lysosomes with damaged membranes spill lytic enzymes & reactive LF into cytoplasm,1,1,8,1,4,2,2,FALSE,FALSE
+8,008,Lipofuscin accumulates in Lysosomes of Post-Mitotic cells,2,0,8,5,7,4,3,FALSE,FALSE
+9,009,ROS in Lysosomes cause damage to Lysosomal membranes or membrane scaffolding which controls vesicle fusions,1,1,8,1,3,1,2,FALSE,FALSE
+10,010,H2O2 diffuses into Lysm,1,0,8,1,2,1,1,FALSE,FALSE
+11,011,"Autophagosome detect damaged Lysosomes, engulf them, transport to new Lysosome for digestion.",3,1,5,6,2,1,1,FALSE,FALSE
+12,012,"Autophagosomes engulf junk, old mitos, organelles, proteasomes, ribosomes, damaged membranes & nuclear scaffolding. Transport to Lysosome for digestion.",3,1,5,6,8,5,3,FALSE,FALSE
+13,013,"Spermidine is anti-ox, anti-inflamm, enhances autophagy, improves anti-cancer immunity, & decreases histone H3 acetylation",3,0,2,4,4,3,1,FALSE,FALSE
+14,014,Lipofuscin in cytoplasm can trigger Apoptosis,1,1,8,4,2,1,1,FALSE,FALSE
+15,015,H2O2 in cytoplasm,2,0,8,4,5,2,3,FALSE,FALSE
+16,016,CD38 degrades NAD+,2,1,2,1,3,1,2,FALSE,FALSE
+17,017,REST protein levels in neurons.,3,0,6,4,1,1,0,TRUE,FALSE
+18,018,Sprouty-1 needed for satellite prolif,3,0,6,4,2,1,1,FALSE,FALSE
+19,419,Mitochondrial Antioxidants quench some ROS,1,1,6,7,3,1,2,FALSE,FALSE
+20,420,Damaged mitos produce less ATP & more ROS; have lower memb pot. Most are autophagized to Lysosome.,1,0,3,7,10,5,5,FALSE,FALSE
+21,421,"mt ROS attack IMM, cardiolipin, mt proteins, & mtDNA",1,1,8,7,4,3,1,FALSE,FALSE
+22,422,Damaged mtDNA or replication machinery,1,0,3,7,3,1,2,FALSE,FALSE
+23,423,"mtDNA replication mistakes generate insertions, deletions",1,1,3,7,1,1,0,TRUE,FALSE
+24,424,O2* - converted to H2O2 by SOD,1,1,8,7,3,1,2,FALSE,FALSE
+25,425,Lon Protease digests damaged mt proteins,1,1,5,7,3,2,1,FALSE,FALSE
+26,426,Lon Protease Levels decline with age,3,0,5,7,2,1,1,FALSE,FALSE
+27,427,Fe-S Cluster assy depends on mt memb potential,3,0,3,7,3,1,2,FALSE,FALSE
+28,428,mutant mtDNA,2,0,3,7,4,2,2,FALSE,FALSE
+29,429,mt GPx degrades H2O2,1,1,6,7,1,1,0,TRUE,FALSE
+30,430,Functionality of collective mt population,3,0,3,7,5,1,4,FALSE,FALSE
+31,431,Rate of mito biogenesis,3,1,3,7,3,1,2,FALSE,FALSE
+32,432,Clonal amplification of mutant mtDNA causes PM cell or skeletal muscle fiber segment to become anaerobic,2,0,3,7,4,2,2,FALSE,FALSE
+33,063,Catalase & cytosolic GPx degrade H2O2.,3,0,6,4,2,1,1,FALSE,FALSE
+34,064,Redox Potential poise in cytoplasm increased by oxidation. This changes intracellular signaling & gene expression,1,1,7,4,6,4,2,FALSE,FALSE
+35,065,Damaged Junk to be repaired or disassembled,1,0,8,4,9,4,5,FALSE,FALSE
+36,066,"Glycation: sugars, AGEs, & ALEs bond to intracellular proteins",1,1,2,4,1,1,0,TRUE,FALSE
+37,067,Damaged proteasome subunits turn- over by CMA,1,1,5,4,3,2,1,FALSE,FALSE
+38,068,Junk molecules aggregate & crosslink if not quickly disassembled,1,0,8,4,2,1,1,FALSE,FALSE
+39,069,"Hyperphosphorylated Tau forms PHF, which bind Cu, produce H2O2",1,1,2,4,3,2,1,FALSE,FALSE
+40,070,Proteasomes digest damaged cytoplasmic proteins,3,0,5,4,6,2,4,FALSE,FALSE
+41,071,Cytoplasmic ROS attack intracellular & membrane proteins & lipids. Enzymes & proteasomes get inactivated,1,1,8,4,21,11,10,FALSE,FALSE
+42,072,"Tau hyper- phosphorylation destabilizes microtubules, blocks axon transport.",1,1,2,4,4,3,1,FALSE,FALSE
+43,073,"Reactive Aggregates, giant mitochondria, & LF-filled Lysosomes accumulate in cytoplasm, generate ROS, & impair cell functioning",2,0,8,4,9,4,5,FALSE,FALSE
+44,074,Aggs block & inhibit Proteasomes,1,1,8,4,2,1,1,FALSE,FALSE
+45,075,Oxidized pigment enzymes in hair follicles turn hair white,2,0,8,4,2,1,1,FALSE,FALSE
+46,076,"Oxidized membrane lipids & proteins degrade transporters of Ca2+, Na+, Glu, & glucose; promote depolarization & Ca2+ influx",2,0,2,1,2,1,1,FALSE,FALSE
+47,077,"Reductive Hotspot: Anaerobic cells & muscle fiber segments export electrons through plasma membrane, generating extracellular ROS",1,1,8,1,2,1,1,FALSE,FALSE
+48,078,"Peroxidized Lipids & oxidized cholesterol in LDL are imported by other cells, & incorporated into membranes, damaging membranes & mitosis via lipid chain-reactions",1,0,4,1,8,5,3,FALSE,FALSE
+49,079,"Normal A-beta in membrane reacts with Cu, producing H2O2 & ROS",1,0,2,1,3,2,1,FALSE,FALSE
+50,080,Cytoplasmic antioxidants quench ROS,1,0,6,4,4,2,2,FALSE,FALSE
+51,081,Endogenous Antioxidant Production,1,1,6,4,4,3,1,FALSE,FALSE
+52,082,RAGE & Scavenger Receptors,2,0,7,1,7,4,3,FALSE,FALSE
+53,083,Intracellular Ca2+ levels rise & generate ROS,2,0,2,4,4,2,2,FALSE,FALSE
+54,084,Intraneuronal Fe generates ROS,2,0,8,4,3,2,1,FALSE,FALSE
+55,085,Fe exported from neuron to EC transferrin,1,1,9,1,4,2,2,FALSE,FALSE
+56,086,Low Zn makes neurons sick,1,1,9,4,3,2,1,FALSE,FALSE
+57,087,Excitotoxicity kills neurons,1,1,9,4,3,1,2,FALSE,FALSE
+58,088,Zn supply in neurons,3,0,6,4,5,3,2,FALSE,FALSE
+59,089,Notch receptor,1,0,7,1,2,1,1,FALSE,FALSE
+60,090,MAPK pERK signaling,3,0,7,4,2,1,1,FALSE,FALSE
+61,091,Delta Ligand,3,0,7,1,2,1,1,FALSE,FALSE
+62,092,cAMP level in cytoplasm of PFC neurons,2,0,7,4,2,1,1,FALSE,FALSE
+63,093,"cAMP opens K+ channels, stops PFCNs from firing",1,1,8,1,2,1,1,FALSE,FALSE
+64,095,ZnT3 pumps Zn & Cu into neurons,3,1,6,1,3,1,2,FALSE,FALSE
+65,098,Misfolded proteins accumulate,2,0,1,9,3,1,2,FALSE,FALSE
+66,096,alpha-2A receptors in PFCN membranes,3,0,7,1,1,1,0,TRUE,FALSE
+67,097,Oxidized membrane lipids & proteins release excess Ca2+,2,0,1,1,3,2,1,FALSE,FALSE
+68,127,Apop of articlular chondrocytes,3,0,9,2,3,1,2,FALSE,FALSE
+69,128,Trans-differentiation: Altered gene expression patterns change some cells to inappropriate phenotypes,1,1,9,2,4,2,2,FALSE,FALSE
+70,129,Fibroblast production of elastin,3,0,9,2,6,2,4,FALSE,FALSE
+71,130,Immune System & Apoptosis kill some cancer cells,1,1,9,2,5,1,4,FALSE,FALSE
+72,131,"Arrested Cell Division: Short telomeres, altered nDNA, or damaged Lamins cause some cells to stop dividing",1,1,9,2,12,4,8,FALSE,FALSE
+73,132,"Arrested Senescent cells secrete hormones, inflammatory cytokines, & toxins, which harm other cells",1,1,7,2,8,6,2,FALSE,FALSE
+74,133,Inflammatory cytokines (IL-6) induce expression of endothelial adhesion molecules,1,1,7,2,3,2,1,FALSE,FALSE
+75,134,Arrested Stem cells stop dividing,3,0,9,2,7,5,2,FALSE,FALSE
+76,135,Cell-to-cell Signaling pathways,1,1,7,2,3,1,2,FALSE,FALSE
+77,136,"IL-6 causes neuronal precursors to become glial cells, not neurons",1,1,7,2,4,3,1,FALSE,FALSE
+78,137,Anergic T-cell clones accumulate & suppress naive T-cells,2,0,9,2,4,2,2,FALSE,FALSE
+79,138,Lung basal cells,3,0,9,2,2,1,1,FALSE,FALSE
+80,139,Stem cells replace some lost cells,1,1,6,2,6,4,2,FALSE,FALSE
+81,140,MSCs & functional fibroblasts,3,0,9,2,11,6,5,FALSE,FALSE
+82,141,"Naive T-cell population shrinks, reducing ability to respond to infectious microbes",3,0,9,2,4,2,2,FALSE,FALSE
+83,142,Thymus size (involution),3,0,9,2,4,2,2,FALSE,FALSE
+84,143,Satellite cell proliferation regenerates skeletal muscle,3,0,9,2,8,1,7,FALSE,FALSE
+85,144,Cardiac myocytes,3,0,9,2,2,1,1,FALSE,FALSE
+86,145,Skeletal muscle fibers,3,0,9,2,4,1,3,FALSE,FALSE
+87,146,Osteoblasts,3,0,9,2,3,1,2,FALSE,FALSE
+88,147,Motor neurons,3,0,9,2,5,1,4,FALSE,FALSE
+89,148,Cell Death: Apoptosis & necrosis kill important cells in slowly renewing tissues,1,1,9,2,21,12,9,FALSE,FALSE
+90,149,Sick Cells: Accumulated cytoplasmic damage causes some cells to function poorly or self-destruct,1,0,9,2,9,4,5,FALSE,FALSE
+91,150,AGE signaling changes MSC Differentiation,1,1,9,2,4,3,1,FALSE,FALSE
+92,151,Healthy endocrine cells,3,0,9,2,3,2,1,FALSE,FALSE
+93,152,neocortex neurons & synapses,3,0,9,2,8,1,7,FALSE,FALSE
+94,153,Commanding neuroendocrine cells in hypothalamus,3,0,9,2,4,1,3,FALSE,FALSE
+95,154,neurons in SN,3,0,9,2,4,1,3,FALSE,FALSE
+96,155,Fibroblasts & MSCs repair ECM,3,1,5,2,5,2,3,FALSE,FALSE
+97,156,"Neurotoxins destroy neurites, synapses, & neurons",1,1,8,2,4,3,1,FALSE,FALSE
+98,157,Neurogenesis by Adult Neural Stem Cells,3,0,6,2,10,5,5,FALSE,FALSE
+99,158,NGF & BDNF preserve neurons & improve synapses,3,0,7,2,7,5,2,FALSE,FALSE
+100,159,Macrophages bind to AGE-collagen,1,1,9,2,5,3,2,FALSE,FALSE
+101,160,"Macrophages ingest peroxidized Lipids, LDL, & RBCs to become Foam Cells",1,0,8,2,5,1,4,FALSE,FALSE
+102,161,Cell detachment promotes metastasis,1,1,8,2,2,1,1,FALSE,FALSE
+103,162,Endothelium extravasates small clots & debris in capillaries,3,1,6,2,2,1,1,FALSE,FALSE
+104,163,GnRH secretion from Hypothalamus,3,1,9,1,3,1,2,FALSE,FALSE
+105,164,NF-kB signaling by hypothalamic neurons,1,1,7,2,4,1,3,FALSE,FALSE
+106,165,TNFa secretion by microglia,1,1,7,2,2,1,1,FALSE,FALSE
+107,166,NF-kB activity in microglia,2,1,7,2,5,3,2,FALSE,FALSE
+108,167,Hypothalamic cells,3,0,9,2,2,1,1,FALSE,FALSE
+109,201,Level of IL-15 & IL-15Ra in serum,3,0,7,3,2,1,1,FALSE,FALSE
+110,202,Glucose Concentration in Bloodstream. (Moderate in healthy people; higher in Diabetes),1,0,4,3,3,1,2,FALSE,FALSE
+111,203,Glycation: sugars bond to extracellular proteins,1,1,8,3,3,1,2,FALSE,FALSE
+112,204,Glycated extracellular proteins form AGEs and crosslinks,1,1,8,3,8,6,2,FALSE,FALSE
+113,205,"Igs crosslink to kidney glomerular Basement Membrane, causing complement-mediated damage",1,1,4,3,2,1,1,FALSE,FALSE
+114,206,Glycated Arginine can convert to Ornithine,1,1,8,3,2,1,1,FALSE,FALSE
+115,207,Altered Arg & Asp residues disrupt RGD cell attachment,1,1,8,3,6,2,4,FALSE,FALSE
+116,208,"ECM protein residues can deamidate or isomerize, which might change folding",1,1,8,3,2,2,0,TRUE,FALSE
+117,209,Extracellular ROS,1,0,8,3,7,3,4,FALSE,FALSE
+118,210,ROS & sugars peroxidize lipids & glycate proteins in circulating LDL,1,1,8,3,4,2,2,FALSE,FALSE
+119,211,"A-beta oxidizes cholesterol & fatty acids, generates H2O2 & OH* radicals",1,1,8,3,5,3,2,FALSE,FALSE
+120,212,Antioxidants in EC fluids quench ROS,1,1,6,3,5,3,2,FALSE,FALSE
+121,213,"A-beta monomers aggregate with Zn, Cu, to form toxic A-beta oligos & plaques",2,0,4,3,9,3,6,FALSE,FALSE
+122,214,"metal ionophores disaggregate toxic A-beta oligos. take Cu, Zn and release A-beta monomer.",1,1,5,3,2,1,1,FALSE,FALSE
+123,215,"Cu, Zn & A-beta monomer released into glutamatergic synapses during neurotransmission",1,0,4,3,9,6,3,FALSE,FALSE
+124,216,EC Zn,1,0,4,3,2,1,1,FALSE,FALSE
+125,217,"Metal Ionophores take Cu, Zn into neuron",1,1,6,3,3,1,2,FALSE,FALSE
+126,218,A-beta monomer slowly cleared by glymphatic transport to lymph & urine,1,1,5,3,5,1,4,FALSE,FALSE
+127,219,MMP2 & 3 slowly digest A-beta monomer,1,1,5,3,2,1,1,FALSE,FALSE
+128,220,Zn/Cu activate MMP2&3,1,1,9,3,2,1,1,FALSE,FALSE
+129,221,Glycated LDL and RBCs crosslink to endothelial arterial collagen,1,0,9,3,2,1,1,FALSE,FALSE
+130,222,Ca ++ & Lipids bound to elastin,2,0,4,3,1,1,0,TRUE,FALSE
+131,223,Oxidation & cleavage of ECM proteins,1,1,8,3,7,2,5,FALSE,FALSE
+132,224,"Damaged, crosslinked, glycated, oxidized ECM proteins accumulate & change EC environment",2,0,4,3,21,14,7,FALSE,FALSE
+133,225,Elastic fibers,3,0,4,3,5,3,2,FALSE,FALSE
+134,226,TTR-amyloid in muscle & elsewhere,2,0,4,3,3,2,1,FALSE,FALSE
+135,227,Cerebral amyloid angiopathy decreases endothelial health,2,0,4,3,3,2,1,FALSE,FALSE
+136,228,Good Hormone Levels,3,0,7,3,6,2,4,FALSE,FALSE
+137,229,"Beta-2-microglobulin, & Chemokines, incl CCL11, in plasma & CSF",2,0,8,3,3,1,2,FALSE,FALSE
+138,230,"EGF, FGF",3,0,4,3,1,1,0,TRUE,FALSE
+139,231,"TGF-beta levels in satellite cell niche, B marrow, & blood",2,0,8,3,2,1,1,FALSE,FALSE
+140,232,MMPs secreted by arrested cells,1,0,4,3,2,1,1,FALSE,FALSE
+141,234,Hypochlorous acid secreted by inflam macrophages,1,0,8,3,2,1,1,FALSE,FALSE
+142,235,Articlular cartilage deteriorates,3,0,4,3,3,1,2,FALSE,FALSE
+143,236,GnRH in Hypothalamus maintains youth,3,0,7,3,5,3,2,FALSE,FALSE
+144,238,"Interstitial spaces in brain increase during sleep. Gamma brainwave entrainment activates microglia, enhancing clearance of A-beta",1,1,5,3,5,2,3,FALSE,FALSE
+145,332,GnRH gene expn in hypothalamus,3,1,1,8,2,1,1,FALSE,FALSE
+146,333,Epigenetic Methylation of DNA,3,0,1,8,2,2,0,TRUE,FALSE
+147,334,Acetylation of Histones,1,1,1,8,4,1,3,FALSE,FALSE
+148,335,PGC-1-alpha PGC-1-beta,3,0,1,8,2,1,1,FALSE,FALSE
+149,336,Lon Protease mRNA,3,0,1,8,3,1,2,FALSE,FALSE
+150,337,Chromatin conformation is altered,2,0,1,8,8,2,6,FALSE,FALSE
+151,338,"Telomeres oxidized, damaged, or made too short",1,1,1,8,9,6,3,FALSE,FALSE
+152,339,p53 rises,2,0,1,8,4,2,2,FALSE,FALSE
+153,340,DNA repair PARP-1 activated,3,1,1,8,5,3,2,FALSE,FALSE
+154,341,Nuclear 20S proteasome removes damaged proteins,1,0,5,8,3,2,1,FALSE,FALSE
+155,342,Genome integrity proteins contain Fe-S Clusters.,3,0,6,8,2,1,1,FALSE,FALSE
+156,343,Position Effect of genes near short Telomeres alters expression,1,1,1,8,2,1,1,FALSE,FALSE
+157,344,Developmental Differentiation reduces Telomerase expression,1,1,1,8,2,1,1,FALSE,FALSE
+158,345,Short Tmeres => end-joining chromosomes => nondysjunction,1,1,1,8,2,1,1,FALSE,FALSE
+159,346,"nDNA adducts, breakage, damage,& mutation",2,0,8,8,11,5,6,FALSE,FALSE
+160,347,Genome integrity proteins & DNA Repair Enzymes (damaged by ROS),3,0,6,8,6,1,5,FALSE,FALSE
+161,048,Levels of miRNA in brain change,2,0,1,4,2,1,1,FALSE,FALSE
+162,349,ROS in nucleus,1,0,8,8,8,6,2,FALSE,FALSE
+163,350,Gene expression is altered,2,1,1,8,17,11,6,FALSE,FALSE
+164,351,HMGB2 mRNA,3,0,1,8,2,1,1,FALSE,FALSE
+165,352,HMGB2 protein,3,0,1,8,2,1,1,FALSE,FALSE
+166,353,Glycation: sugars bond to nDNA & proteins,1,1,8,8,3,2,1,FALSE,FALSE
+167,354,Cytoplasmic tubulin accumulates in nucleus & damages chromatin,2,0,1,8,3,2,1,FALSE,FALSE
+168,355,Oxidized nuclear pore proteins allow other proteins in & out,2,0,1,1,5,2,3,FALSE,FALSE
+169,356,Signals to nucleus,1,1,7,1,5,1,4,FALSE,FALSE
+170,357,Nrf2 activates antiox genes,3,0,1,8,3,1,2,FALSE,FALSE
+171,358,ZnT3 mRNA,3,0,1,8,2,1,1,FALSE,FALSE
+172,359,Spliceosome errors mis-splice Lamin-A and cytoskeleton mRNAs,1,1,1,8,3,1,2,FALSE,FALSE
+173,360,Progerin splice-variant of Lamin A accumulates,2,0,1,8,5,3,2,FALSE,FALSE
+174,361,Damaged nuclear proteins accumulate,2,0,1,8,7,1,6,FALSE,FALSE
+175,362,Loss of nuclear proteins,3,0,1,8,2,1,1,FALSE,FALSE
+176,701,Enhance Mitochondrial Fission,5,1,6,1,1,1,0,TRUE,FALSE
+177,702,Lysosomal Enzyme Augmentation Therapy,5,0,5,1,3,3,0,TRUE,FALSE
+178,703,LF-formation Inhibitor Drugs,5,0,5,1,1,1,0,TRUE,FALSE
+179,704,LF-Removing Drugs,5,0,5,1,2,2,0,TRUE,FALSE
+180,705,Oral Spermidine or Agmatine,5,0,6,1,1,1,0,TRUE,FALSE
+181,706,Sirtuin Activators,5,0,6,1,1,1,0,TRUE,FALSE
+182,707,Epigenetic Reprograming (Yamanaka factors) Chromatin remodeling drugs.eg. HdAcs & HdAc inhibitors,5,1,1,1,1,1,0,TRUE,FALSE
+183,708,Telomerase & TERT Therapy & Activators,5,1,6,1,2,2,0,TRUE,FALSE
+184,709,X-Rays & ionizing radiation create ROS,4,1,8,1,2,2,0,TRUE,FALSE
+185,710,"Reprogramming, Genetic Engineering, Gene Editing: Increase expn of beneficial genes: eg TFAM, Lamp2a, hTERT, Lon Protease, Proteasome. Make super-fibroblasts. Re-differentiate certain cells for improved performance.",5,1,1,1,2,2,0,TRUE,FALSE
+186,711,R-alpha-Lipoic Acid reverses Nrf2 loss,5,0,6,1,1,1,0,TRUE,FALSE
+187,712,Splice Enhancement Therapy,5,1,1,1,1,1,0,TRUE,FALSE
+188,713,Selective T-Cell Deletion Therapy,5,1,6,1,1,1,0,TRUE,FALSE
+189,714,Stem Cell Therapy or Trophic Factors,5,1,6,1,4,4,0,TRUE,FALSE
+190,715,Glucose- Lowering Drugs,5,0,6,1,1,1,0,TRUE,FALSE
+191,716,Glycation -Inhibitor Drugs,5,0,6,1,1,1,0,TRUE,FALSE
+192,717,Enhance Detection & Turnover of mutant mtDNA,5,0,6,1,1,1,0,TRUE,FALSE
+193,718,"Smoke, etc. creates ROS",4,0,8,1,1,1,0,TRUE,FALSE
+194,719,Dietary or injected Antioxidants,5,0,6,1,4,4,0,TRUE,FALSE
+195,720,"Fasting, CR, or Exercise reduce LDL levels",5,0,6,1,3,1,2,FALSE,FALSE
+196,721,"PBT2, BBB-permeant metal ionophores",5,0,6,1,2,2,0,TRUE,FALSE
+197,722,TTR solublizing Drugs,5,0,5,1,1,1,0,TRUE,FALSE
+198,723,Crosslink- Breaker Drugs,5,0,5,1,1,1,0,TRUE,FALSE
+199,724,Stimulate or engineer super-Fibroblasts & MSCs to repair ECM,5,0,6,1,2,2,0,TRUE,FALSE
+200,725,"Toxic Heavy Metals, Pb, Hg, Pesticides",4,0,8,1,1,1,0,TRUE,FALSE
+201,726,Exercise or Hormone Therapy,5,1,7,1,10,10,0,TRUE,FALSE
+202,727,Fasting or CR or Drugs that mimic fasting,4,1,7,1,8,8,0,TRUE,FALSE
+203,728,Meditation,5,1,7,1,1,1,0,TRUE,FALSE
+204,729,"Pathogenic Infectious Agents, viruses, bacteria, microbes",4,0,8,1,1,1,0,TRUE,FALSE
+205,730,"Anti-Inflammatory Foods & Drugs including turmeric, Montelukast",5,0,6,1,1,1,0,TRUE,FALSE
+206,731,Chronic Psychological stress,4,0,7,1,2,2,0,TRUE,FALSE
+207,732,GnRH Injection,5,0,6,1,1,1,0,TRUE,FALSE
+208,733,Block NF-kB production,5,1,6,1,2,2,0,TRUE,FALSE
+209,735,Senolytic Drugs kill arrested cells to prevent spread of damage,5,1,6,1,1,1,0,TRUE,FALSE
+210,901,Cancer,6,0,8,1,6,0,6,FALSE,TRUE
+211,903,Osteo- Arthritis,6,0,9,1,1,0,1,FALSE,TRUE
+212,904,"Persistent, asymptomatic Infections, eg. CMV, occupy immune system",1,1,8,1,2,2,0,TRUE,FALSE
+213,905,Thin Skin; Thin Hair; White Hair.,6,0,9,1,5,0,5,FALSE,TRUE
+214,906,Macular Degeneration,6,0,9,1,3,1,2,FALSE,FALSE
+215,907,Blindness,6,0,9,1,2,0,2,FALSE,TRUE
+216,908,Retinopathy,6,0,9,1,2,1,1,FALSE,FALSE
+217,909,"Stiff arteries & capillaries, systolic hypertension, cardiovascular disease",6,0,9,1,8,5,3,FALSE,FALSE
+218,910,Ischemic Stroke,6,0,9,1,3,0,3,FALSE,TRUE
+219,911,Atherosclerotic plaque buildup,2,0,9,1,8,3,5,FALSE,FALSE
+220,912,Heart Failure,6,0,9,1,5,0,5,FALSE,TRUE
+221,913,Heart Attack,6,0,9,1,1,0,1,FALSE,TRUE
+222,914,Hemorrhagic Stroke,6,0,9,1,2,0,2,FALSE,TRUE
+223,915,"Inflammation, tissue remodeling, Inflammatory proteins secreted by Liver: C-RP, IL-6",2,0,8,1,14,6,8,FALSE,FALSE
+224,916,Small clots in neural capillaries cause micro-strokes,1,1,9,1,2,1,1,FALSE,FALSE
+225,917,Impaired kidney function,6,0,9,1,3,0,3,FALSE,TRUE
+226,918,Reduced capacity of urinary Bladder,6,0,9,1,1,0,1,FALSE,TRUE
+227,919,Erectile Dysfunction,6,0,9,1,1,0,1,FALSE,TRUE
+228,920,Cataracts,6,0,9,1,2,0,2,FALSE,TRUE
+229,921,"Stiff skin, tendons",6,0,9,1,3,0,3,FALSE,TRUE
+230,922,Lung Alveoli degraded,6,0,9,1,2,1,1,FALSE,FALSE
+231,923,Working memory & executive function,3,0,9,1,6,0,6,FALSE,TRUE
+232,924,Alzheimer?s & other dementias,6,0,9,1,6,1,5,FALSE,FALSE
+233,925,Parkinson's Disease,6,0,9,1,1,0,1,FALSE,TRUE
+234,926,Osteoporosis,6,0,9,1,5,1,4,FALSE,FALSE
+235,927,"Weakness, Frailty",6,0,9,1,2,0,2,FALSE,TRUE
+236,928,Sarcopenia,6,0,9,1,5,1,4,FALSE,FALSE
+237,929,Neuroendocrine & immune functions,3,1,7,1,24,9,15,FALSE,FALSE
+238,930,Pathogenic Infections kill cells & generate inflammation,1,1,8,1,5,2,3,FALSE,FALSE
+239,931,Menopause,6,0,9,1,2,0,2,FALSE,TRUE
+240,932,Impaired wound healing & tissue repair,6,0,9,1,3,0,3,FALSE,TRUE
+241,933,"Pulmonary Emphysema, COPD",6,0,9,1,3,0,3,FALSE,TRUE
+242,934,Rheumatoid Arthritis,6,0,9,1,3,0,3,FALSE,TRUE
+243,935,Inflammation of Hypothalamus & skin,1,1,8,1,3,1,2,FALSE,FALSE
+244,936,"GnRH improves Cognition, muscle strength, skin, bone, neurogenesis, memory",6,0,6,1,2,1,1,FALSE,FALSE
+245,999,Many other downstream effects of AGING,6,0,9,1,4,0,4,FALSE,TRUE
+246,800,Macroautophagy,7,0,5,6,2,1,1,FALSE,FALSE
+247,168,Brain Hyperactivity,2,0,8,2,2,1,1,FALSE,FALSE
+248,239,"FGF2 & VEGF secreted by astrocytes, microglia, NSCs, & NPCs.",3,0,7,3,2,1,1,FALSE,FALSE
+249,240,Osteocalcin in blood,3,0,7,3,2,2,0,TRUE,FALSE
+250,241,Wnt signaling proteins in serum,2,0,7,3,2,1,1,FALSE,FALSE
+251,242,Racemization of L- to D-Asp with aging of long-lived protein cause A-beta & alpha-synuclein fibrils,1,1,4,3,3,2,1,FALSE,FALSE
+252,243,Transferrin carries Iron in blood plasma,1,0,4,3,1,0,1,FALSE,TRUE
+253,244,Bone deposition in cribiform plate restricts clearance of CSF & A-beta,2,0,4,3,2,1,1,FALSE,FALSE
+254,301,ZMPSTE24 converts pre-Lamin-A to Lamin-A,3,0,1,8,1,1,0,TRUE,FALSE
+255,302,pre-Lamin-A accumulates,2,0,1,8,2,1,1,FALSE,FALSE
+256,363,Telomerase maintains Telomere Length,3,0,1,8,3,1,2,FALSE,FALSE
+257,364,Long Telomeres required for Stem Cell function,3,0,1,8,2,0,2,FALSE,TRUE
+258,365,Progerin shortens Telomeres,1,1,1,8,2,1,1,FALSE,FALSE
+259,366,Short telomeres cause splicing errors,1,1,1,8,2,1,1,FALSE,FALSE
+260,367,Methylation of Histones,1,1,1,8,1,1,0,TRUE,FALSE
+261,368,Activated NF-kB activates CD38,1,1,1,8,1,1,0,TRUE,FALSE
+262,369,NAD+ needed for PARP & sirtuin activity,3,0,1,8,4,2,2,FALSE,FALSE
+263,370,"Retro-Transposable Elements (LINE-1) insert, mutate, break DNA",2,0,1,8,2,1,1,FALSE,FALSE
+264,371,Reverse Transcriptases mobilize RTEs,1,0,8,8,3,1,2,FALSE,FALSE
+265,372,"Sirtuins deacetylate histones, & enhance DNA repair",1,1,9,8,4,2,2,FALSE,FALSE
+266,373,Sprouty-1 expressionn reduced by DNA methylation,3,0,1,8,2,1,1,FALSE,FALSE
+267,404,"Cardiolipin bends IMM, enhancing ETC function",3,0,3,7,3,1,2,FALSE,FALSE
+268,416,H2O2 diffuses out of mitochondria,1,0,8,1,3,2,1,FALSE,FALSE
+269,417,"Giant mitochondria accumulate when damage impairs mitochondria fission. They can?t be autophagized, & they produce more ROS.",2,0,3,7,6,4,2,FALSE,FALSE
+270,418,ROS generated by mitochondrial metabolism,1,0,8,7,6,2,4,FALSE,FALSE
+285,734,Sleep,5,0,6,1,1,1,0,TRUE,FALSE
+286,736,Infuse Young plasma or remove old plasma,5,0,6,1,3,3,0,TRUE,FALSE
+287,737,Nanoscavenger therapy cleans plasma,5,0,6,1,2,2,0,TRUE,FALSE
+288,738,Engineer cells to make anti-cancer immune cells,5,1,6,1,1,1,0,TRUE,FALSE
+289,739,Induce Exocytosis of LF - filled Lysosomes,1,1,5,1,4,2,2,FALSE,FALSE
+290,740,40 Hz flashingLight,5,0,6,1,1,1,0,TRUE,FALSE
+291,741,Gamma sound vibration,5,0,6,1,1,1,0,TRUE,FALSE
+292,742,"J147 increases ATP. J147 induces NGF & BDNF, activates AMPK, inhibits mTOR,protects neurons from toxicity of glutamate & A-beta",5,0,6,1,3,3,0,TRUE,FALSE
+293,743,SM04554 stimulates hair growth in androgenic alopecia,5,0,6,1,1,1,0,TRUE,FALSE
+294,744,MK-0677,5,0,6,1,1,1,0,TRUE,FALSE
+295,745,Surgical shunt in cribiform plate,5,0,6,1,1,1,0,TRUE,FALSE
+296,746,Lanosterol,5,0,6,1,1,1,0,TRUE,FALSE
+297,747,Targeted Apoptotic Agents,5,1,6,1,1,1,0,TRUE,FALSE
+298,748,Macrophages digest LF - filled Exosomes .,1,1,5,2,1,0,1,FALSE,TRUE
+299,749,Chronic Periodontitis. Gingivitis bacteria increase production of A-beta,4,1,8,1,1,1,0,TRUE,FALSE
+300,750,Elamipretide protects cardiolipin from ROS damage,5,0,6,1,1,1,0,TRUE,FALSE
+301,751,CD38 inhibitors,5,0,6,1,1,1,0,TRUE,FALSE
+302,752,"Niacin, NMN, or NR supplements increase NAD+",5,0,6,1,1,1,0,TRUE,FALSE
+303,753,Reverse Transcriptase Inhibitors inhibit RTases,5,0,6,1,1,1,0,TRUE,FALSE
+304,754,Prostagladin PGE2 injection IM stimulates skeletal muscle stem cells,5,0,6,1,1,1,0,TRUE,FALSE
+305,937,"Cardiac Hypertrophy, Stiff Heart",6,0,9,1,2,1,1,FALSE,FALSE
+306,938,Body Plan Dysregulation,6,0,9,1,5,2,3,FALSE,FALSE
+307,939,Failure to Regenerate,6,0,9,1,1,0,1,FALSE,TRUE
+308,940,Prostate Hyperplasia,6,0,9,1,1,0,1,FALSE,TRUE
+309,941,VCAM-1 in plasma,2,0,9,1,1,1,0,TRUE,FALSE
+310,033,"Vitamin C, Spermidine, Fasting enhance rate of autophagy.",1,1,5,6,5,2,3,FALSE,FALSE
+311,034,"ROS activate NF-kB, which enters nucleus, activating genes",1,0,8,1,4,3,1,FALSE,FALSE
+312,200,"Extracellular Spaces: ECM, Blood Plasma, ymph, CSF",7,0,4,0,0,0,0,FALSE,FALSE
