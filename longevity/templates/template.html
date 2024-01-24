@@ -1,23 +1,102 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.28.1/dist/cytoscape.umd.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Network Graph</title> -->
+    <title>Systems Biology of Human Aging</title>
+    <style>
+        #cy {
+            position: absolute;
+            width: 10200px;
+            height: 10000px;
+            display: block;
+        }
+    </style>
+</head>
+<!--                        //{ data: { id: '{{ node.node_id }}', label: '[ {{ node.ref_num }} ]\n{{ node.nodecaption }}' }, style: { 'width': '{{ node.width }}px', 'height': '{{ node.height }}px', {{ node.style|safe }} }, position: { x: '{{ node.posx }}px', y: '{{ node.posy }}px' } }, -->
 <body>
+    <div id="cy"></div>
+    <script>
+	    document.addEventListener('DOMContentLoaded', function () {
+            var cy = cytoscape({
+                container: document.getElementById('cy'),
+                //layout: {
+                //    name: 'preset'
+                //},                
+				elements: {
+                    nodes: [
+                        {% for node in nodes %}
+                        {
+                            data: { id: '{{ node.node_id }}', label: '[{{ node.ref_num }}]\n{{ node.nodecaption|default:'' }}', parent: '{{ node.parent_n_id }}' },
+                        //    style: { 'width': '{{ node.width }}px', 'height': '{{ node.height }}px', {{ node.style|safe }} },
+                            style: {{ node.style|safe }},
+                            position: { x: '{{ node.posx }}', y: '{{ node.posy }}' }
+                            //position: { x: 1000 , y: 1000 }
+                        }{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
 
-<p>The queryset object:</p>
-{{ theoriesofaging }}
+                    edges: [
+                        {% for edge in edges %}
+                        { data: { source: '{{ edge.begin.node_id }}', target: '{{ edge.end.node_id }}' }, style: {{edge.style|safe }} },
+                        {% endfor %}
+                    ]
+                },
 
-<table border='1'>
-  <tr>
-    <th>ID</th>
-    <th>Theories</th>
-<!--    <th>Subjects</th> -->
-  </tr>
-  {% for x in theoriesofaging %}
-    <tr>
-      <td>{{ x.id }}</td>
-      <td>{{ x.theorytitle }}</td>
-<!--      <td>{{ x.subjects }}</td> -->
-    </tr>
-  {% endfor %}
-</table>
+                style: [
+                    {
+                        selector: 'node[nodeshape != 7]',
+                        style: {
+                            'label': 'data(label)',
+                            'border-width': 10,
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'background-color': '#fff',
+							'color': '#000',
+							'text-wrap': 'wrap'
+							//'text-max-width': '150px' // '{{ node.width }}' // * .9' // + 'px'
+                        }
+                    },
+                    {
+                        selector: 'node[nodeshape = 7]',
+                        style: {
+                            'label': 'data(label)',
+                            'border-width': 10,
+                            'text-valign': 'top',
+                            'text-halign': 'center',
+                            'background-opacity': 0.333,
+							'color': '#000',
+                        }
+                    },
+                    {
+                        selector: 'edge',
+						style: {
+                            'curve-style': 'bezier'
+                        }
+                    },
+                ]
+            });
+            cy.nodes().forEach(function (node) {
+            //    var label = node.data('label');
+            //    var textLength = label.length;
+            //    var desiredWidth = Math.max(130, textLength*2);
+            //    var desiredheight = Math.max(130, textLength);
+            //    node.style({
+            //        'width': desiredWidth + 'px',
+			//        'height': desiredheight + 'px',
+            //        'text-max-width': desiredWidth*.85 + 'px'
+            //    });
+                console.log('Node data Label:', node.data('label'));
+                console.log('Position X:', node.position('x'));
+                console.log('Position Y:', node.position('y'));
+                console.log('Rendered position X:', node.renderedPosition('x'));
+                console.log('Rendered position Y:', node.renderedPosition('y'));
+            });
+        });
+    </script>
 </body>
 </html>
+

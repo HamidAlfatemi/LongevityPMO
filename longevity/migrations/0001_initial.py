@@ -1403,17 +1403,17 @@ class Migration(migrations.Migration):
                 'db_table': 'intervention_literature',
             },
         ),
-        migrations.CreateModel(
-            name='InterventionGene',
-            fields=[
-                ('ig_id', models.AutoField(primary_key=True, serialize=False)),
-                ('gene', models.ForeignKey(db_column='gene_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.gene')),
-                ('intervention', models.ForeignKey(db_column='Intervention_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.intervention')),
-            ],
-            options={
-                'db_table': 'intervention_gene',
-            },
-        ),
+        # migrations.CreateModel(
+            # name='InterventionGene',
+            # fields=[
+                # ('ig_id', models.AutoField(primary_key=True, serialize=False)),
+                # ('gene', models.ForeignKey(db_column='gene_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.gene')),
+                # ('intervention', models.ForeignKey(db_column='Intervention_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.intervention')),
+            # ],
+            # options={
+                # 'db_table': 'intervention_gene',
+            # },
+        # ),
         migrations.CreateModel(
             name='InterventionDrawback',
             fields=[

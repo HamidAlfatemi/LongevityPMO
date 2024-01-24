@@ -37,10 +37,10 @@ from .models import Drawbacktype
 admin.site.register(Drawbacktype)
 # from .models import NodeGene
 # admin.site.register(NodeGene)
-from .models import Gene
-admin.site.register(Gene)
-from .models import InterventionGene
-admin.site.register(InterventionGene)
+#from .models import Gene
+#admin.site.register(Gene)
+#from .models import InterventionGene
+#admin.site.register(InterventionGene)
 from .models import Project
 admin.site.register(Project)
 from .models import ProjectIntervention
@@ -97,3 +97,9 @@ from .models import gsgene
 admin.site.register(gsgene)
 from .models import nodegs
 admin.site.register(nodegs)
+from .models import concept
+admin.site.register(concept)
+# from .models import Node0
+# admin.site.register(Node0)
+# from .models import Edge0
+# admin.site.register(Edge0)
