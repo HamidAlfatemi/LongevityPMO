@@ -5,20 +5,34 @@ from django.db.models import Q
 from django.db.models import F, ExpressionWrapper, fields
 
 def network_graph(request):
-    nodes_with_surface = Node.objects.annotate(
-    surface=ExpressionWrapper(F('width') * F('height'), output_field=fields.IntegerField())
-    )
+    #nodes_with_surface = Node.objects.annotate(
+    #surface=ExpressionWrapper(F('width') * F('height'), output_field=fields.IntegerField())
+    #)
 
     nodes = Node.objects.all() # nodes_with_surface.order_by('-surface')
-    # nodes = Node.objects.filter(container=7)
+    #nodes = Node.objects.exclude(nodeshape=7)
+    #nodes = Node.objects.order_by('ref_num')[:2]
+    #nodes = Node.objects.filter(container=5).order_by('ref_num')
+    #nodes = Node.objects.filter(Q(container=5) | Q(ref_num=803)).order_by('ref_num')
+    #nodes = Node.objects.filter(Q(container=5) | Q(container=6)).order_by('ref_num')
+    #nodes = Node.objects.filter(Q(container=5) | Q(ref_num=803) | Q(container=6)).order_by('ref_num')
+    #nodes = Node.objects.filter(Q(container=5) | Q(ref_num=803) | Q(container=6) | Q(ref_num=800) | Q(container=4) | Q(ref_num=802)).order_by('ref_num')
+    #nodes = Node.objects.filter(Q(container=5) | Q(ref_num=803) | Q(container=6)).order_by('cyrend')
+    #nodes = Node.objects.filter(Q(container=5) | Q(ref_num=803) | Q(container=6) | Q(ref_num=800)).order_by('cyrend')
+    #nodes = Node.objects.filter(Q(container=5) | Q(container=6)).order_by('cyrend').exclude(Q(nodeshape=7))
+    
+
     vindex = 0
     for node in nodes:
         # vindex = vindex + 1
         node.style = determine_style(node.nodeshape, node.nodecolor, node.dash, node.width, node.height, node.nodecaption) # vindex)
     
-    edges = Edge.objects.all()
-    # edges = Edge.objects.exclude(Q(begin__nodeshape=7) | Q(end__nodeshape=7))
+    #edges = Edge.objects.all()
+    #edges = Edge.objects.exclude(Q(begin__nodeshape=7) | Q(end__nodeshape=7))
+    edges = Edge.objects.filter(begin_id__in=nodes.values_list('node_id', flat=True), end_id__in=nodes.values_list('node_id', flat=True))
+    
     for edge in edges:
+        #print(edge.begin_id, edge.end_id)
         edge.style = edge_style(edge.edgeshape, edge.color, edge.edgetype)
         # edge.style = 'edge_style_' + str(edge.edgeshape)  # Use a class name based on edgeshape
 
@@ -27,13 +41,13 @@ def network_graph(request):
 
 def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption): # vindex):
     shape_styles = {
-        1: {'shape': 'rectangle'},
-        2: {'shape': 'polygon', 'shape-polygon-points': '-1, -0.3,   1, -1,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '7px', 'text-margin-y': '15px'},
-        3: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   1, -0.3,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '-6px', 'text-margin-y': '15px'},
-        4: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   0.31, -1,   1, -0.3,   1, 0.3,   0.31, 1,   -1, 1', 'height': '115px', 'text-margin-x': '-6px'},
-        5: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   0.31, -1,   1, -0.3,   1, 0.3,   0.31, 1,   -1, 1', 'height': '115px', 'text-margin-x': '-6px'},
-        6: {'shape': 'ellipse'},
-        7: {'shape': 'round-rectangle'}
+        1: {'shape': 'rectangle', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        2: {'shape': 'polygon', 'shape-polygon-points': '-1, -0.3,   1, -1,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '7px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        3: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   1, -0.3,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '-6px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        4: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   0.31, -1,   1, -0.3,   1, 0.3,   0.31, 1,   -1, 1', 'height': '115px', 'text-margin-x': '-6px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        5: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   0.31, -1,   1, -0.3,   1, 0.3,   0.31, 1,   -1, 1', 'height': '115px', 'text-margin-x': '-6px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        6: {'shape': 'ellipse', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        7: {'shape': 'round-rectangle', 'border-width': 10, 'text-valign': 'top', 'text-halign': 'center', 'background-opacity': 0.999, 'color': '#000'} #, 'width': width, 'height': height}
     }
 
     color_styles = {
@@ -53,13 +67,13 @@ def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption): # v
         1: {'border-style': 'dashed'}
     }
     
-    dimensions_styles = { 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05 } # , 'z-index': vindex }
+    # dimensions_styles = { 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05 } # , 'z-index': vindex }
     
     shape_style = shape_styles.get(nodeshape, {'shape': 'rectangle'})
     color_style = color_styles.get(nodecolor, {'border-color': '#000000'})
     border_style = border_styles.get(dash, {'border-style': 'solid'})
     
-    return {**shape_style, **color_style, **border_style, **dimensions_styles}
+    return {**shape_style, **color_style, **border_style} # , **dimensions_styles}
 
 def edge_style(edgeshape, color, edgetype):
     width_styles = {

@@ -1,40 +1,76 @@
+{% load static %}
+
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.28.1/dist/cytoscape.umd.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Network Graph</title> -->
+    
     <title>Systems Biology of Human Aging</title>
+    <!-- <script src="../../node_modules/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="../../node_modules/cytoscape-cola/cytoscape-cola.js"></script> -->
     <style>
         #cy {
             position: absolute;
-            width: 10200px;
-            height: 10000px;
-            display: block;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+			z-index: 999;
+			border: 1px solid #000;
         }
     </style>
 </head>
-<!--                        //{ data: { id: '{{ node.node_id }}', label: '[ {{ node.ref_num }} ]\n{{ node.nodecaption }}' }, style: { 'width': '{{ node.width }}px', 'height': '{{ node.height }}px', {{ node.style|safe }} }, position: { x: '{{ node.posx }}px', y: '{{ node.posy }}px' } }, -->
+
 <body>
     <div id="cy"></div>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+	<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.5.1/cytoscape-cola.min.js"></script>
+	
+<!--    <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@3.6.6/dist/cytoscape-cola.min.js"></script> -->
+<!--    <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.5.1/dist/cytoscape-cola.min.js"></script>
+    <script src="http://marvl.infotech.monash.edu/webcola/cola.min.js"></script> -->
+
+<!--    <script src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
+    <script src="{% static 'cytoscape-cola/cytoscape-cola.js' %}"></script> -->
+    <!-- <script type="module">
+        import cytoscape from 'https://cdn.jsdelivr.net/npm/cytoscape@3.28.1/dist/cytoscape.min.js';
+        import cola from 'https://cdn.jsdelivr.net/npm/cytoscape-cola@2.5.1/cytoscape-cola.min.js';
+		cytoscape.use( cola ); // register extension
+    </script>
+	<!-- <script src="{% static 'bundle.js' %}"></script> -->
+
+	<!-- <script src="cytoscape-cola.js"></script> -->
     <script>
-	    document.addEventListener('DOMContentLoaded', function () {
+        //cytoscape.use(cola);
+        // Register the cola layout plugin
+        //cytoscape.use(cytoscape-cola);
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            //cytoscape.use(require('cytoscape-cola'));
+            //import cytoscapeCola from 'cytoscape-cola'; // Import the cola layout plugin
+
+            //cytoscape.use(window.cola); // Register the cola layout plugin
+            //cytoscape.use( cola );
             var cy = cytoscape({
+
+				//import cola from 'cytoscape-cola';
+                //cytoscape.use(window.cola);
                 container: document.getElementById('cy'),
-                //layout: {
-                //    name: 'preset'
-                //},                
-				elements: {
+
+
+                elements: {
                     nodes: [
                         {% for node in nodes %}
                         {
                             data: { id: '{{ node.node_id }}', label: '[{{ node.ref_num }}]\n{{ node.nodecaption|default:'' }}', parent: '{{ node.parent_n_id }}' },
-                        //    style: { 'width': '{{ node.width }}px', 'height': '{{ node.height }}px', {{ node.style|safe }} },
                             style: {{ node.style|safe }},
-                            position: { x: '{{ node.posx }}', y: '{{ node.posy }}' }
-                            //position: { x: 1000 , y: 1000 }
+                            //{% if node.nodeshape != 7 %}
+                            //position: { "x": '{{ node.posnx }}', "y": '{{ node.posny }}' }
+                            //{% endif %}
                         }{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     ],
@@ -46,34 +82,39 @@
                     ]
                 },
 
+                layout: {
+                    name: 'cola',
+					positions: undefined,
+					fit: true
+                },
+
                 style: [
                     {
-                        selector: 'node[nodeshape != 7]',
+                        selector: 'node', //[nodeshape != 7]',
                         style: {
                             'label': 'data(label)',
-                            'border-width': 10,
-                            'text-valign': 'center',
-                            'text-halign': 'center',
-                            'background-color': '#fff',
-							'color': '#000',
-							'text-wrap': 'wrap'
-							//'text-max-width': '150px' // '{{ node.width }}' // * .9' // + 'px'
+                            //'border-width': 10,
+                            //'text-valign': 'center',
+                            //'text-halign': 'center',
+                            //'background-color': '#999',
+                            //'color': '#f00',
+                            //'text-wrap': 'wrap'
                         }
                     },
-                    {
-                        selector: 'node[nodeshape = 7]',
-                        style: {
-                            'label': 'data(label)',
-                            'border-width': 10,
-                            'text-valign': 'top',
-                            'text-halign': 'center',
-                            'background-opacity': 0.333,
-							'color': '#000',
-                        }
-                    },
+                    //{
+                    //    selector: 'node[nodeshape = 7]',
+                    //    style: {
+                    //        'label': 'data(label)',
+                    //        'border-width': 10,
+                    //        'text-valign': 'top',
+                    //        'text-halign': 'center',
+                    //        'background-opacity': 0.333,
+                    //        'color': '#000',
+                    //    }
+                    //},
                     {
                         selector: 'edge',
-						style: {
+                        style: {
                             'curve-style': 'bezier'
                         }
                     },
@@ -94,6 +135,8 @@
                 console.log('Position Y:', node.position('y'));
                 console.log('Rendered position X:', node.renderedPosition('x'));
                 console.log('Rendered position Y:', node.renderedPosition('y'));
+				//console.log('Width:',node.width);
+				//console.log('height:',node.height);
             });
         });
     </script>

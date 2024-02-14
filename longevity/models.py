@@ -898,7 +898,7 @@ class Node(models.Model):
     container = models.IntegerField(db_column='Container', blank=True, null=True)
     # 1- Tissue, Organ, & Whole Body Physiology & Pathology - Node_id=313 - Ref_num=900
     # 2- Whole Cells or Tissues - Node_id=314 - Ref_num=801
-    # 3- Extracellular Spaces: ECM, Blood Plasma, Lymph, CSF - Node_id=298 - Ref_num=200
+    # 3- Extracellular Spaces: ECM, Blood Plasma, Lymph, CSF - Node_id=312 - Ref_num=200
     # 4- Cytosolic Compartment of the Cell - Node_id=315 - Ref_num=802
     # 5- Lysosome – Hydrolysis - for recycling. Accumulation in nonmitotic cells - Node_id=316 - Ref_num=803
     # 6- Macroautophagy - Node_id=246 - Ref_num=800
@@ -918,13 +918,16 @@ class Node(models.Model):
     severity_q = models.DecimalField(db_column='Severity_Q', max_digits=3, decimal_places=0, blank=True, null=True)
     frequency_q = models.DecimalField(db_column='Frequency_Q', max_digits=3, decimal_places=0, blank=True, null=True)
     speed_q = models.DecimalField(db_column='Speed_Q', max_digits=3, decimal_places=0, blank=True, null=True)
-    adsens = models.DecimalField(db_column='ADSens', max_digits=6, decimal_places=2, blank=True, null=True), # Acceptable Diagnosis Sensitivity
-    adspec = models.DecimalField(db_column='ADSpec', max_digits=6, decimal_places=2, blank=True, null=True), # Acceptable Diagnosis Specificity
+    adsens = models.DecimalField(db_column='adsens', max_digits=6, decimal_places=2, blank=True, null=True) # Acceptable Diagnosis Sensitivity
+    adspec = models.DecimalField(db_column='adspec', max_digits=6, decimal_places=2, blank=True, null=True) # Acceptable Diagnosis Specificity
     parent_n = models.ForeignKey('self', models.DO_NOTHING, db_column='Parent_n_id', blank=True, null=True, related_name='children')
     width = models.IntegerField(db_column='width', blank=True, null=True)
     height = models.IntegerField(db_column='height', blank=True, null=True)
     posx = models.IntegerField(db_column='posx', blank=True, null=True)
     posy = models.IntegerField(db_column='posy', blank=True, null=True)
+    cyrend = models.IntegerField(db_column='cyrend', blank=True, null=True)
+    posnx = models.DecimalField(db_column='posnx', max_digits=9, decimal_places=4, blank=True, null=True)
+    posny = models.DecimalField(db_column='posny', max_digits=9, decimal_places=4, blank=True, null=True)
     #hallmark = models.IntegerField(db_column='Hallmark', blank=True, null=True)
     def __str__(self):
         return f"{self.ref_num} - {self.nodecaption}"
