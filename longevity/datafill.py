@@ -22,13 +22,18 @@ django.setup()
 # Import the Theory model after Django setup
 from longevity.models import Node # Theory
 
+# objects_with_ampersand = Node.objects.filter(nodecaption__contains='&')
+# for obj in objects_with_ampersand:
+    # obj.nodecaption = obj.nodecaption.replace('&', 'and')
+    # obj.save()
+
 #Node.objects.filter(Q(container=5) & ~Q(nodeshape=7)).update(cyrend=10)
-Node.objects.filter(Q(container=5)).update(cyrend=10)
-Node.objects.filter(ref_num='803').update(cyrend=15)
-Node.objects.filter(Q(container=6)).update(cyrend=30)
-Node.objects.filter(ref_num='800').update(cyrend=35)
-Node.objects.all().update(posnx=Cast(F('posx'), output_field=FloatField()) / 100.0)
-Node.objects.all().update(posny=Cast(F('posy'), output_field=FloatField()) / 100.0)
+# Node.objects.filter(Q(container=5)).update(cyrend=10)
+# Node.objects.filter(ref_num='803').update(cyrend=15)
+# Node.objects.filter(Q(container=6)).update(cyrend=30)
+# Node.objects.filter(ref_num='800').update(cyrend=35)
+# Node.objects.all().update(posnx=Cast(F('posx'), output_field=FloatField()) / 100.0)
+# Node.objects.all().update(posny=Cast(F('posy'), output_field=FloatField()) / 100.0)
 #Node.objects.all().update(container=F('container') / 10)
 # Node.objects.filter(nodeshape=4).update(container=12)
 # Node.objects.filter(nodeshape=5).update(container=17)

@@ -22,7 +22,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'longevity', 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'node_modules'),
+    os.path.join(BASE_DIR, 'node_modules', ),
+#    os.path.join(BASE_DIR, 'longevity', 'templates', 'css'),
+#    os.path.join(BASE_DIR, 'staticfiles'),
+#    os.path.join(BASE_DIR, 'longevity', 'staticfiles'),
 ]
 
 # Define the directory where collectstatic will collect static files for deployment
