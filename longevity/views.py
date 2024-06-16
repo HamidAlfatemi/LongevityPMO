@@ -12,6 +12,7 @@ import time
 
 def network_graph(request):
     nodes = Node.objects.all()
+    #nodes = Node.objects.filter(Q(ref_num='078') | Q(ref_num='160') | Q(ref_num='911') | Q(ref_num='913') | Q(ref_num='210') | Q(ref_num='209') | Q(ref_num='077') | Q(ref_num='432') | Q(ref_num='428') | Q(ref_num='423') | Q(ref_num='702') | Q(ref_num='720') | Q(ref_num='212') | Q(ref_num='719') | Q(ref_num='717') | Q(ref_num='081') | Q(ref_num='357') | Q(ref_num='711')) # | Q(ref_num='804') | Q(ref_num='807') | Q(ref_num='200') | Q(ref_num='801') | Q(ref_num='900'))
     for node in nodes:
         node.style = determine_style(node.nodeshape, node.nodecolor, node.dash, node.width, node.height, node.nodecaption)
 

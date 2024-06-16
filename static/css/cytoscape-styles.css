@@ -1,0 +1,16 @@
+/* Apply styles only to the element with ID "cy" */
+#cy {
+    position: absolute;
+    width: 400%;
+    height: 1290%;
+    display: block;
+    border: 1px solid #000;
+    /* zoom: 1; */
+	/*overflow: auto; /* Allow scrolling if content overflows */
+}
+
+/* Example of CSS transforms for zooming */
+#cy.zoomed {
+    transform: scale(4); /* Equivalent to 400% zoom */
+    transform-origin: top left; /* Ensure zoom starts from the top-left corner */
+}

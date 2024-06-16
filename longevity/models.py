@@ -842,13 +842,15 @@ class Nanocarrier(models.Model):
 
 class Nanoparticle(models.Model):
     np_id = models.AutoField(db_column='NP_id', primary_key=True, serialize=True)
+    nptitle = models.TextField(db_column='NPTitle', blank=True, null=True)
+    npdesc = models.TextField(db_column='NPDesc', blank=True, null=True)
+    nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
+
     nc = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
     tl = models.ForeignKey('Targetingligand', models.DO_NOTHING, db_column='TL_id', blank=True, null=True)
     agent = models.ForeignKey(Cellenteragent, models.DO_NOTHING, db_column='Agent_id', blank=True, null=True)
     linker = models.ForeignKey(Linker, models.DO_NOTHING, db_column='Linker_id', blank=True, null=True)
     linkerdesc = models.TextField(db_column='LinkerDesc', blank=True, null=True)
-    nptitle = models.TextField(db_column='NPTitle', blank=True, null=True)
-    npdesc = models.TextField(db_column='NPDesc', blank=True, null=True)
     shape = models.TextField(db_column='Shape', blank=True, null=True)
     dimx = models.DecimalField(db_column='Dimx', max_digits=4, decimal_places=0, blank=True, null=True)
     dimy = models.DecimalField(db_column='Dimy', max_digits=4, decimal_places=0, blank=True, null=True)
@@ -948,6 +950,95 @@ class NodeDiagnosis(models.Model):
     class Meta:
         db_table = 'nodediagnosis'
 
+class celltype(models.Model):
+    ct_id = models.AutoField(db_column='ct_id', primary_key=True, serialize=True)
+    cttitle = models.CharField(db_column='cttitle', max_length=100, blank=True, null=True)
+    def __str__(self):
+        return self.cttitle
+    class Meta:
+
+        db_table = 'celltype'
+
+class nodecelltype(models.Model):
+    nct_id = models.AutoField(db_column='nct_id', primary_key=True, serialize=True)
+    node = models.ForeignKey(Node, on_delete=models.CASCADE, db_column='node_id', blank=True, null=True)
+    ct = models.ForeignKey(celltype, on_delete=models.CASCADE, db_column='ct_id', blank=True, null=True)
+    def __str__(self):
+        return f"{self.node.ref_num} - {self.celltype.cttitle}"
+
+    class Meta:
+        db_table = 'nodecelltype'
+
+class edgecelltype(models.Model):
+    ect_id = models.AutoField(db_column='ect_id', primary_key=True, serialize=True)
+    edge = models.ForeignKey(Edge, on_delete=models.CASCADE, db_column='edge_id', blank=True, null=True)
+    ct = models.ForeignKey(celltype, on_delete=models.CASCADE, db_column='ct_id', blank=True, null=True)
+    #def __str__(self):
+    #    return f"{self.edge.edge.ref_num} - {self.celltype.cttitle}"
+
+    class Meta:
+        db_table = 'edgecelltype'
+
+class tissue(models.Model):
+    tissue_id = models.AutoField(db_column='tissue_id', primary_key=True, serialize=True)
+    tissuetitle = models.CharField(db_column='tissuetitle', max_length=100, blank=True, null=True)
+    def __str__(self):
+        return self.tissuetitle
+    class Meta:
+
+        db_table = 'tissue'
+
+class nodenodetissue(models.Model):
+    nt_id = models.AutoField(db_column='nt_id', primary_key=True, serialize=True)
+    node = models.ForeignKey(Node, on_delete=models.CASCADE, db_column='node_id', blank=True, null=True)
+    tissue = models.ForeignKey(tissue, on_delete=models.CASCADE, db_column='tissue_id', blank=True, null=True)
+    def __str__(self):
+        return f"{self.node.ref_num} - {self.tissue.tissuetitle}"
+
+    class Meta:
+        db_table = 'nodetissue'
+
+class edgetissue(models.Model):
+    et_id = models.AutoField(db_column='et_id', primary_key=True, serialize=True)
+    edge = models.ForeignKey(Edge, on_delete=models.CASCADE, db_column='edge_id', blank=True, null=True)
+    tissue = models.ForeignKey(tissue, on_delete=models.CASCADE, db_column='tissue_id', blank=True, null=True)
+    #def __str__(self):
+    #    return f"{self.edge.edge.ref_num} - {self.celltype.cttitle}"
+
+    class Meta:
+        db_table = 'edgetissue'
+
+class protein(models.Model):
+    protein_id = models.AutoField(db_column='protein_id', primary_key=True, serialize=True)
+    proteinname = models.CharField(db_column='proteinname', max_length=100, blank=True, null=True)
+    uniportid = models.CharField(db_column='uniportid', max_length=6, blank=True, null=True)
+    gene = models.ForeignKey(Gene, on_delete=models.CASCADE, db_column='gene_id', blank=True, null=True)
+    def __str__(self):
+        return self.proteinname
+    class Meta:
+
+        db_table = 'protein'
+
+class nodeprotein(models.Model):
+    np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
+    node = models.ForeignKey(Node, on_delete=models.CASCADE, db_column='node_id', blank=True, null=True)
+    protein = models.ForeignKey(protein, on_delete=models.CASCADE, db_column='protein_id', blank=True, null=True)
+    def __str__(self):
+        return f"{self.node.ref_num} - {self.protein.proteinname}"
+
+    class Meta:
+        db_table = 'nodeprotein'
+
+class edgeprotein(models.Model):
+    ep_id = models.AutoField(db_column='ep_id', primary_key=True, serialize=True)
+    edge = models.ForeignKey(Edge, on_delete=models.CASCADE, db_column='edge_id', blank=True, null=True)
+    protein = models.ForeignKey(protein, on_delete=models.CASCADE, db_column='protein_id', blank=True, null=True)
+    #def __str__(self):
+    #    return f"{self.edge.edge.ref_num} - {self.celltype.cttitle}"
+
+    class Meta:
+        db_table = 'edgeprotein'
+
 
 class GeneSet(models.Model):
     gs_id = models.AutoField(primary_key=True, serialize=True)
@@ -958,8 +1049,6 @@ class GeneSet(models.Model):
 
     class Meta:
         db_table = 'geneset'
-
-
 
 class gsgene(models.Model):
     gsg_id = models.AutoField(primary_key=True, serialize=True)
@@ -1193,7 +1282,7 @@ class OrgOrg(models.Model):
 
 class Organization(models.Model):
     organization_id = models.AutoField(db_column='Organization_id', primary_key=True, serialize=True)
-    ot = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='OT_id', blank=True, null=True)
+    # ot = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='OT_id', blank=True, null=True)
     orgtitle = models.CharField(db_column='OrgTitle', max_length=200, blank=True, null=True)
     parent_org_id = models.BigIntegerField(db_column='Parent_org_id', blank=True, null=True)
     olrole = models.IntegerField(db_column='OLRole', blank=True, null=True)
@@ -1222,16 +1311,58 @@ class OrganizationPerson(models.Model):
     class Meta:
         db_table = 'organization_person'
 
+class orgot(models.Model):
+    oot_id = models.AutoField(primary_key=True, serialize=True)
+    organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
+    ot = models.ForeignKey(Orgtype, models.DO_NOTHING, db_column='ot_id', blank=True, null=True)
+    def __str__(self):
+        return  f"{self.organization.orgtitle} - {self.ot.typetitle}"
+
+    class Meta:
+        db_table = 'ortot'
 
 class Orgtype(models.Model):
     ot_id = models.AutoField(db_column='OT_id', primary_key=True, serialize=True)
-    typetitle = models.TextField(db_column='TypeTitle', blank=True, null=True)
+    typetitle = models.CharField(db_column='TypeTitle', max_length=70, blank=True, null=True)
+    typedesc = models.TextField(db_column='typedesc', blank=True, null=True)
 
     class Meta:
 
         db_table = 'orgtype'
         db_table_comment = '1- Univerity\n2- Faculty - A department of University.\n'
 
+class otot(models.Model):
+    otot_id = models.AutoField(db_column='otot_id', primary_key=True, serialize=True)
+    orgtyperelation = models.CharField(db_column='orgtyperelation', max_length=50, blank=True, null=True)
+    pot_id = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='pot_id')
+    cot_id = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='cot_id', related_name='otot_ot_id_set')
+
+    class Meta:
+        db_table = 'otot'
+
+class benefittype(models.Model):
+    bt_id = models.AutoField(db_column='bt_id', primary_key=True, serialize=True)
+    benefittitle = models.CharField(db_column='benefittitle', max_length=255, blank=True, null=True)
+
+    class Meta:
+        db_table = 'benefittype'
+
+class benefit(models.Model):
+    benefit_id = models.AutoField(db_column='benefit_id', primary_key=True, serialize=True)
+    bt = models.ForeignKey('benefittype', models.DO_NOTHING, db_column='bt_id', blank=True, null=True)
+    organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
+    person = models.ForeignKey('Person', models.DO_NOTHING, db_column='person_id', blank=True, null=True)
+    estvalue = models.DecimalField(db_column='estvalue', max_digits=10, decimal_places=0, blank=True, null=True)
+    actvalue = models.DecimalField(db_column='actvalue', max_digits=10, decimal_places=0, blank=True, null=True)
+    benefitdesc = models.TextField(db_column='benefitdesc', blank=True, null=True)
+    durstart = models.DateField(db_column='durstart', blank=True, null=True)
+    durend = models.DateField(db_column='dursend', blank=True, null=True)
+    poject = models.ForeignKey('Project', models.DO_NOTHING, db_column='project_id', blank=True, null=True)
+    collab = models.ForeignKey('collaboration', models.DO_NOTHING, db_column='collab_id', blank=True, null=True)
+    pbenefit = models.ForeignKey('self', models.DO_NOTHING, db_column='pbenefit_id', blank=True, null=True)
+
+    class Meta:
+        db_table = 'benefit'
 
 class Parameter(models.Model):
     parameter_id = models.AutoField(db_column='Parameter_id', primary_key=True, serialize=True)
@@ -1439,21 +1570,68 @@ class ProNp(models.Model):
 
 class Project(models.Model):
     project_id = models.AutoField(db_column='Project_id', primary_key=True, serialize=True)
-    #research = models.ForeignKey('Requiredresearch', models.DO_NOTHING, db_column='Research_id', blank=True, null=True)
     projtitle = models.CharField(db_column='ProjTitle', max_length=255, blank=True, null=True)
     overallgoal = models.TextField(db_column='overallgoal', blank=True, null=True)
     keyobjectives = models.TextField(db_column='keyobjectives', blank=True, null=True)
     projectsource = models.IntegerField(db_column='ProjectSource', blank=True, null=True)
+    # 1 = The challenges currently underway to find interventions for reverse-aging
+    # 2 = Projects defined  to help intervention discovery and development processes leap one step forward
     program = models.ForeignKey('self', models.DO_NOTHING, db_column='Program_id', blank=True, null=True)
     projdesc = models.TextField(db_column='ProjDesc', blank=True, null=True)
-    #proj_subj = models.IntegerField(db_column='Proj_Subj', blank=True, null=True)
     projstatus = models.IntegerField(db_column='ProjStatus', blank=True, null=True)
+    # 1 = Required
+    # 2 = Initiated
+    # 3 = Running
+    # 4 = Hold
+    # 5 = Canceled
+    # 6 = Finished
     def __str__(self):
         return self.projtitle
 
     class Meta:
         db_table = 'project'
 
+class collaboration(models.Model):
+    collab_id = models.AutoField(db_column='collab_id', primary_key=True, serialize=True)
+    collabtitle = models.CharField(db_column='collabtitle', max_length=150, blank=True, null=True)
+    collabdesc = models.TextField(db_column='collabdesc', blank=True, null=True)
+    collabstart = models.DateField(db_column='collabstart', blank=True, null=True)
+    collabend = models.DateField(db_column='collabend', blank=True, null=True)
+    def __str__(self):
+        return self.collabtitle
+
+    class Meta:
+        db_table = 'collaboration'
+
+class collabproject(models.Model):
+    cp_id = models.AutoField(primary_key=True, serialize=True)
+    collab = models.ForeignKey(collaboration, models.DO_NOTHING, db_column='collab_id', blank=True, null=True)
+    project = models.ForeignKey('Project', models.DO_NOTHING, db_column='project_id', blank=True, null=True)
+    def __str__(self):
+        return  f"{self.project.projtitle} - {self.collaboration.collabtitle}"
+
+    class Meta:
+        db_table = 'collabproj'
+
+class collaborg(models.Model):
+    co_id = models.AutoField(primary_key=True, serialize=True)
+    collab = models.ForeignKey(collaboration, models.DO_NOTHING, db_column='collab_id', blank=True, null=True)
+    organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
+    def __str__(self):
+        return  f"{self.organization.orgtitle} - {self.collaboration.collabtitle}"
+
+    class Meta:
+        db_table = 'collaborg'
+
+class collabpers(models.Model):
+    cp_id = models.AutoField(primary_key=True, serialize=True)
+    collab = models.ForeignKey(collaboration, models.DO_NOTHING, db_column='collab_id', blank=True, null=True)
+    person = models.ForeignKey('Person', models.DO_NOTHING, db_column='person_id', blank=True, null=True)
+    def __str__(self):
+        return  f"{self.person.firstname} {self.person.lastname} - {self.collaboration.collabtitle}"
+
+    class Meta:
+        db_table = 'collabpers'
 
 class Subject(models.Model):
     subject_id = models.AutoField(db_column='Subject_id', primary_key=True, serialize=True)

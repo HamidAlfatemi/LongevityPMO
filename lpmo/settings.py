@@ -14,19 +14,21 @@ from pathlib import Path
 import os
 
 # Define the base directory for the project
-#BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'longevity', 'staticfiles')
-
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'node_modules', ),
-#    os.path.join(BASE_DIR, 'longevity', 'templates', 'css'),
-#    os.path.join(BASE_DIR, 'staticfiles'),
-#    os.path.join(BASE_DIR, 'longevity', 'staticfiles'),
+    BASE_DIR / "static",  # This is the directory where you place your global static files
+    #os.path.join(BASE_DIR, 'longevity', 'static'),
 ]
+
+# For production (use this when you deploy)
+# STATIC_ROOT = BASE_DIR / "staticfiles"  # This is where collectstatic will collect static files
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Define the directory where collectstatic will collect static files for deployment
 
@@ -163,7 +165,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
