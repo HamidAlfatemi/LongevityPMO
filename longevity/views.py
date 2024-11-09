@@ -5,32 +5,24 @@ from django.db.models import Q
 from django.db.models import F, ExpressionWrapper, fields
 import time
 
-################### time measurement #################
-#start_time = time.time()
-#print(start_time)
-######################################################
-
-def network_graph(request):
+def index(request):
+    return render(request, 'index.html')
+def sbha(request):
     nodes = Node.objects.all()
-    #nodes = Node.objects.filter(Q(ref_num='078') | Q(ref_num='160') | Q(ref_num='911') | Q(ref_num='913') | Q(ref_num='210') | Q(ref_num='209') | Q(ref_num='077') | Q(ref_num='432') | Q(ref_num='428') | Q(ref_num='423') | Q(ref_num='702') | Q(ref_num='720') | Q(ref_num='212') | Q(ref_num='719') | Q(ref_num='717') | Q(ref_num='081') | Q(ref_num='357') | Q(ref_num='711')) # | Q(ref_num='804') | Q(ref_num='807') | Q(ref_num='200') | Q(ref_num='801') | Q(ref_num='900'))
+    ########## added for temporarily manual filter #################
+    #nodes = Node.objects.filter(Q(ref_num='423') | Q(ref_num='428') | Q(ref_num='432') | Q(ref_num='148') | Q(ref_num='906') | Q(ref_num='907')) # | Q(ref_num='317') | Q(ref_num='801') | Q(ref_num='900')) # | Q(ref_num='423') | Q(ref_num='702') | Q(ref_num='720') | Q(ref_num='212') | Q(ref_num='719') | Q(ref_num='717') | Q(ref_num='081') | Q(ref_num='357') | Q(ref_num='711')) # | Q(ref_num='804') | Q(ref_num='807') | Q(ref_num='200') | Q(ref_num='801') | Q(ref_num='900'))
+    ################################################################
     for node in nodes:
-        node.style = determine_style(node.nodeshape, node.nodecolor, node.dash, node.width, node.height, node.nodecaption)
+        node.style = determine_style(node.nodeshape, node.nodecolor, node.dashed, node.width, node.height, node.nodecaption) # create each node styled based on attributes in the record
 
-    edges = Edge.objects.filter(begin_id__in=nodes.values_list('node_id', flat=True), end_id__in=nodes.values_list('node_id', flat=True))
+    edges = Edge.objects.filter(begin_id__in=nodes.values_list('node_id', flat=True), end_id__in=nodes.values_list('node_id', flat=True)) # only edges with both side nodes present
     for edge in edges:
-        edge.style = edge_style(edge.edgeshape, edge.color, edge.edgetype)
+        edge.style = edge_style(edge.edgeshape, edge.color, edge.edgetype) # create each edge styled based on attributes in the record
 
     return render(request, 'sbha.html', {'nodes': nodes, 'edges': edges})
 
-################### time measurement #################
-# end_time = time.time()
-# print(end_time)
-# elapsed_time = end_time - start_time
-# print(f"Elapsed time: {elapsed_time:.2f} seconds - views.py")
-######################################################
-
-def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption): # vindex):
-    shape_styles = {
+def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption):
+    shape_styles = { # define style based on node.nodeshape
         1: {'shape': 'rectangle', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
         2: {'shape': 'polygon', 'shape-polygon-points': '-1, -0.3,   1, -1,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '7px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
         3: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   1, -0.3,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '-6px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
@@ -40,7 +32,7 @@ def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption): # v
         7: {'shape': 'round-rectangle', 'border-width': 10, 'text-valign': 'top', 'text-margin-y': '100px', 'text-halign': 'center', 'color': '#000', 'text-wrap': 'wrap', 'font-weight': 'bold', 'font-size': '40px', 'padding': '100px'}
     }
 
-    color_styles = {
+    color_styles = { # define color based on node.nodecolor
         1: {'border-color': '#0000DD'}, # Blue
         2: {'border-color': '#CC9900'}, # Light Brown
         3: {'border-color': '#3399FF'}, # Light Blue
@@ -54,34 +46,29 @@ def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption): # v
         11: {'border-color': '#FFFF00'} # Yellow
     }
 
-    border_styles = {
+    border_styles = { # define border style based on node.dashed
         0: {'border-style': 'solid'},
         1: {'border-style': 'dashed'}
     }
     
-    # dimensions_styles = { 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05 } # , 'z-index': vindex }
-    
     shape_style = shape_styles.get(nodeshape, {'shape': 'rectangle'})
-    color_style = color_styles.get(nodecolor, {'border-color': '#000000'})
+    color_style = color_styles.get(nodecolor, {'border-color': '#000000'}) # default border color is black
     border_style = border_styles.get(dash, {'border-style': 'solid'})
     
-    if nodeshape == 7:
-        #shape_style['background-color'] = color_style['border-color']
-        #shape_style['background-opacity'] = 0.5
-        background_color = get_lighter_color(nodecolor)  # Assuming you have a function to get lighter color
+    if nodeshape == 7: # node is a container
+        background_color = get_lighter_color(nodecolor)  # lighter color of boders for the background of the containers
         shape_style['background-color'] = background_color
-        #shape_style['classes'] = 'container-label'
 
-    return {**shape_style, **color_style, **border_style} # , **dimensions_styles}
+    return {**shape_style, **color_style, **border_style}
 
 def edge_style(edgeshape, color, edgetype):
-    width_styles = {
+    width_styles = { # define width and pattern of the Edge based on edge.edgeshape
         1: {'width': 6},
         2: {'width': 15},
-        3: {'width': 15, 'line-style': 'dotted'} #, 'target-arrow-opacity': 0.5}
+        3: {'width': 15, 'line-style': 'dotted'}
     }
 
-    linecolor_styles = {
+    linecolor_styles = { # define color of the Edge based on edge.color
         1: {'line-color': '#0000DD', 'target-arrow-color': '#0000DD'},  # Blue
         2: {'line-color': '#CC9900', 'target-arrow-color': '#CC9900'},  # Light Brown
         3: {'line-color': '#3399FF', 'target-arrow-color': '#3399FF'},  # Light Blue
@@ -93,11 +80,11 @@ def edge_style(edgeshape, color, edgetype):
         9: {'line-color': '#000000', 'target-arrow-color': '#000000'} # Black
     }
 
-    arrow_styles = {
-        0: {'target-arrow-shape': 'triangle'}, # 'target-arrow-opacity': 0.63},
-        1: {'target-arrow-shape': 'tee', 'target-arrow-color': '#00BB00'},
-        2: {'target-arrow-shape': 'tee', 'target-arrow-color': '#EE0000'},
-        3: {'target-arrow-shape': 'tee', 'target-arrow-color': '#000000'}
+    arrow_styles = { # define arrow head of the Edge based on edge.edgetype
+        1: {'target-arrow-shape': 'triangle'},
+        2: {'target-arrow-shape': 'tee', 'target-arrow-color': '#00BB00'},
+        3: {'target-arrow-shape': 'tee', 'target-arrow-color': '#EE0000'},
+        4: {'target-arrow-shape': 'tee', 'target-arrow-color': '#000000'}
     }
     
     width_style = width_styles.get(edgeshape, {'width': 5})

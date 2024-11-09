@@ -66,17 +66,6 @@ class Cellage(models.Model):
         db_table_comment = 'Genes associated with cellular senescence based on genetic m'
 
 
-class Cellenteragent(models.Model):
-    agent_id = models.AutoField(db_column='Agent_id', primary_key=True, serialize=True)
-    agenttitle = models.TextField(db_column='AgentTitle', blank=True, null=True)
-    agentdesc = models.TextField(db_column='AgentDesc', blank=True, null=True)
-    entrancetype = models.IntegerField(db_column='EntranceType', blank=True, null=True)
-    receptor = models.TextField(db_column='Receptor', blank=True, null=True)
-    class Meta:
-
-        db_table = 'cellenteragent'
-
-
 class Contactinfo(models.Model):
     ci_id = models.AutoField(db_column='CI_id', primary_key=True, serialize=True)
     conttype = models.IntegerField(db_column='ContType', blank=True, null=True)
@@ -125,7 +114,7 @@ class Costanalysis(models.Model):
     costitem = models.TextField(db_column='CostItem', blank=True, null=True)
     cost = models.DecimalField(db_column='Cost', max_digits=8, decimal_places=2, blank=True, null=True)
     ni = models.ForeignKey('NodeIntervention', models.DO_NOTHING, db_column='NI_id', blank=True, null=True)
-    np = models.ForeignKey('Nanoparticle', models.DO_NOTHING, db_column='NP_id', blank=True, null=True)
+    np = models.ForeignKey('nanoparticle', models.DO_NOTHING, db_column='NP_id', blank=True, null=True)
     parent_c = models.ForeignKey('self', models.DO_NOTHING, db_column='Parent_c_id', blank=True, null=True)
 
     class Meta:
@@ -172,7 +161,6 @@ class DiagnoseDt(models.Model):
 
 class Diagnosis(models.Model):
     diagnosis_id = models.AutoField(db_column='diagnosis_id', primary_key=True, serialize=True)
-#    node = models.ForeignKey('Node', models.DO_NOTHING, db_column='Node_id')
     diagnosis = models.CharField(db_column='diagnosis', max_length=50, blank=True, null=True)
     nddesc = models.TextField(db_column='NDDesc', blank=True, null=True)
     goldstandard = models.IntegerField(db_column='GoldStandard', blank=True, null=True)
@@ -217,11 +205,8 @@ class Drawbacktype(models.Model):
 
 class Drawback(models.Model):
     drawback_id = models.AutoField(db_column='DrawBack_id', primary_key=True, serialize=True)
-    #intervention = models.ForeignKey('Intervention', models.DO_NOTHING, db_column='Intervention_id')
-    #diagnose = models.ForeignKey(Diagnostictest, models.DO_NOTHING, db_column='Diagnose_id')
     dbtitle = models.CharField(db_column='DBTitle', max_length=100, blank=True, null=True)
     dbdesc = models.TextField(db_column='DBDesc', blank=True, null=True)
-    #project = models.ForeignKey(Project, models.DO_NOTHING, db_column='Project_id')
     dbt = models.ForeignKey(Drawbacktype, models.DO_NOTHING, db_column='DBT_id', blank=True, null=True)
     def __str__(self):
         return self.dbtitle
@@ -240,95 +225,69 @@ class DiagnoseDrawback(models.Model):
     class Meta:
         db_table = 'diagnose_drawback'
 
+# class Drugage(models.Model):
+    # da_id = models.AutoField(primary_key=True, serialize=True)
+    # drag_id = models.BigIntegerField(db_column='DrAg_id')
+    # drug = models.ForeignKey(Drug, models.DO_NOTHING, db_column='Drug_id', blank=True, null=True)
+    # formulation = models.TextField(db_column='Formulation', blank=True, null=True)
+    # species = models.TextField(db_column='Species', blank=True, null=True)
+    # lifespanc = models.TextField(db_column='LifespanC', blank=True, null=True)
+    # maxlifspan = models.TextField(db_column='MaxLifspan', blank=True, null=True)
+    # strain = models.TextField(db_column='Strain', blank=True, null=True)
+    # dosage = models.TextField(db_column='Dosage', blank=True, null=True)
+    # significant = models.IntegerField(db_column='Significant', blank=True, null=True)
+    # reference = models.TextField(db_column='Reference', blank=True, null=True)
 
-class Drug(models.Model):
-    drug_id = models.AutoField(db_column='Drug_id', primary_key=True, serialize=True)
-    drugname = models.TextField(db_column='DrugName', blank=True, null=True)
-    genericname = models.TextField(db_column='GenericName', blank=True, null=True)
-    drugdesc = models.TextField(db_column='DrugDesc', blank=True, null=True)
-    drugtype = models.IntegerField(db_column='DrugType', blank=True, null=True)
-
-    class Meta:
-        db_table = 'drug'
-
-
-class DrugNp(models.Model):
-    dnp_id = models.AutoField(primary_key=True, serialize=True)
-    np = models.ForeignKey('Nanoparticle', models.DO_NOTHING, db_column='NP_id')
-    drug = models.ForeignKey(Drug, models.DO_NOTHING, db_column='Drug_id')
-
-    class Meta:
-        db_table = 'drug_np'
-
-
-class Drugage(models.Model):
-    da_id = models.AutoField(primary_key=True, serialize=True)
-    drag_id = models.BigIntegerField(db_column='DrAg_id')
-    drug = models.ForeignKey(Drug, models.DO_NOTHING, db_column='Drug_id', blank=True, null=True)
-    formulation = models.TextField(db_column='Formulation', blank=True, null=True)
-    species = models.TextField(db_column='Species', blank=True, null=True)
-    lifespanc = models.TextField(db_column='LifespanC', blank=True, null=True)
-    maxlifspan = models.TextField(db_column='MaxLifspan', blank=True, null=True)
-    strain = models.TextField(db_column='Strain', blank=True, null=True)
-    dosage = models.TextField(db_column='Dosage', blank=True, null=True)
-    significant = models.IntegerField(db_column='Significant', blank=True, null=True)
-    reference = models.TextField(db_column='Reference', blank=True, null=True)
-
-    class Meta:
-        db_table = 'drugage'
+    # class Meta:
+        # db_table = 'drugage'
 
 
 class Drugbank(models.Model):
     dbd_id = models.AutoField(primary_key=True, serialize=True)
-    drba_id = models.BigIntegerField(db_column='DrBa_id')
-    drug = models.ForeignKey(Drug, models.DO_NOTHING, db_column='Drug_id', blank=True, null=True)
+    dbentry = models.TextField(db_column='dbentry', blank=True, null=True)
 
     class Meta:
         db_table = 'drugbank'
 
 
-# class DtypeDrawback(models.Model):
-    # dtdb_id = models.AutoField(primary_key=True, serialize=True)
-    # drawback = models.ForeignKey(Drawback, models.DO_NOTHING, db_column='DrawBack_id')
-    # dbt = models.ForeignKey(Drawbacktype, models.DO_NOTHING, db_column='DBT_id')
-
-    # class Meta:
-        # db_table = 'dtype_drawback'
-
-
-class Dye(models.Model):
-    dye_id = models.AutoField(db_column='Dye_id', primary_key=True, serialize=True)
-    dyetitle = models.TextField(db_column='DyeTitle', blank=True, null=True)
-    dyedesc = models.TextField(db_column='DyeDesc', blank=True, null=True)
-
-    class Meta:
-        db_table = 'dye'
-
-
-class DyeNp(models.Model):
-    dnp_id = models.AutoField(primary_key=True, serialize=True)
-    np = models.ForeignKey('Nanoparticle', models.DO_NOTHING, db_column='NP_id')
-    dye = models.ForeignKey(Dye, models.DO_NOTHING, db_column='Dye_id')
-
-    class Meta:
-        db_table = 'dye_np'
-
 class Edge(models.Model):
+    EDGESHAPE_CHOICES = [
+        (1, 'Causal Sequence of Events or Enhancement'),
+        (2, 'Very Important Pathway'),
+        (3, 'Movement, Transport, or Flow of things'),
+    ]
+    COLOR_CHOICES = [
+        (1, 'Blue: Genetics, Nucleus, Endoplasmic Reticulum'),
+        (2, 'Light Brown (Dark Yellow): Cytoplasmic molecules'),
+        (3, 'Light Blue (Cyan): Mitochondria'),
+        (4, 'Brown: Extracellular Substances & Structures'),
+        (5, 'Pink (Magenta): Controlled Degradation & Turnover'),
+        (6, 'Green: Beneficial process or intervention'),
+        (7, 'Purple (Violet): Signaling Pathway'),
+        (8, 'Red: Damaging Substance or Process'),
+        (9, 'Black: Senescence Physiology'),
+        (10, 'Orange'),
+        (11, 'Yellow'),
+    ]
+    EDGETYPE_CHOICES = [
+        (1, 'Enhancement of Pathway or Process'),
+        (2, 'Beneficial Inhibition of Pathway or Process'),
+        (3, 'Harmful Inhibition of Pathway or Process'),
+        (4, 'Inhibition of Pathway or Process, benefit or harm depends on situation'),
+    ]
     edge_id = models.AutoField(db_column='Edge_id', primary_key=True, serialize=True)
     begin = models.ForeignKey('Node', models.DO_NOTHING, db_column='Begin_id')
     end = models.ForeignKey('Node', models.DO_NOTHING, db_column='End_id', related_name='edge_end_set')
-    edgeshape = models.IntegerField(db_column='EdgeShape', blank=True, null=True)
-    # 1- Causal Sequence of Events or Enhancement
-    # 2- Very Important Pathway
-    # 3- Movement, Transport, or Flow of things
-    color = models.IntegerField(db_column='Color', blank=True, null=True)
-    # Color integer codes are the same as in Node
+    edgeshape = models.IntegerField(db_column='EdgeShape', choices=EDGESHAPE_CHOICES, blank=True, null=True)
+    color = models.IntegerField(db_column='Color', choices=COLOR_CHOICES, blank=True, null=True)
     edgetype = models.IntegerField(db_column='EdgeType', blank=True, null=True)
-    # 0- Enhancement of Pathway or Process
-    # 1- Beneficial Inhibition of Pathway or Process
-    # 2- Harmful Inhibition of Pathway or Process
-    # 3- Inhibition of Pathway or Process, benefit or harm depends on situation
     edgedesc = models.TextField(db_column='EdgeDesc', blank=True, null=True)
+    beginrefnum = models.CharField(max_length=3, blank=True, null=True)
+    endrefnum = models.CharField(max_length=3, blank=True, null=True)
+    edgefunction = models.CharField(db_column='edgefunction', max_length=254, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.begin.ref_num} - {self.end.ref_num}"
 
     class Meta:
         db_table = 'edge'
@@ -360,21 +319,21 @@ class Education(models.Model):
 
 
 class Externalfactor(models.Model):
-    ef_id = models.AutoField(db_column='EF_id', primary_key=True, serialize=True)
-    eftype = models.IntegerField(db_column='EFType', blank=True, null=True)
-    efdesc = models.TextField(db_column='EFDesc', blank=True, null=True)
+    ef_id = models.AutoField(db_column='ef_id', primary_key=True, serialize=True)
+    eftype = models.IntegerField(db_column='eftype', blank=True, null=True)
+    efdesc = models.TextField(db_column='efdesc', blank=True, null=True)
 
     class Meta:
         db_table = 'externalfactor'
 
 
-class ExtfactNp(models.Model):
-    efnp_id = models.AutoField(primary_key=True, serialize=True)
-    np = models.ForeignKey('Nanoparticle', models.DO_NOTHING, db_column='NP_id')
-    ef = models.ForeignKey(Externalfactor, models.DO_NOTHING, db_column='EF_id')
+class extfactnpint(models.Model):
+    efnpint_id = models.AutoField(primary_key=True, serialize=True)
+    npi = models.ForeignKey('npint', models.DO_NOTHING, db_column='npi_id')
+    ef = models.ForeignKey(Externalfactor, models.DO_NOTHING, db_column='ef_id')
 
     class Meta:
-        db_table = 'extfact_np'
+        db_table = 'extfactnpint'
 
 
 class Facility(models.Model):
@@ -484,6 +443,15 @@ class Intellectualproperty(models.Model):
 
 
 class Intervention(models.Model):
+    INTOUTPUT_CHOICES = [
+        (1, 'Alleviation of Symptoms'),
+        (2, 'Help to live with disease'),
+        (3, 'Slow down the progress of disease'),
+        (4, 'Stop the progress of disease and have it under control'),
+        (5, 'Stop the progress of disease with no need for control'),
+        (6, 'Prevention'),
+        (7, 'Reverse the body, tissue, cell, or gene back to healthy condition'),
+    ]
     intervention_id = models.AutoField(db_column='Intervention_id', primary_key=True, serialize=True)
     interventiontitle = models.CharField(db_column='InterventionTitle', max_length=100, blank=True, null=True)
     interventiondesc = models.TextField(db_column='InterventionDesc', blank=True, null=True)
@@ -491,14 +459,7 @@ class Intervention(models.Model):
     processcosts = models.FloatField(db_column='ProcessCosts', blank=True, null=True)
     costeffectiveness = models.IntegerField(db_column='CostEffectiveness', blank=True, null=True)
     compare_factor = models.FloatField(db_column='Compare_Factor', blank=True, null=True)
-    intoutput = models.IntegerField(db_column='IntOutput', blank=True, null=True)
-    # 1- Alleviation of Symptoms
-    # 2- Slow down
-    # 3- Stop progress
-    # 4- Cure and control
-    # 5- Rejuvenation
-    # 6- Prevention
-    # 7- Life Style
+    intoutput = models.IntegerField(db_column='IntOutput', choices=INTOUTPUT_CHOICES, blank=True, null=True)
     comb_n = models.ForeignKey('self', models.DO_NOTHING, db_column='Comb_N_id', blank=True, null=True)
     ichi = models.CharField(db_column='ICHI', max_length=10, blank=True, null=True)  # International Classification of Health Interventions
     def __str__(self):
@@ -573,15 +534,17 @@ class InterventionTarget(models.Model):
 
 
 class interventionstep(models.Model):
+    CONDITION_CHOICES = [
+        (1, 'Not Started'),
+        (2, 'Ongoing'),
+        (3, 'On Hold'),
+        (4, 'Stopped'),
+        (5, 'Done'),
+    ]
     is_id = models.AutoField(primary_key=True, serialize=True)
     intervention = models.ForeignKey('Intervention', on_delete=models.CASCADE, db_column='Intervention_id')
     step = models.ForeignKey('Ddstep', on_delete=models.CASCADE, db_column='Step_id')
-    condition = models.IntegerField(db_column='condition', blank=True, null=True)
-    # 0- Not Started
-    # 1- Ongoing
-    # 2- On Hold
-    # 3- Stopped
-    # 4- Done
+    condition = models.IntegerField(db_column='condition', choices=CONDITION_CHOICES, blank=True, null=True)
     conddesc = models.TextField(db_column='conddesc', blank=True, null=True)
     def __str__(self):
         return f"{self.intervention.interventiontitle} - {self.step.ddstitle}"
@@ -737,25 +700,6 @@ class Keyword(models.Model):
         db_table = 'keyword'
 
 
-class Ligandtype(models.Model):
-    lt_id = models.AutoField(db_column='LT_id', primary_key=True, serialize=True)
-    lttitle = models.TextField(db_column='LTTitle', blank=True, null=True)
-    ltdesc = models.TextField(db_column='LTDesc', blank=True, null=True)
-
-    class Meta:
-        db_table = 'ligandtype'
-#        db_table_comment = 'Peptide chain\nAntibody\nChemical\n...'
-
-
-class Linker(models.Model):
-    linker_id = models.AutoField(db_column='Linker_id', primary_key=True, serialize=True)
-    linkertitle = models.TextField(db_column='LinkerTitle', blank=True, null=True)
-    linkerdesc = models.TextField(db_column='LinkerDesc')
-
-    class Meta:
-        db_table = 'linker'
-
-
 class Literature(models.Model):
     lit_id = models.AutoField(db_column='Lit_id', primary_key=True, serialize=True)
     doi = models.CharField(db_column='DOI', max_length=50, blank=True, null=True)
@@ -831,73 +775,162 @@ class Medicalrecord(models.Model):
         db_table = 'medicalrecord'
 
 
-class Nanocarrier(models.Model):
-    nc_id = models.AutoField(db_column='NC_id', primary_key=True, serialize=True)
-    nctitle = models.TextField(db_column='NCTitle', blank=True, null=True)
-    ncdesc = models.TextField(db_column='NCDesc', blank=True, null=True)
-
-    class Meta:
-        db_table = 'nanocarrier'
-
-
-class Nanoparticle(models.Model):
-    np_id = models.AutoField(db_column='NP_id', primary_key=True, serialize=True)
-    nptitle = models.TextField(db_column='NPTitle', blank=True, null=True)
-    npdesc = models.TextField(db_column='NPDesc', blank=True, null=True)
-    nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
-
-    nc = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
-    tl = models.ForeignKey('Targetingligand', models.DO_NOTHING, db_column='TL_id', blank=True, null=True)
-    agent = models.ForeignKey(Cellenteragent, models.DO_NOTHING, db_column='Agent_id', blank=True, null=True)
-    linker = models.ForeignKey(Linker, models.DO_NOTHING, db_column='Linker_id', blank=True, null=True)
-    linkerdesc = models.TextField(db_column='LinkerDesc', blank=True, null=True)
-    shape = models.TextField(db_column='Shape', blank=True, null=True)
-    dimx = models.DecimalField(db_column='Dimx', max_digits=4, decimal_places=0, blank=True, null=True)
-    dimy = models.DecimalField(db_column='Dimy', max_digits=4, decimal_places=0, blank=True, null=True)
-    dimz = models.DecimalField(db_column='Dimz', max_digits=4, decimal_places=0, blank=True, null=True)
-    echarge = models.DecimalField(db_column='ECharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    ecdist = models.TextField(db_column='ECDist', blank=True, null=True)
-    hydrophobicity = models.TextField(db_column='Hydrophobicity', blank=True, null=True)
-    immuneresist = models.TextField(db_column='ImmuneResist', blank=True, null=True)
-    specificity = models.DecimalField(db_column='Specificity', max_digits=6, decimal_places=2, blank=True, null=True)
-    efficiency = models.DecimalField(db_column='Efficiency', max_digits=8, decimal_places=0, blank=True, null=True)
-    effectspeed = models.TextField(db_column='EffectSpeed', blank=True, null=True)
+class nanoparticle(models.Model):
+    HYDROPHOBICITY_METHOD_CHOICES = [
+        (1, 'Contact Angle Measurement'),
+        (2, 'Partition Coefficient (Log P)'),
+        (3, 'Hydrophobic Interaction Chromatography (HIC)'),
+        (4, 'Hydropathy Index (Kyte-Doolittle Scale'),
+        (5, 'Water Solubility'),
+    ]
+    SHAPE_CHOICES = [
+        (1, 'Spherical'),
+        (2, 'Rod-shaped (nanorods)'),
+        (3, 'Cubic'),
+        (4, 'Platelet-shaped (nanosheets)'),
+        (5, 'Tubular (nanotubes)'),
+        (6, 'Star-shaped (nanostars)'),
+        (7, 'Branched (nanobranches)'),
+        (8, 'Flower-shaped (nanoflowers)'),
+        (9, 'Hollow (nanocages, nanospheres)'),
+    ]
+    IMMUNRESIST_CHOICES = [
+        (1, 'Phagocytosis Assays'),
+        (2, 'Complement Activation Assays'),
+        (3, 'Cytokine Release Assays'),
+        (4, 'Surface Protein Adsorption Studies'),
+        (5, 'In Vivo Biodistribution Studies'),
+    ]
+    OFFTARGET_CHOICES = [
+        (1, 'Flow Cytometry'),
+        (2, 'Imaging Techniques'),
+        (3, 'Mass Spectrometry'),
+        (4, 'Bio-distribution Studies'),
+        (5, 'Proteomics and Genomics Approaches'),
+    ]
+    np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
+    nptitle = models.CharField(db_column='nptitle', max_length=100, blank=True, null=True)
+    npdesc = models.TextField(db_column='npdesc', blank=True, null=True)
+    shape = models.IntegerField(db_column='shape', choices=SHAPE_CHOICES, blank=True, null=True)
+    mindimx = models.DecimalField(db_column='mindimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    mindimy = models.DecimalField(db_column='mindimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    mindimz = models.DecimalField(db_column='mindimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimx = models.DecimalField(db_column='maxdimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimy = models.DecimalField(db_column='maxdimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimz = models.DecimalField(db_column='maxdimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    minnegcharge = models.DecimalField(db_column='minnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    maxnegcharge = models.DecimalField(db_column='maxnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    minposcharge = models.DecimalField(db_column='minposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    maxposcharge = models.DecimalField(db_column='maxposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    hydrophobicity = models.FloatField(db_column='hydrophobicity', blank=True, null=True)
+    hydrophmethod = models.IntegerField(db_column='hydrophmethod', choices=HYDROPHOBICITY_METHOD_CHOICES, blank=True, null=True)
+    immuneresistance = models.FloatField(db_column='immuneresistance', blank=True, null=True)
+    immunmethod = models.IntegerField(db_column='immunmethod', choices=IMMUNRESIST_CHOICES, blank=True, null=True)
+    targetingefficiency = models.DecimalField(db_column='targetingefficiency', max_digits=6, decimal_places=2, blank=True, null=True)
+    cellularuptake = models.DecimalField(db_column='cellularuptake', max_digits=6, decimal_places=2, blank=True, null=True)
+    immunogenicity = models.TextField(db_column='immunogenicity', blank=True, null=True)
+    offtarget = models.FloatField(db_column='offtarget', blank=True, null=True)
+    offtargetmethod = models.IntegerField(db_column='offtargetmethod', choices=OFFTARGET_CHOICES, blank=True, null=True)
     halflife = models.DecimalField(db_column='HalfLife', max_digits=3, decimal_places=0, blank=True, null=True)
-    excretion = models.TextField(db_column='Excretion', blank=True, null=True)
+    circulationrate = models.DecimalField(db_column='circulationrate', max_digits=3, decimal_places=0, blank=True, null=True)
+    clearancerate = models.DecimalField(db_column='clearancerate', max_digits=3, decimal_places=0, blank=True, null=True)
     tracked = models.IntegerField(db_column='Tracked', blank=True, null=True)
     peg = models.TextField(db_column='PEG', blank=True, null=True)
+    npreq = models.ForeignKey('self', models.DO_NOTHING, db_column='npreq_id', blank=True, null=True)
+    
+
+    #nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
+
+    # nc = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
+    # tl = models.ForeignKey('Targetingligand', models.DO_NOTHING, db_column='TL_id', blank=True, null=True)
+    # agent = models.ForeignKey(Cellenteragent, models.DO_NOTHING, db_column='Agent_id', blank=True, null=True)
+    # linker = models.ForeignKey(Linker, models.DO_NOTHING, db_column='Linker_id', blank=True, null=True)
+    # linkerdesc = models.TextField(db_column='LinkerDesc', blank=True, null=True)
+    # shape = models.TextField(db_column='Shape', blank=True, null=True)
+    # dimx = models.DecimalField(db_column='Dimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    # dimy = models.DecimalField(db_column='Dimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    # dimz = models.DecimalField(db_column='Dimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    # echarge = models.DecimalField(db_column='ECharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    # ecdist = models.TextField(db_column='ECDist', blank=True, null=True)
+    # immuneresist = models.TextField(db_column='ImmuneResist', blank=True, null=True)
+    # specificity = models.DecimalField(db_column='Specificity', max_digits=6, decimal_places=2, blank=True, null=True)
+    # efficiency = models.DecimalField(db_column='Efficiency', max_digits=8, decimal_places=0, blank=True, null=True)
+    # effectspeed = models.TextField(db_column='EffectSpeed', blank=True, null=True)
+    # excretion = models.TextField(db_column='Excretion', blank=True, null=True)
 
     class Meta:
         db_table = 'nanoparticle'
 
+class comptype(models.Model):
+    ct_id = models.AutoField(db_column='ct_id', primary_key=True, serialize=True)
+    ctypetitle = models.CharField(db_column='ctypetitle', max_length=50, blank=True, null=True)
+    ctypedesc = models.TextField(db_column='ctypedesc', blank=True, null=True)
+
+    class Meta:
+        db_table = 'comptype'
+
+class component(models.Model):
+    comp_id = models.AutoField(db_column='comp_id', primary_key=True, serialize=True)
+    comptitle = models.CharField(db_column='comptitle', max_length=100, blank=True, null=True)
+    ct = models.ForeignKey(comptype, models.DO_NOTHING, db_column='ct_id')
+    compdesc = models.TextField(db_column='compdesc', blank=True, null=True)
+    dbd = models.ForeignKey(Drugbank, models.DO_NOTHING, db_column='dbd_id')
+
+    class Meta:
+        db_table = 'component'
+
+
+
 class Node(models.Model):
-    node_id = models.IntegerField(db_column='Node_id', primary_key=True, serialize=True)
+    NODESHAPE_CHOICES = [
+        (1, '1- Rectangles - Things: Quantities or Pools of Molecules, Cells, Substances, etc.  Or Process, Action, Change, or Reaction'),
+        (2, 'Gradual Accumulation or Increase in Quantity or Mass with Aging'),
+        (3, 'Gradual Loss or Decrease in Quantity or Mass with Aging'),
+        (4, 'Environmental Factors'),
+        (5, 'External Intervention'),
+        (6, 'Physiological Condition (Senescence)'),
+        (7, 'Container'),
+    ]
+    NODECOLOR_CHOICES = [
+        (1, 'Blue: Genetics, Nucleus, Endoplasmic Reticulum'),
+        (2, 'Light Brown (Dark Yellow): Cytoplasmic molecules'),
+        (3, 'Light Blue (Cyan): Mitochondria'),
+        (4, 'Brown: Extracellular Substances & Structures'),
+        (5, 'Pink (Magenta): Controlled Degradation & Turnover'),
+        (6, 'Green: Beneficial process or intervention'),
+        (7, 'Purple (Violet): Signaling Pathway'),
+        (8, 'Red: Damaging Substance or Process'),
+        (9, 'Black: Senescence Physiology'),
+        (10, 'Orange'),
+        (11, 'Yellow'),
+    ]
+    CONTAINER_CHOICES = [
+        (1, 'Tissue, Organ, & Whole Body Physiology & Pathology'),
+        (2, 'Whole Cells or Tissues'),
+        (3, 'Extracellular Spaces: ECM, Blood Plasma, Lymph, CSF'),
+        (4, 'Cytosolic Compartment of the Cell'),
+        (5, 'Lysosome – Hydrolysis - for recycling. Accumulation in nonmitotic cells'),
+        (6, 'Macroautophagy'),
+        (7, 'Mitochondria in nonmitotic cell'),
+        (8, 'Cell Nucleus – Genetics'),
+        (9, 'Endoplasmic Reticulum'),
+        (10, 'Cell Membrane'),
+        (11, 'Secretion'),
+        (12, 'Environmental Factors'),
+        (13, 'Endoplasmic Reticulum Membrane'),
+        (14, 'Nucleus Membrane'),
+        (15, 'Mitochondria Membrane'),
+        (16, 'Lysosome Membrane'),
+        (17, 'Intervention'),
+    ]
+    node_id = models.AutoField(db_column='Node_id', primary_key=True, serialize=True)
     ref_num = models.CharField(db_column='Ref_num', max_length=3, blank=True, null=True)
     nodecaption = models.CharField(db_column='NodeCaption', max_length=254, blank=True, null=True)
-    nodeshape = models.IntegerField(db_column='NodeShape', blank=True, null=True)
-    # 1- Rectangles - Things: Quantities or Pools of Molecules, Cells, Substances, etc.  Or Process, Action, Change, or Reaction  
-    # 2- Gradual Accumulation or Increase in Quantity or Mass with Aging  
-    # 3- Gradual Loss or Decrease in Quantity or Mass with Aging  
-    # 4- Environmental Factors  
-    # 5- External Intervention  
-    # 6- Physiological Condition (Senescence)  
-    # 7- Container   
-    dash = models.IntegerField(db_column='Dash', blank=True, null=True)
-    # 0- continuous
-    # 1- dashed
-    nodecolor = models.IntegerField(db_column='NodeColor', blank=True, null=True)
-    # 1- Blue: Genetics, Nucleus, Endoplasmic Reticulum
-    # 2- Light Brown (Dark Yellow): Cytoplasmic molecules
-    # 3- Light Blue (Cyan): Mitochondria
-    # 4- Brown: Extracellular Substances & Structures
-    # 5- Pink (Magenta): Controlled Degradation & Turnover
-    # 6- Green: Beneficial process or intervention
-    # 7- Purple (Violet): Signaling Pathway
-    # 8- Red: Damaging Substance or Process
-    # 9- Black: Senescence Physiology
-    # 10- Orange
-    # 11- Yellow
-    container = models.IntegerField(db_column='Container', blank=True, null=True)
+    agingfunction = models.CharField(db_column='agingfunction', max_length=254, blank=True, null=True)
+    nodeshape = models.IntegerField(db_column='NodeShape', choices=NODESHAPE_CHOICES, blank=True, null=True)
+    dashed = models.BooleanField(default=False)
+    nodecolor = models.IntegerField(db_column='NodeColor', choices=NODECOLOR_CHOICES, blank=True, null=True)
+    container = models.IntegerField(db_column='Container', choices=CONTAINER_CHOICES, blank=True, null=True)
     # 1- Tissue, Organ, & Whole Body Physiology & Pathology - Node_id=313 - Ref_num=900
     # 2- Whole Cells or Tissues - Node_id=314 - Ref_num=801
     # 3- Extracellular Spaces: ECM, Blood Plasma, Lymph, CSF - Node_id=312 - Ref_num=200
@@ -916,10 +949,11 @@ class Node(models.Model):
     # 16- Lysosome Membrane - Node_id=326 - Ref_num=813
     # 17- Intervention - Node_id=327 - Ref_num=814
     nodedesc = models.TextField(db_column='NodeDesc', blank=True, null=True)
-    icd11 = models.CharField(db_column='ICD11', max_length=10, blank=True, null=True) # 
-    severity_q = models.DecimalField(db_column='Severity_Q', max_digits=3, decimal_places=0, blank=True, null=True)
-    frequency_q = models.DecimalField(db_column='Frequency_Q', max_digits=3, decimal_places=0, blank=True, null=True)
-    speed_q = models.DecimalField(db_column='Speed_Q', max_digits=3, decimal_places=0, blank=True, null=True)
+    vmortality = models.DecimalField(db_column='vmortality', max_digits=3, decimal_places=0, blank=True, null=True)
+    vspeed = models.DecimalField(db_column='vspeed', max_digits=3, decimal_places=0, blank=True, null=True) # Value of speed of progress
+    vfrequency = models.DecimalField(db_column='vfrequency', max_digits=3, decimal_places=0, blank=True, null=True) # Value of frequency of occurrence
+    vimpact = models.DecimalField(db_column='vimpact', max_digits=3, decimal_places=0, blank=True, null=True) # Value of impact on quality of life
+    ventropy = models.DecimalField(db_column='ventropy', max_digits=3, decimal_places=0, blank=True, null=True) # Value of the increase in entropy or impair of homeostasis
     adsens = models.DecimalField(db_column='adsens', max_digits=6, decimal_places=2, blank=True, null=True) # Acceptable Diagnosis Sensitivity
     adspec = models.DecimalField(db_column='adspec', max_digits=6, decimal_places=2, blank=True, null=True) # Acceptable Diagnosis Specificity
     parent_n = models.ForeignKey('self', models.DO_NOTHING, db_column='Parent_n_id', blank=True, null=True, related_name='children')
@@ -930,13 +964,34 @@ class Node(models.Model):
     cyrend = models.IntegerField(db_column='cyrend', blank=True, null=True)
     posnx = models.DecimalField(db_column='posnx', max_digits=9, decimal_places=4, blank=True, null=True)
     posny = models.DecimalField(db_column='posny', max_digits=9, decimal_places=4, blank=True, null=True)
-    #hallmark = models.IntegerField(db_column='Hallmark', blank=True, null=True)
     def __str__(self):
         return f"{self.ref_num} - {self.nodecaption}"
 
     class Meta:
         db_table = 'node'
         ordering = ['ref_num']
+
+
+class normweight(models.Model):
+    PURPOSE_CHOICES = [
+        (1, 'Academic Research Environment'),
+        (2, 'Business Environment'),
+        (3, 'Healthcare Environment'),
+    ]
+    nw_id = models.AutoField(db_column='nw_id', primary_key=True, serialize=True)
+    node = models.ForeignKey(Node, models.DO_NOTHING, db_column='Node_id')
+    purpose = models.IntegerField(db_column='purpose', choices=NODESHAPE_CHOICES, blank=True, null=True)
+    wmortality = models.DecimalField(db_column='wmortality', max_digits=3, decimal_places=0, blank=True, null=True)
+    wspeed = models.DecimalField(db_column='wspeed', max_digits=3, decimal_places=0, blank=True, null=True) # Value of speed of progress
+    wfrequency = models.DecimalField(db_column='wfrequency', max_digits=3, decimal_places=0, blank=True, null=True) # Value of frequency of occurrence
+    wimpact = models.DecimalField(db_column='wimpact', max_digits=3, decimal_places=0, blank=True, null=True) # Value of impact on quality of life
+    wentropy = models.DecimalField(db_column='wentropy', max_digits=3, decimal_places=0, blank=True, null=True) # Value of the increase in entropy or impair of homeostasis
+    def __str__(self):
+        return f"{self.node.ref_num} - {self.purpose}"
+
+    class Meta:
+        db_table = 'normweight'
+        ordering = ['node']
 
 
 class NodeDiagnosis(models.Model):
@@ -974,7 +1029,7 @@ class edgecelltype(models.Model):
     edge = models.ForeignKey(Edge, on_delete=models.CASCADE, db_column='edge_id', blank=True, null=True)
     ct = models.ForeignKey(celltype, on_delete=models.CASCADE, db_column='ct_id', blank=True, null=True)
     #def __str__(self):
-    #    return f"{self.edge.edge.ref_num} - {self.celltype.cttitle}"
+    #    return f"{self.edge.ref_num} - {self.celltype.cttitle}"
 
     class Meta:
         db_table = 'edgecelltype'
@@ -988,7 +1043,7 @@ class tissue(models.Model):
 
         db_table = 'tissue'
 
-class nodenodetissue(models.Model):
+class nodetissue(models.Model):
     nt_id = models.AutoField(db_column='nt_id', primary_key=True, serialize=True)
     node = models.ForeignKey(Node, on_delete=models.CASCADE, db_column='node_id', blank=True, null=True)
     tissue = models.ForeignKey(tissue, on_delete=models.CASCADE, db_column='tissue_id', blank=True, null=True)
@@ -1003,10 +1058,30 @@ class edgetissue(models.Model):
     edge = models.ForeignKey(Edge, on_delete=models.CASCADE, db_column='edge_id', blank=True, null=True)
     tissue = models.ForeignKey(tissue, on_delete=models.CASCADE, db_column='tissue_id', blank=True, null=True)
     #def __str__(self):
-    #    return f"{self.edge.edge.ref_num} - {self.celltype.cttitle}"
+    #    return f"{self.edge.ref_num} - {self.celltype.cttitle}"
 
     class Meta:
         db_table = 'edgetissue'
+
+class icd11(models.Model):
+    icd11_id = models.AutoField(db_column='icd11_id', primary_key=True, serialize=True)
+    icd11code = models.CharField(db_column='icd11code', max_length=20, blank=True, null=True)
+    icd11title = models.CharField(db_column='icd11title', max_length=254, blank=True, null=True)
+    def __str__(self):
+        return f"{self.icd11code} - {self.icd11title}"
+    class Meta:
+
+        db_table = 'icd11'
+
+class nodeicd11(models.Model):
+    ni_id = models.AutoField(db_column='ni_id', primary_key=True, serialize=True)
+    node = models.ForeignKey(Node, on_delete=models.CASCADE, db_column='node_id', blank=True, null=True)
+    icd11 = models.ForeignKey(icd11, on_delete=models.CASCADE, db_column='icd11_id', blank=True, null=True)
+    def __str__(self):
+        return f"{self.node.ref_num} - {self.icd11.icd11code} - {self.icd11.icd11title}"
+
+    class Meta:
+        db_table = 'nodeicd11'
 
 class protein(models.Model):
     protein_id = models.AutoField(db_column='protein_id', primary_key=True, serialize=True)
@@ -1034,7 +1109,7 @@ class edgeprotein(models.Model):
     edge = models.ForeignKey(Edge, on_delete=models.CASCADE, db_column='edge_id', blank=True, null=True)
     protein = models.ForeignKey(protein, on_delete=models.CASCADE, db_column='protein_id', blank=True, null=True)
     #def __str__(self):
-    #    return f"{self.edge.edge.ref_num} - {self.celltype.cttitle}"
+    #    return f"{self.edge.ref_num} - {self.celltype.cttitle}"
 
     class Meta:
         db_table = 'edgeprotein'
@@ -1098,28 +1173,27 @@ class geneinteraction(models.Model):
 
 
 class SAE(models.Model):
+    SAE_CHOICES = [
+        (1, 'Results in Death'),
+        (2, 'Is life-threatening'),
+        (3, 'Requires Inpatient Hospitalization or Prolongation of Existing Hospitalization'),
+        (4, 'Results in Persistent or Significant Disability/Incapacity'),
+        (5, 'Impacts Mental Health'),
+        (6, 'Causes Congenital Anomaly/Birth Defect'),
+        (7, 'Requires Medical Intervention but Not Hospitalization'),
+        (8, 'Causes Temporary and Annoying Effects'),
+        # Add more levels as needed
+    ]
     ae_id = models.AutoField(db_column='AE_id', primary_key=True, serialize=True)
     aetitle = models.CharField(db_column='AETitle', max_length=40, blank=True, null=True)
     aedesc = models.TextField(db_column='AEDesc', blank=True, null=True)
-    sae = models.IntegerField(db_column='SAE', blank=True, null=True, db_comment='Serious Adverse Event')
-    SAE_LEVELS = {
-        1: 'Results in Death',
-        2: 'Is life-threatening',
-        3: 'Requires Inpatient Hospitalization or Prolongation of Existing Hospitalization',
-        4: 'Results in Persistent or Significant Disability/Incapacity',
-        5: 'Impacts Mental Health',
-        6: 'Causes Congenital Anomaly/Birth Defect',
-        7: 'Requires Medical Intervention but Not Hospitalization',
-        8: 'Causes Temporary and Annoying Effects',
-        # Add more levels as needed
-    }
+    sae = models.IntegerField(db_column='SAE', choices=SAE_CHOICES, blank=True, null=True, db_comment='Serious Adverse Event')
     def __str__(self):
         sae_category = self.SAE_LEVELS.get(self.sae, '')
         return f"{self.aetitle} - {sae_category}"
 
     class Meta:
         db_table = 'sae'
-
 
 class DoseUnit(models.Model):
     unit_id = models.AutoField(db_column='unit_id', primary_key=True, serialize=True)
@@ -1146,17 +1220,6 @@ class InterventionSAE(models.Model):
 
     class Meta:
         db_table = 'intervention_sae'
-
-
-# class SAELiterature(models.Model):
-    # sael_id = models.AutoField(primary_key=True, serialize=True)
-    # ae = models.ForeignKey('SAE', models.DO_NOTHING, db_column='AE_id')
-    # lit = models.ForeignKey('Literature', models.DO_NOTHING, db_column='Lit_id')
-    # def __str__(self):
-        # return  f"{self.sae.sae} - self.lit.littitle"
-
-    # class Meta:
-        # db_table = 'sae_literature'
 
 
 class ISAELiterature(models.Model):
@@ -1197,7 +1260,6 @@ class NodeIntervention(models.Model):
     ni_id = models.AutoField(db_column='NI_id', primary_key=True, serialize=True)
     node = models.ForeignKey(Node, on_delete=models.CASCADE, db_column='Node_id', blank=True, null=True)
     intervention = models.ForeignKey(Intervention, on_delete=models.CASCADE, db_column='Intervention_id', blank=True, null=True)
-#    ae = models.ForeignKey(SAE, models.DO_NOTHING, db_column='AE_id', blank=True, null=True)
     def __str__(self):
         return f"{self.node.ref_num} - {self.intervention.interventiontitle}"
 
@@ -1252,13 +1314,23 @@ class NodeTheory(models.Model):
     class Meta:
         db_table = 'node_theory'
 
-class NpInt(models.Model):
+
+class npint(models.Model):
     npi_id = models.AutoField(primary_key=True, serialize=True)
-    intervention = models.ForeignKey(Intervention, models.DO_NOTHING, db_column='Intervention_id')
-    np = models.ForeignKey(Nanoparticle, models.DO_NOTHING, db_column='NP_id')
+    intervention = models.ForeignKey(Intervention, models.DO_NOTHING, db_column='intervention_id')
+    researchnp = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='researchnp_id', null=True, blank=True)
+    manufacturenp = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='manufacturenp_id', related_name='npint_manufacture_set', null=True, blank=True)
 
     class Meta:
-        db_table = 'np_int'
+        db_table = 'npint'
+
+class nplit(models.Model):
+    npl_id = models.AutoField(primary_key=True, serialize=True)
+    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='np_id')
+    lit = models.ForeignKey(Literature, models.DO_NOTHING, db_column='lit_id')
+
+    class Meta:
+        db_table = 'nplit'
 
 
 class OrgIp(models.Model):
@@ -1302,7 +1374,6 @@ class OrganizationCountry(models.Model):
     class Meta:
         db_table = 'organization_country'
 
-
 class OrganizationPerson(models.Model):
     op_id = models.AutoField(primary_key=True, serialize=True)
     person = models.ForeignKey('Person', models.DO_NOTHING, db_column='Person_id')
@@ -1310,16 +1381,6 @@ class OrganizationPerson(models.Model):
 
     class Meta:
         db_table = 'organization_person'
-
-class orgot(models.Model):
-    oot_id = models.AutoField(primary_key=True, serialize=True)
-    organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
-    ot = models.ForeignKey(Orgtype, models.DO_NOTHING, db_column='ot_id', blank=True, null=True)
-    def __str__(self):
-        return  f"{self.organization.orgtitle} - {self.ot.typetitle}"
-
-    class Meta:
-        db_table = 'ortot'
 
 class Orgtype(models.Model):
     ot_id = models.AutoField(db_column='OT_id', primary_key=True, serialize=True)
@@ -1331,6 +1392,16 @@ class Orgtype(models.Model):
         db_table = 'orgtype'
         db_table_comment = '1- Univerity\n2- Faculty - A department of University.\n'
 
+class orgot(models.Model):
+    oot_id = models.AutoField(primary_key=True, serialize=True)
+    organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
+    ot = models.ForeignKey(Orgtype, models.DO_NOTHING, db_column='ot_id', blank=True, null=True)
+    def __str__(self):
+        return  f"{self.organization.orgtitle} - {self.ot.typetitle}"
+
+    class Meta:
+        db_table = 'ortot'
+
 class otot(models.Model):
     otot_id = models.AutoField(db_column='otot_id', primary_key=True, serialize=True)
     orgtyperelation = models.CharField(db_column='orgtyperelation', max_length=50, blank=True, null=True)
@@ -1339,6 +1410,22 @@ class otot(models.Model):
 
     class Meta:
         db_table = 'otot'
+
+class service(models.Model):
+    serv_id = models.AutoField(db_column='serv_id', primary_key=True, serialize=True)
+    servtitle = models.CharField(db_column='servtitle', max_length=255, blank=True, null=True)
+    servdesc = models.TextField(db_column='servdesc', blank=True, null=True)
+
+    class Meta:
+        db_table = 'service'
+
+class servot(models.Model):
+    sot_id = models.AutoField(db_column='sot_id', primary_key=True, serialize=True)
+    serv_id = models.ForeignKey('service', models.DO_NOTHING, db_column='serv_id')
+    ot_id = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='ot_id')
+
+    class Meta:
+        db_table = 'servot'
 
 class benefittype(models.Model):
     bt_id = models.AutoField(db_column='bt_id', primary_key=True, serialize=True)
@@ -1475,31 +1562,7 @@ class Person(models.Model):
 
     class Meta:
         db_table = 'person'
-##########################################################################
-#########################  Temporarily added   ###########################
-##########################################################################
 
-# class Stakeholder(models.Model):
-    # sh_id = models.IntegerField(db_column='SH_id', primary_key=True)
-    # shrole = models.CharField(db_column='SHRole', max_length=255, blank=True, null=True)
-    # shroledesc = models.TextField(db_column='SHRoleDesc', blank=True, null=True)
-
-    # class Meta:
-        # managed = False
-        # db_table = 'stakeholder'
-
-       
-# class PersonStakeholder(models.Model):
-    # ps_id = models.IntegerField(db_column='ps_id', primary_key=True)
-    # sh = models.ForeignKey(Stakeholder, models.DO_NOTHING, db_column='SH_id') The composite primary key (SH_id, Person_id) found, that is not supported. The first column is selected.
-    # person = models.ForeignKey(Person, models.DO_NOTHING, db_column='Person_id')
-
-    # class Meta:
-        # managed = False
-        # db_table = 'person_stakeholder'
-        # #unique_together = (('sh', 'person'),)
-
-###########################################################################
 
 class PersonCountry(models.Model):
     pc_id = models.AutoField(primary_key=True, serialize=True)
@@ -1561,7 +1624,7 @@ class Pricelist(models.Model):
 
 class ProNp(models.Model):
     pnp_id = models.AutoField(primary_key=True, serialize=True)
-    np = models.ForeignKey(Nanoparticle, models.DO_NOTHING, db_column='NP_id')
+    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='NP_id')
     prot = models.ForeignKey('Protocol', models.DO_NOTHING, db_column='Prot_id')
 
     class Meta:
@@ -1569,22 +1632,28 @@ class ProNp(models.Model):
 
 
 class Project(models.Model):
+    PROJ_SOURCE_CHOICES = [
+        (1, 'The challenges currently underway to find interventions'),
+        (2, 'Initiated'),
+        (3, 'Running'),
+        (4, 'Hold'),
+        (5, 'Canceled'),
+        (6, 'Finished'),
+    ]
+    PROJ_STATUS_CHOICES = [
+        (1, 'Required'),
+        (2, 'Projects defined  to help intervention discovery and development processes leap one step forward'),
+        (3, 'Help the holistic approach'),
+        # Add more levels as needed
+    ]
     project_id = models.AutoField(db_column='Project_id', primary_key=True, serialize=True)
     projtitle = models.CharField(db_column='ProjTitle', max_length=255, blank=True, null=True)
     overallgoal = models.TextField(db_column='overallgoal', blank=True, null=True)
     keyobjectives = models.TextField(db_column='keyobjectives', blank=True, null=True)
-    projectsource = models.IntegerField(db_column='ProjectSource', blank=True, null=True)
-    # 1 = The challenges currently underway to find interventions for reverse-aging
-    # 2 = Projects defined  to help intervention discovery and development processes leap one step forward
+    projectsource = models.IntegerField(db_column='ProjectSource', choices=PROJ_SOURCE_CHOICES, blank=True, null=True)
     program = models.ForeignKey('self', models.DO_NOTHING, db_column='Program_id', blank=True, null=True)
     projdesc = models.TextField(db_column='ProjDesc', blank=True, null=True)
-    projstatus = models.IntegerField(db_column='ProjStatus', blank=True, null=True)
-    # 1 = Required
-    # 2 = Initiated
-    # 3 = Running
-    # 4 = Hold
-    # 5 = Canceled
-    # 6 = Finished
+    projstatus = models.IntegerField(db_column='ProjStatus', choices=PROJ_STATUS_CHOICES, blank=True, null=True)
     def __str__(self):
         return self.projtitle
 
@@ -1664,6 +1733,24 @@ class ProjectIntervention(models.Model):
 
     class Meta:
         db_table = 'project_intervention'
+
+class drawbackproject(models.Model):
+    DPRELATION_CHOICES = [
+        (1, 'Bottleneck - Drawback is slowing down the project'),
+        (2, 'Barrier - Drawback has hold the project'),
+        (3, 'Risk - Drawback is causing risk'),
+        (4, 'Expense: Drawback is raising the expenses'),
+        (5, 'Subject - Project is initiated to solve or alleviate the drawback problem'),
+    ]
+    dp_id = models.AutoField(primary_key=True, serialize=True)
+    drawback = models.ForeignKey(Drawback, models.DO_NOTHING, db_column='drawback_id', blank=True, null=True)
+    project = models.ForeignKey('Project', models.DO_NOTHING, db_column='Project_id', blank=True, null=True)
+    dprelation = models.IntegerField(db_column='dprelation', choices=DPRELATION_CHOICES, blank=True, null=True)
+    def __str__(self):
+        return  f"{self.project.projtitle} - {self.drawback.dbtitle}"
+
+    class Meta:
+        db_table = 'drawbackproject'
 
 class ProjectDiagnosis(models.Model):
     pd_id = models.AutoField(primary_key=True, serialize=True)
@@ -1823,12 +1910,10 @@ class StakeholderPers(models.Model):
     sp_id = models.AutoField(primary_key=True, serialize=True)
     person = models.ForeignKey(Person, models.DO_NOTHING, db_column='Person_id')
     project = models.ForeignKey(Project, models.DO_NOTHING, db_column='Project_id')
-    #role = models.ForeignKey(StakeholderRole, models.DO_NOTHING, db_column='Role_id')
 
     
     class Meta:
         db_table = 'stakeholderpers'
-        #db_table = 'person_stakeholder'
 
 class StrategyIntervention(models.Model):
     si_id = models.AutoField(primary_key=True, serialize=True)
@@ -1890,18 +1975,8 @@ class TargetArticle(models.Model):
         db_table = 'target_article'
 
 
-class Targetingligand(models.Model):
-    tl_id = models.AutoField(db_column='TL_id', primary_key=True, serialize=True)
-    lt = models.ForeignKey(Ligandtype, models.DO_NOTHING, db_column='LT_id', blank=True, null=True)
-    tltitle = models.TextField(db_column='TLTitle', blank=True, null=True)
-    tldesc = models.TextField(db_column='TLDesc', blank=True, null=True)
-
-    class Meta:
-        db_table = 'targetingligand'
-
 class Theory(models.Model):
     theory_id = models.AutoField(db_column='Theory_id', primary_key=True, serialize=True)
-    #theory_id = models.BigIntegerField(db_column='Theory_id', primary_key=True, serialize=True)
     theorytitle = models.CharField(db_column='TheoryTitle', max_length=40, blank=True, null=True)
     theorydesc = models.TextField(db_column='TheoryDesc', blank=True, null=True)
     parent_t = models.ForeignKey('self', models.DO_NOTHING, db_column='Parent_T_id', blank=True, null=True)
@@ -1920,7 +1995,7 @@ class TheoryLiterature(models.Model):
         db_table = 'theory_literature'
 
 
-class Unit(models.Model):
+class unit(models.Model):
     unit_id = models.AutoField(primary_key=True, serialize=True)
     unitname = models.CharField(db_column='UnitName', max_length=50, blank=True, null=True)
     abbreviation = models.CharField(db_column='Abbreviation', max_length=10, blank=True, null=True)
@@ -1929,6 +2004,15 @@ class Unit(models.Model):
 
         db_table = 'unit'
 
+class npcomponent(models.Model):
+    npc_id = models.AutoField(db_column='npc_id', primary_key=True, serialize=True)
+    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='np_id')
+    comp = models.ForeignKey(component, models.DO_NOTHING, db_column='comp_id')
+    amount = models.FloatField(db_column='amount', blank=True, null=True)
+    unit = models.ForeignKey(unit, models.DO_NOTHING, db_column='unit_id')
+
+    class Meta:
+        db_table = 'npcomponent'
 
 class Visit(models.Model):
     visit_id = models.AutoField(db_column='Visit_id', primary_key=True, serialize=True)

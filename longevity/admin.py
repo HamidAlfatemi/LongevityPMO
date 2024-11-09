@@ -99,7 +99,21 @@ from .models import nodegs
 admin.site.register(nodegs)
 from .models import concept
 admin.site.register(concept)
-# from .models import Node0
-# admin.site.register(Node0)
-# from .models import Edge0
-# admin.site.register(Edge0)
+from .models import normweight
+admin.site.register(normweight)
+from .models import icd11
+admin.site.register(icd11)
+from .models import nodeicd11
+admin.site.register(nodeicd11)
+from .models import tissue
+admin.site.register(tissue)
+from .models import nodetissue
+admin.site.register(nodetissue)
+from .models import edgetissue
+admin.site.register(edgetissue)
+from .models import celltype
+admin.site.register(celltype)
+from .models import nodecelltype
+admin.site.register(nodecelltype)
+from .models import edgecelltype
+admin.site.register(edgecelltype)

@@ -1,12 +1,11 @@
 import os
 import sys
-import django
 
-from django.db.models import F, IntegerField, Value
-from django.db.models.functions import Length, Greatest
-from django.db.models import Q
-from django.db.models.functions import Cast
-from django.db.models.fields import FloatField
+from django.db.models import F # , IntegerField, Value
+# from django.db.models.functions import Length, Greatest
+# from django.db.models import Q
+# from django.db.models.functions import Cast
+# from django.db.models.fields import FloatField
 
 
 # Assuming your project root directory is C:\lpmo, adjust it if needed.
@@ -16,12 +15,21 @@ sys.path.append(project_path)
 # Set the DJANGO_SETTINGS_MODULE environment variable
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lpmo.settings')
 
+import django
 # Initialize Django
 django.setup()
 
 # Import the Theory model after Django setup
-from longevity.models import Node # Theory
+# from longevity.models import Node # Theory
+from longevity.models import Node, Edge
 
+for edge in Edge.objects.all():
+    edge.beginrefnum = edge.begin.ref_num
+    edge.endrefnum = edge.end.ref_num
+    edge.save()
+    
+#Node.objects.filter(dash = 1).update(dashed = True)
+# Edge.objects.all().update(edgetype=F('edgetype') + 1)
 # objects_with_ampersand = Node.objects.filter(nodecaption__contains='&')
 # for obj in objects_with_ampersand:
     # obj.nodecaption = obj.nodecaption.replace('&', 'and')

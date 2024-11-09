@@ -1,0 +1,359 @@
+.normaltext {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-family: Arial, sans-serif;
+	padding: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0; /* 1%; */
+    line-height: 1.8;
+    font-weight: 750;
+    font-family: Arial, sans-serif;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3, h4 {
+    font-size: 1.25rem;
+}
+
+h5, h6 {
+    font-size: 1.1rem;
+}
+
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sticky Header */
+.mainheader {
+    position: sticky;
+    background-color: #ffffff;
+	top: 0;
+    color: #000000;
+    z-index: 1000;
+    padding: 0px 0;
+    height: 45px;
+}
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.title {
+	text-align: center !important;
+	color: #00aa00 !important;
+}
+
+.header-red {
+	text-align: center !important;
+	color: #ee0000 !important;
+}
+
+.image-on-text {
+	text-align: center !important;
+	color: #0000dd !important;
+}
+
+.container-red {
+    width: 50%;
+    color: white;
+    background-color: rgba(238, 0, 0, 1);
+    padding: 10px;
+    font-size: 2.5rem;
+    font-family: Arial, sans-serif;
+	margin: 0 auto; /* Centers the container horizontally */
+}
+
+.title-container {
+    width: 50%;
+    color: white;
+    background-color: rgba(0, 221, 0, 1);
+    padding: 10px;
+    font-size: 2.5rem;
+    font-family: Arial, sans-serif;
+	margin: 0 auto; /* Centers the container horizontally */
+}
+
+.image-container {
+    position: relative;
+    text-align: center;
+    padding: 10px;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.container h1, .container h2, .container h3 {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0);
+    /* padding: 1px;
+    margin: 1px 0; /* Added margin to create space between headings */
+}
+
+.container h3 a {
+    z-index: 2;
+    color: blue;
+    text-decoration: underline;
+}
+
+.container1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0px;
+}
+
+.logo {
+    height: 40px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    flex-direction: row; /* This makes the menu items horizontal by default */
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu li a {
+    color: #000000;
+    padding: 10px 30px;
+    text-decoration: none;
+    display: block;
+    font-weight: 600; /* Semi-bold */
+}
+
+/* Change the color of the 'Home' menu item */
+.menu > li:first-child > a {
+    color: blue; /* Change 'Home' to blue */
+}
+
+/* Change font color on hover for other menu items */
+.menu li a:hover {
+    color: #0056B3; /* Change to desired color when hovered */
+}
+
+.menu li:hover > .submenu {
+    display: block;
+}
+
+.submenu {
+    position: absolute;
+    display: none;
+    background-color: #DDEBF7;
+    list-style: none;
+    /* min-width: 100%; /* Ensure submenu is at least as wide as the parent */
+    padding: 0;
+    margin: 0;
+    white-space: nowrap; /* Prevent wrapping */
+    z-index: 9999;
+    /*left: 100%; /* Default: appear to the right of the parent menu */
+}
+
+/* Ensure submenu doesn't go out of screen */
+.menu li:hover > .submenu {
+    display: block;
+    left: 0;
+    right: auto; /* Default position */
+}
+
+.submenu li a {
+    padding: 5px;
+	white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Move the fifth submenu to the left */
+.menu li:nth-child(5) .submenu {
+    left: -50%; /* Adjust this value as needed */
+}
+
+.hamburger {
+    display: none;
+	font-size: 30px;
+    cursor: pointer;
+}
+
+/* Main Content */
+.main-content {
+    margin: 0;
+	padding: 0;
+}
+
+.image-section {
+    width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* Full-Width Image */
+.full-width-image {
+    width: 100%;
+    height: auto;
+	margin: 10;
+	padding: 10;
+}
+
+.image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; /* Or another color that contrasts with the image */
+    background-color: rgba(0, 0, 221, 1); /* Optional background to improve readability */
+    padding: 10px;
+    font-size: 1.5rem;
+    font-family: Arial, sans-serif;
+}
+
+/* Explanation Paragraph */
+.explanation {
+    background-color: #D9E1F2;
+    padding: 20px;
+    text-align: left;
+    font-size: 1.25rem; /* Adjust the value as needed */
+    line-height: 1.6; /* Optional: Adjust line spacing for readability */
+	font-weight: 600;
+	margin-top: 0;
+}
+
+.explanation2 {
+    background-color: #ffffff !important;
+    padding: 20px 10px !important;
+    color: #ffffff !important;
+    text-align: left !important;
+    width: 100% !important;
+}
+
+.responsive-image {
+  width: 100%;
+  height: auto;
+  max-width: 100vw; /* Limits the image width to the viewport width */
+  display: block;
+}
+
+/* Responsive Menu */
+@media (max-width: 1100px) {
+    .hamburger {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        z-index: 1000;        
+    }
+
+    .navbar {
+        display: none;
+        position: absolute;
+        top: 50px; /* Adjust as needed */
+        right: 0;
+        width: 100%;
+        /* background-color: #E1FEFF; /* Color for mobile menu */
+        z-index: 9999;
+    }
+
+    .navbar.active {
+        display: block;
+        flex-direction: column; /* Stack items vertically */
+        width: 100%; /* Full width for mobile menu */
+	}
+	
+	.menu {
+        display: block;
+        width: 100%; /* Full width for dropdown */
+        text-align: center;
+        padding: 0;
+    }
+
+    .menu li {
+        width: 100%;
+		position: relative;
+    }
+
+    .menu li a {
+        padding: 10px 20px;
+        text-align: left;
+        color: white;
+        background-color: #444; /* Background color for mobile items */
+		display: block;
+        font-weight: 600;
+    }
+
+    .submenu {
+        display: none; /* Hide submenus by default */
+        /*position: static;*/
+        background-color: #555; /* Submenu background for mobile */
+        /*width: 100%;*/
+    }
+
+    /* Show the submenu when the parent item is clicked */
+    .menu li.active > .submenu {
+        display: block;
+        width: 100%;
+    }
+
+    .submenu li a {
+        padding: 10px;
+        background-color: #666;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 30px;
+        height: 3px;
+        margin: 5px auto;
+        background-color: #000;
+	}
+}
+
+.content-section {
+    padding: 20px;
+    background-color: white;
+    text-align: left;
+    font-size: 1.1rem; /* Adjust the value as needed */
+    line-height: 3; /* Optional: Adjust line spacing for readability */
+	font-weight: 600;
+	margin-top: 0;
+}
+
+.content-section .sectheader {
+    padding: 10px;
+	background-color: #D9E1F2;
+	font-size: 3;
+	font-weight: 600;
+	margin-bottom: 0px;
+	color: #0000bb;
+}
+
+.hmitem {
+	color: #0000bb;
+}
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <LINK REL="SHORTCUT ICON" HREF="{% static 'favicon.ico' %}">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Longevity PMO{% endblock %}</title>
+		<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <script src="{% static 'js/styles.js' %}"></script>
+    </head>
+    <body>
+        <!-- Include the header template -->
+        {% include 'header.html' %}
+	    
+		<!-- Main Content -->
+		<main class="main-content">
+            {% block content %}
+		    {% endblock %}
+		</main>	
+   		<footer class="explanation2">
+    		<p> Thank you for visiting my website.</p>
+	    </footer>
+	</body>
+</html>

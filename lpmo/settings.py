@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
 import os
 
 # Define the base directory for the project
@@ -19,30 +20,34 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # This is the directory where you place your global static files
-    #os.path.join(BASE_DIR, 'longevity', 'static'),
 ]
 
 # For production (use this when you deploy)
 # STATIC_ROOT = BASE_DIR / "staticfiles"  # This is where collectstatic will collect static files
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
+# Enable Gzip compression and caching of static files in production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Define the directory where collectstatic will collect static files for deployment
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u3+)x7--vy@2p%&z*ndd$1p#l_-y#*-6$(ns-+)3&9@dntl=92'
+# Initialize environment variables
+env = environ.Env()
+
+# Read the .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# Use the SECRET_KEY from the .env file
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='default-insecure-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['longevitypmo.com', '69.49.245.120', 'www.longevitypmo.com']
 
 # Application definition
 
@@ -58,6 +63,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -65,6 +71,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+WHITENOISE_MANIFEST_STRICT = False
 
 ROOT_URLCONF = 'lpmo.urls'
 
@@ -97,7 +105,7 @@ DATABASES = {
         'NAME': 'longevity',
         'USER': 'postgres',
         'PASSWORD': 'srt270',
-        'HOST': 'localhost',
+        'HOST': 'localhost', # '69.49.245.120',
         'PORT': '5432',
         'OPTIONS': {
             'options': '-c search_path=pmo,public'
@@ -105,16 +113,12 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-    # 'default': {
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'Rejuvenomics',
-        # 'USER': 'Hamid',
-        # 'PASSWORD': '412412',
-        # 'HOST': 'localhost',  # Assuming the database is hosted locally
-        # 'PORT': '3306',       # Assuming the default MySQL port
-    # }
-# }
+#important security settings. Uncomment after buying SSL certificate
+# SECURE_HSTS_SECONDS = 3600
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# X_FRAME_OPTIONS = 'DENY'
 
 
 # Password validation

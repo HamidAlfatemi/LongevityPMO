@@ -1,0 +1,92 @@
+<!-- Copyright (c) Django Software Foundation and individual contributors. -->
+
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systems Biology of Human Aging</title>
+	
+    <link rel="stylesheet" href="{% static 'css/cytoscape-styles.css' %}">
+<!--    <link rel="stylesheet" href="http://localhost:8000/static/css/cytoscape-styles.css"> -->
+    <link rel="stylesheet" href="{% static 'css/lpmo.css' %}">
+	<!-- <link rel="stylesheet" href="http://localhost:8000/static/css/lpmo.css">
+	<!-- <link rel="stylesheet" href="{{ STATIC_URL }} css/cytoscape-styles.css" media="screen">
+	<link rel="stylesheet" href="{{ STATIC_URL }} css/lpmo.css" media="screen"> -->
+</head>
+
+<body>
+    <div class="container">
+	    <h1>Systems Biology of Human Aging - Network Model</h1>
+		<h2>By: John D. Furber<br>© 2000 - 2019 John D. Furber<br>All rights reserved.<br><br>Legendary Pharmaceuticals</h2>
+		<h3>PO Box 14200
+		    <br>Gainesville FL 32604-2200 USA
+			<br>JohnFurber@LegendaryPharma.com
+			<br><br>Download PDF version to print: <a href="http://www.LegendaryPharma.com/chartbg.html" target="_blank">www.LegendaryPharma.com/chartbg.html</a>
+			<br><br>Developed in Cytoscape.js by: Hamid H. Alfatemi
+			<br><br>© 2016-2021, 2023, The Cytoscape Consortium
+		</h3>
+    </div>
+    <div id="cy"></div>
+<!-- Copyright (c) 2016-2021, 2023, The Cytoscape Consortium -->
+    <script src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
+    <script src="{% static 'webcola/WebCola/cola.min.js' %}"></script>
+    <script src="{% static 'cytoscape-cola/cytoscape-cola.js' %}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var cy = cytoscape({
+                container: document.getElementById('cy'),
+
+                elements: {
+
+                    nodes: [
+                        {% for node in nodes %}
+                        {
+                            data: { id: '{{ node.node_id }}', label: '[{{ node.ref_num }}]\n{{ node.nodecaption|default:''|escapejs }}', parent: '{{ node.parent_n_id }}' },
+                            style: {{ node.style|safe }},
+                        }{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+
+                    edges: [
+                        {% for edge in edges %}
+                        { data: { source: '{{ edge.begin.node_id }}', target: '{{ edge.end.node_id }}' }, style: {{edge.style|safe }} },
+                        {% endfor %}
+                    ]
+                },
+
+                layout: {
+                    name: 'cola',
+                    flow: 'x',
+					animate: false,
+                },
+
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'label': 'data(label)',
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'curve-style': 'bezier',
+							'line-opacity': 0.63
+                        }
+                    },
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+{% block title %}
+	Longevity PMO
+{% endblock %}
+
+{% block content %}
+	<div class="title-container">
+	    <h1 class="title">Longevity Project Management Office</h1>
+	</div>
+	<div class="image-container">
+	    <img src="{% static 'Images/mainpage0.jpg' %}" alt="Main Page Image" class="full-width-image">
+	    <div class="image-text">
+	        <h2 class="image-on-text">We Scan Aging, Find Missing Research, and Initiate Projects for them.</h2>
+        </div>
+	</div>
+    <!-- <p>If you are a researcher, VC, manufacturer, consultant, or interested in the field of longevity, this website is meant to serve you. Feel like home.</p> -->
+	<div class="container-red">
+        <h2 class="header-red">This website is under construction.</h2>
+	</div>
+{% endblock %}

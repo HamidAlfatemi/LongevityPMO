@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<header class="mainheader">
+	<div class="container1">
+		<img src="{% static 'Images/Logo.jpg' %}" alt="logo" class="logo">
+		<div class="hamburger">&#9776;</div>
+        <nav class="navbar">
+			<ul class="menu">
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'sbha' %}">SBHA</a></li>
+            </ul>
+		</nav>
+    </div>
+</header>
