@@ -1,0 +1,438 @@
+{% extends 'base.html' %}
+{% block title %}Nodes List{% endblock %}
+{% load custom_filters %}
+
+{% block content %}
+
+<style>
+    <!-- Add margin to the page -->
+    body {
+        margin: 5px;
+    }
+    <!-- Style the tree -->
+    .tree ul {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+    .tree li {
+        margin: 5px 0;
+		padding-left: 20px; /* Indentation for child containers */
+    }
+
+    .level-1 { margin-left: 0px; }
+    .level-2 { margin-left: 20px; }
+    .level-3 { margin-left: 40px; }
+    .level-4 { margin-left: 60px; }
+
+    .tree .collapsible {
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .tree .children {
+        display: block;
+		margin-buttom: 1px;
+    }
+    .tree .active > .children {
+        display: block;
+    }
+    .tree .arrow {
+        margin-right: 5px;
+    }
+
+    <!-- Layout for titles -->
+    .header-row,
+    .header-row div,
+    .header-row {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .header-row div {
+        border-bottom: 2px solid #000;
+    }
+
+    .ref-number {
+        width: 30%;
+    }
+    .caption {
+        width: 50%;
+    }
+    .select {
+        width: 20%;
+        text-align: center;
+    }
+    .column-titles {
+        display: flex;
+        font-weight: bold;
+        margin-bottom: 10px;
+        justify-content: space-between;
+    }
+
+</style>
+
+<div class="top-controls">
+    {% if renderview == "nodetonode" %}
+        <h1>Select Two Nodes</h1>
+    {% elif renderview == "onenode" %}
+        <h1>Select One Node</h1>
+    {% elif renderview == "containers" %}
+        <h1>Select Containers and Nodes</h1>
+        <button class="command-button" type="button" id="selectAllButton">Select All</button>
+    {% endif %}
+    <button class="command-button" type="button" id="deselectAllButton">Deselect All</button>
+</div>
+
+<!-- Search bar with a button -->
+<input type="text" id="searchInput" class="search-input" placeholder="Search for containers or nodes..." onkeypress="handleKeyPress(event)">
+<button type="button" id="searchButton" class="command-button" onclick="filterTable()">Filter</button>
+<button type="button" id="removefilter" class="command-button" onclick="removefilter()">Remove Filter</button>
+<br><br>
+
+<form method="post" action="{% url 'sbha' %}">
+    {% csrf_token %}
+    <div id="nodesTree" class="tree">
+        {% for container_id, container_l1 in containers_l1.items %}
+            <ul id="container-{{ container_l1.node_id }}">
+                <li data-container-id="{{ container_l1.node_id }}">
+                    <span class="collapsible" style="border: 5px solid {{ color_mapping|get_item:container_l1.nodecolor }}; background-color: {{ light_color_mapping|get_item:container_l1.nodecolor }}; margin: 1px; border-radius: 7px">
+                        {% if renderview == "containers" %}
+                            <input type="checkbox" name="selected_nodes" value="{{ container_l1.node_id }}"
+                                {% if container_l1.node_id in selected_node_ids %}checked{% endif %}
+                                style="margin-left: 10px;">
+                        {% endif %}
+                        <span class="arrow" onclick="toggleVisibility({{ container_l1.node_id }})">▼</span>
+                        <span>
+                            [{{ container_l1.ref_num }}]
+                        </span>
+                        <span>
+                            {{ container_l1.nodecaption }}
+                        </span>
+                    </span>
+					<ul class="children">
+                        <!-- List child nodes of level 1 -->
+                        {% for node_l1 in grouped_nodes|get_item:container_l1.node_id %}
+                            <li data-parent-id="{{ container_l1.node_id }}" style="border: 2px solid {{ color_mapping|get_item:node_l1.nodecolor }}; color: {{ color_mapping|get_item:node_l1.nodecolor }}; margin: 1px; margin-left: 20px">
+                                <!-- Collapsible span for nodes -->
+                                <input type="checkbox" name="selected_nodes" value="{{ node_l1.node_id }}"
+                                    {% if node_l1.node_id in selected_node_ids %}checked{% endif %}
+                                    style="margin-left: 10px;">
+                                <span>
+                                    [{{ node_l1.ref_num }}]
+                                </span>
+                                <span>
+                                    {{ node_l1.nodecaption }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                        <!-- List containers at level 2 -->
+						{% for container_l2 in grouped_containers|get_item:container_l1.node_id %}
+							<ul class="children" id="container-{{ container_l2.node_id }}">
+                                <li data-parent-id="{{ container_l1.node_id }}">
+                                    <span class="collapsible" style="border: 5px solid {{ color_mapping|get_item:container_l2.nodecolor }}; background-color: {{ light_color_mapping|get_item:container_l2.nodecolor }}; margin: 2px; border-radius: 7px">
+									    <span class="arrow" onclick="toggleVisibility_l2({{ container_l2.node_id }})">▼</span>
+                                        {% if renderview == "containers" %}
+                                            <input type="checkbox" name="selected_nodes" value="{{ container_l2.node_id }}"
+                                                {% if container_l2.node_id in selected_node_ids %}checked{% endif %}
+                                                style="margin-left: 10px;">
+                                        {% endif %}
+                                        <span>
+                                            [{{ container_l2.ref_num }}]
+                                        </span>
+                                        <span>
+                                            {{ container_l2.nodecaption }}
+                                        </span>
+                                    </span>
+							
+                                    <ul class="children">
+                                        <!-- List child nodes of level 2 -->
+                                        {% for node_l2 in grouped_nodes|get_item:container_l2.node_id %}
+                                            <li data-parent-id="{{ container_l2.node_id }}" style="border: 2px solid {{ color_mapping|get_item:node_l2.nodecolor }}; color: {{ color_mapping|get_item:node_l2.nodecolor }}; margin: 1px; margin-left: 20px">
+                                                <!-- Collapsible span for nodes -->
+                                                <input type="checkbox" name="selected_nodes" value="{{ node_l2.node_id }}"
+                                                    {% if node_l2.node_id in selected_node_ids %}checked{% endif %}
+                                                    style="margin-left: 10px;">
+                                                <span>
+                                                    [{{ node_l2.ref_num }}]
+                                                </span>
+                                                <span>
+                                                    {{ node_l2.nodecaption }}
+                                                </span>
+                                            </li>
+                                        {% endfor %}
+                                        <!-- List containers at level 3 -->
+                                        {% for container_l3 in grouped_containers|get_item:container_l2.node_id %}
+                                            <ul class="children" id="container-{{ container_l3.node_id }}">
+                                                <li data-parent-id="{{ container_l2.node_id }}">
+                                                    <span class="collapsible" style="border: 5px solid {{ color_mapping|get_item:container_l3.nodecolor }}; background-color: {{ light_color_mapping|get_item:container_l3.nodecolor }}; margin: 2px; border-radius: 7px">
+                                                        <span class="arrow" onclick="toggleVisibility_l3({{ container_l3.node_id }})">▼</span>
+                                                        {% if renderview == "containers" %}
+                                                            <input type="checkbox" name="selected_nodes" value="{{ container_l3.node_id }}"
+                                                                {% if container_l3.node_id in selected_node_ids %}checked{% endif %}
+                                                                style="margin-left: 10px;">
+                                                        {% endif %}
+                                                        <span>
+                                                            [{{ container_l3.ref_num }}]
+                                                        </span>
+                                                        <span>
+                                                            {{ container_l3.nodecaption }}
+                                                        </span>
+                                                    </span>
+											
+                                                    <ul class="children">
+                                                        <!-- List child nodes of level 3 -->
+                                                        {% for node_l3 in grouped_nodes|get_item:container_l3.node_id %}
+                                                            <li class="level-1 tree-row" data-parent-id="{{ container_l3.node_id }}" style="border: 2px solid {{ color_mapping|get_item:node_l3.nodecolor }}; color: {{ color_mapping|get_item:node_l3.nodecolor }}; margin: 1px; margin-left: 20px">
+                                                                <!-- Collapsible span for nodes -->
+                                                                <input type="checkbox" name="selected_nodes" value="{{ node_l3.node_id }}"
+                                                                    {% if node_l3.node_id in selected_node_ids %}checked{% endif %}
+                                                                    style="margin-left: 10px;">
+                                                                <span>
+                                                                    [{{ node_l3.ref_num }}]
+                                                                </span>
+                                                                <span>
+                                                                    {{ node_l3.nodecaption }}
+                                                                </span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+		{% endfor %}
+    </div>
+    <br>
+
+    <div class="bottom-controls">
+        {% if renderview == "onenode" %}
+            <div class="checkbox-item">
+                <input type="checkbox" name="downstream" value="sbha" checked>
+                <span>Include Downstream Nodes</span>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" name="upstream" value="sbha">
+                <span>Include Upstream Nodes</span>
+            </div>
+        {% endif %}
+        <div class="checkbox-item">
+            <input type="checkbox" name="include_containers" value="sbha" checked>
+            <span>Include Containers</span>
+        </div>
+        <input type="hidden" name="renderview" value="{{ renderview }}">
+        <button class="command-button" id="drawPathwayButton" type="submit" name="submit_action" value="sbha">Draw Pathway</button>
+		<pr>
+    </div>
+    <div>
+	   <pr>
+	</div>
+	<pr>
+</form>
+
+<!-- JavaScript for filtering -->
+<script>
+    // Add event listener to each container checkbox
+    document.addEventListener("DOMContentLoaded", () => {
+        const containerCheckboxes = document.querySelectorAll('input[type="checkbox"][name="selected_nodes"]');
+        const dpbutton = document.getElementById("drawPathwayButton");
+		//const renderview = document.getElementById("renderview")?.value || "No Value";
+		var renderview = "{{ renderview }}";
+        if (renderview === "nodetonode") {
+		    var maxSelection = 2;
+            //console.log(renderview); // Debugging
+			//console.log("maxSelection:", maxSelection); // Debugging: Check current count
+		} else {
+		    var maxSelection = 1;
+		}
+        let selectedCount = 0;
+
+        function updateSelectionCount() {
+            selectedCount = [...containerCheckboxes].filter(cb => cb.checked).length;
+			//console.log("Selected Count:", selectedCount); // Debugging: Check current count
+        }
+
+        containerCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener("click", (event) => {
+                if (renderview === "nodetonode" || renderview === "onenode") {
+                    //console.log("renderview === nodetonode"); // Debugging
+                    if (event.target.checked) {
+                        //console.log("event.target.checked"); // Debugging
+                        updateSelectionCount();
+                        if (selectedCount === maxSelection) {
+                            setTimeout(function() {
+                                dpbutton.scrollIntoView({ behavior: "smooth", block: "end" });
+                            }, 500);
+						}
+                        if (selectedCount > maxSelection) {
+                            event.preventDefault(); // Stop it from being checked
+                            //event.target.checked = false; // Prevent checking more than two
+                            updateSelectionCount(); // Ensure count is updated after any change
+                            //console.log("Selection limit reached. Click prevented."); // Debugging
+                            return;
+                        }
+                    }
+
+                    setTimeout(updateSelectionCount, 0); // Ensure count updates after state change
+                } else {
+                    const containerId = event.target.value; // Assuming value is the container's ID
+                    toggleChildren(containerId, event.target.checked);
+                }
+            });
+        });
+
+        // Handle Enter key press for search input
+        document.getElementById("searchInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+                filterTable(); // Trigger filtering
+            }
+        });
+		
+        const selectAllButton = document.getElementById('selectAllButton');
+        if (selectAllButton) {
+            selectAllButton.addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="selected_nodes"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+            });
+        }
+
+        const deselectAllButton = document.getElementById('deselectAllButton');
+        if (deselectAllButton) {
+            deselectAllButton.addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="selected_nodes"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            });
+        }
+		
+    });
+
+    // Toggle visibility of child nodes in tree view
+    function toggleVisibility(containerId) {
+		var pcontainer = document.getElementById('container-' + containerId);
+		var children = pcontainer.querySelector('.children');
+        var arrow = pcontainer.querySelector('.collapsible .arrow');
+
+        if (children.style.display === 'block' || children.style.display === '') {
+            children.style.display = 'none';
+			arrow.textContent = '\u25B6'; // Change arrow direction to ▶ Right arrow
+        } else {
+            children.style.display = 'block';
+			arrow.textContent = '\u25BC'; // Change arrow direction to ▼ Down arrow
+        }
+    }
+
+    function toggleVisibility_l2(containerId) {
+		var pcontainer_l2 = document.getElementById('container-' + containerId);
+		var children_l2 = pcontainer_l2.querySelector('.children');
+        var arrow_l2 = pcontainer_l2.querySelector('.collapsible .arrow');
+		
+        if (!children_l2 || !arrow_l2) {
+            console.error(`Could not find children or arrow for container-${containerId}`);
+            return;
+        }
+
+        if (children_l2.style.display === 'block' || children_l2.style.display === '') {
+            children_l2.style.display = 'none';
+			arrow_l2.textContent = '\u25B6'; // Change arrow direction to ▶ Right arrow
+        } else {
+            children_l2.style.display = 'block';
+			arrow_l2.textContent = '\u25BC'; // Change arrow direction to ▼ Down arrow
+        }
+    }
+
+    function toggleVisibility_l3(containerId) {
+        //console.log(`toggleVisibility_l2 called for containerId: ${containerId}`); // Log when the function is called
+		var pcontainer_l3 = document.getElementById('container-' + containerId);
+        //console.log(`pcontainer_l2: ${pcontainer_l2}`);
+		var children_l3 = pcontainer_l3.querySelector('.children');
+        var arrow_l3 = pcontainer_l3.querySelector('.collapsible .arrow');
+		
+        if (!children_l3 || !arrow_l3) {
+            console.error(`Could not find children or arrow for container-${containerId}`);
+            return;
+        }
+
+        if (children_l3.style.display === 'block' || children_l3.style.display === '') {
+            children_l3.style.display = 'none';
+			arrow_l3.textContent = '\u25B6'; // Change arrow direction to ▶ Right arrow
+        } else {
+            children_l3.style.display = 'block';
+			arrow_l3.textContent = '\u25BC'; // Change arrow direction to ▼ Down arrow
+        }
+    }
+
+    // Trigger filtering when the "Search" button is clicked
+    function filterTable() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toLowerCase();
+        const rows = document.querySelectorAll(".tree li"); // ("#nodesTable tbody tr");
+
+        // Create a map to track containers that should remain visible
+        const visibleContainers = new Set();
+
+        rows.forEach(row => {
+            const isContainer = row.classList.contains("container-row");
+            const text = row.textContent.toLowerCase();
+
+            if (isContainer) {
+                // Initially hide all containers
+                row.style.display = "none";
+            } else {
+                // Check if node matches the filter
+                const parentId = row.getAttribute("data-parent-id");
+                if (text.includes(filter)) {
+                    // If a node matches, make it visible and mark its container as visible
+                    row.style.display = "";
+                    visibleContainers.add(parentId);
+                } else {
+                    // Hide nodes that don't match the filter
+                    row.style.display = "none";
+                }
+            }
+        });
+
+        // Show containers with visible nodes or that match the filter
+        rows.forEach(row => {
+            if (row.classList.contains("container-row")) {
+                const containerId = row.getAttribute("data-container-id");
+                const text = row.textContent.toLowerCase();
+
+                if (visibleContainers.has(containerId) || text.includes(filter)) {
+                    row.style.display = ""; // Show the container
+                }
+            }
+        });
+    }
+
+    function removefilter() {
+        // Clear the search input field
+        document.getElementById("searchInput").value = "";
+
+        // Get all rows within the tree and display them
+        const rows = document.querySelectorAll(".tree li");
+        rows.forEach(row => {
+            row.style.display = "";
+        });
+    }
+	
+    // Function to toggle selection of child checkboxes when a container is checked/unchecked
+    function toggleChildren(containerId, isChecked) {
+        const parentElement = document.querySelector(`#container-${containerId}`);
+        if (parentElement) {
+            const childCheckboxes = parentElement.querySelectorAll('input[type="checkbox"]');
+            childCheckboxes.forEach((checkbox) => {
+                checkbox.checked = isChecked;
+            });
+        }
+    }
+
+</script>
+{% endblock %}

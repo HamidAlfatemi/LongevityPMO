@@ -1,3 +1,13 @@
+html {
+    scroll-behavior: smooth;
+}
+
+footer {
+    margin-top: 30px;  /* Adjust the gap as needed */
+    padding-top: 20px;
+    border-top: 1px solid #ddd;  /* Optional: adds a line to separate the footer */
+}
+
 .normaltext {
     font-size: 1.1rem;
     line-height: 1.8;
@@ -11,7 +21,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.8;
     font-weight: 750;
     font-family: Arial, sans-serif;
-    color: #000000;
+    /* color: #000000; */
     background-color: #ffffff;
 }
 
@@ -40,9 +50,13 @@ h5, h6 {
 }
 
 /* Sticky Header */
+.normaltitle {
+	color: #008888;
+}
+
 .mainheader {
     position: sticky;
-    background-color: #ffffff;
+    background-color: #f5f9fc;
 	top: 0;
     color: #000000;
     z-index: 1000;
@@ -56,9 +70,73 @@ body {
     line-height: 1.6;
 }
 
+.tree li {
+/*    padding: 2px; */
+    margin-bottom: 4px; /* uniform gap after each row */
+}
+
+.children > li {
+    margin-top: 4px; /* ensure there's a gap above each child */
+}
+
+/* Make the search input wider, with h1-like font */
+.search-input {
+    width: 60%;              /* Adjust width as needed */
+    font-size: 1.25rem;         /* Adjust to match your h1 font size */
+    padding: 5px;          /* Add some padding */
+    border: 2px solid #ccc;  /* A light border */
+    border-radius: 5px;      /* Rounded corners */
+    box-sizing: border-box;  /* Ensure padding is included in width */
+	margin-left: 10px;
+}
+
+/* Style the search button to look more attractive */
+.command-button {
+    font-size: 1.25rem;          /* Match h1 or adjust as needed */
+    padding: 5px;       /* Vertical and horizontal padding */
+    border: none;             /* Remove default border */
+    background-color: #33CCCC;/* A pleasing blue, adjust as desired */
+    color: white;             /* White text */
+    border-radius: 5px;       /* Rounded corners */
+    cursor: pointer;          /* Pointer on hover */
+    margin-left: 10px;         /* Space between input and button */
+    /* transition: background-color 0.3s ease; /* Smooth hover effect */
+
+}
+
+.command-button:hover {
+    background-color: #007BF6; /* Slightly darker on hover */
+}
+
+.bottom-controls {
+    display: flex;
+    justify-content: center; /* Centers items horizontally */
+    align-items: center;     /* Centers items vertically */
+    gap: 40px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* A smaller gap between the checkbox and its caption */
+}
+
+.top-controls {
+    display: flex;
+    align-items: center;     /* Centers items vertically */
+	gap: 60px;
+    flex-wrap: wrap; /* Allows wrapping when the screen is small */
+}
+
+.top-controls h1 {
+    margin: 0; /* Removes default margins to prevent extra spacing */
+    display: inline-block; /* Ensures it doesn't take full width */
+}
+
 .title {
 	text-align: center !important;
 	color: #00aa00 !important;
+	padding: 10px
 }
 
 .header-red {
@@ -94,7 +172,7 @@ body {
 .image-container {
     position: relative;
     text-align: center;
-    padding: 10px;
+    /*padding: 10px; */
 }
 
 .container {
@@ -154,36 +232,39 @@ body {
 
 /* Change the color of the 'Home' menu item */
 .menu > li:first-child > a {
-    color: blue; /* Change 'Home' to blue */
+    color: #009999;
 }
 
 /* Change font color on hover for other menu items */
 .menu li a:hover {
-    color: #0056B3; /* Change to desired color when hovered */
+    color: #008888; /* Change to desired color when hovered */
 }
 
-.menu li:hover > .submenu {
+/* .menu li:hover > .submenu {
     display: block;
-}
+} */
 
 .submenu {
     position: absolute;
     display: none;
-    background-color: #DDEBF7;
+    background-color: #DDEEE7;
     list-style: none;
-    /* min-width: 100%; /* Ensure submenu is at least as wide as the parent */
     padding: 0;
     margin: 0;
-    white-space: nowrap; /* Prevent wrapping */
+    white-space: nowrap;
     z-index: 9999;
-    /*left: 100%; /* Default: appear to the right of the parent menu */
 }
 
 /* Ensure submenu doesn't go out of screen */
-.menu li:hover > .submenu {
+/* .menu li:hover > .submenu {
     display: block;
     left: 0;
-    right: auto; /* Default position */
+    right: auto;
+} */
+
+/* When the parent li has the 'active' class, show the submenu */
+.menu li.active > .submenu {
+    display: block;
 }
 
 .submenu li a {
@@ -192,8 +273,9 @@ body {
 }
 
 /* Move the fifth submenu to the left */
-.menu li:nth-child(5) .submenu {
-    left: -50%; /* Adjust this value as needed */
+.menu li:nth-child(3) .submenu {
+    left: -160%; /* Adjust this value as needed */
+	/* background-color: #DDEB00; */
 }
 
 .hamburger {
@@ -218,8 +300,13 @@ body {
 .full-width-image {
     width: 100%;
     height: auto;
-	margin: 10;
-	padding: 10;
+	/*margin: 10;
+	padding: 10; */
+}
+
+.intext-image {
+    width: 50%;
+    height: auto;
 }
 
 .image-text {
@@ -228,10 +315,10 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white; /* Or another color that contrasts with the image */
-    background-color: rgba(0, 0, 221, 1); /* Optional background to improve readability */
+    background-color: rgba(0, 221, 0, 1); /* Optional background to improve readability */
     padding: 10px;
-    font-size: 1.5rem;
-    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    /* font-family: Arial, sans-serif; */
 }
 
 /* Explanation Paragraph */
@@ -246,11 +333,12 @@ body {
 }
 
 .explanation2 {
-    background-color: #ffffff !important;
+    background-color: #00bbbb !important;
     padding: 20px 10px !important;
     color: #ffffff !important;
     text-align: left !important;
     width: 100% !important;
+	font-size: 1.25rem;
 }
 
 .responsive-image {
@@ -262,10 +350,10 @@ body {
 
 /* Responsive Menu */
 @media (max-width: 1100px) {
-    .hamburger {
+     .hamburger {
         display: block;
         position: absolute;
-        top: 15px;
+        top: 3px;
         right: 20px;
         z-index: 1000;        
     }
@@ -273,17 +361,16 @@ body {
     .navbar {
         display: none;
         position: absolute;
-        top: 50px; /* Adjust as needed */
+        top: 50px;
         right: 0;
         width: 100%;
-        /* background-color: #E1FEFF; /* Color for mobile menu */
         z-index: 9999;
     }
 
     .navbar.active {
         display: block;
         flex-direction: column; /* Stack items vertically */
-        width: 100%; /* Full width for mobile menu */
+        /* width: 100%; /* Full width for mobile menu */
 	}
 	
 	.menu {
@@ -302,16 +389,15 @@ body {
         padding: 10px 20px;
         text-align: left;
         color: white;
-        background-color: #444; /* Background color for mobile items */
+        background-color: #444;
 		display: block;
         font-weight: 600;
     }
 
     .submenu {
         display: none; /* Hide submenus by default */
-        /*position: static;*/
-        background-color: #555; /* Submenu background for mobile */
-        /*width: 100%;*/
+        position: static;
+        background-color: #555;
     }
 
     /* Show the submenu when the parent item is clicked */
@@ -320,10 +406,10 @@ body {
         width: 100%;
     }
 
-    .submenu li a {
+    /* .submenu li a {
         padding: 10px;
         background-color: #666;
-    }
+    } */
 
     .hamburger span {
         display: block;
@@ -332,6 +418,11 @@ body {
         margin: 5px auto;
         background-color: #000;
 	}
+	.intext-image {
+        width: 100%;
+        height: auto;
+    }
+
 }
 
 .content-section {
@@ -340,7 +431,7 @@ body {
     text-align: left;
     font-size: 1.1rem; /* Adjust the value as needed */
     line-height: 3; /* Optional: Adjust line spacing for readability */
-	font-weight: 600;
+	/* font-weight: 600; */
 	margin-top: 0;
 }
 

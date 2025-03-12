@@ -1,0 +1,13 @@
+<!-- Copyright (c) Django Software Foundation and individual contributors. -->
+{% load static %}
+<LINK REL="SHORTCUT ICON" HREF="{% static 'favicon.ico' %}">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Legend{% endblock %}</title>
+</head>
+
+{% block content %}
+	<div class="image-container">
+	    <img src="{% static 'Images/Legend.jpg' %}" alt="Legend Image" class="full-width-image">
+	</div>
+{% endblock %}

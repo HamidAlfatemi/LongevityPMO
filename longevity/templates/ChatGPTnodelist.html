@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Nodes List{% endblock %}
+{% load custom_filters %}
+
+{% block content %}
+<style>
+    .tree ul {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+    .tree li {
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+    }
+    .level-0 { margin-left: 0px; }
+    .level-1 { margin-left: 20px; }
+    .level-2 { margin-left: 40px; }
+    .level-3 { margin-left: 60px; }
+    .container { background-color: {{ light_color_mapping|get_item:container.nodecolor }}; font-weight: bold; }
+    .node { color: {{ color_mapping|get_item:node.nodecolor }}; }
+</style>
+
+<h1>Select Containers and Nodes</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="tree">
+        {% for container in containers %}
+        <ul>
+            <li class="level-{{ container.level }}">
+                <span class="container">
+                    {{ container.ref_num }} - {{ container.nodecaption }}
+                </span>
+                <input type="checkbox" name="selected_containers" value="{{ container.node_id }}" 
+                       {% if container.node_id in selected_container_ids %}checked{% endif %}>
+
+                <!-- List child nodes first -->
+                <ul>
+                    {% for child in grouped_nodes|get_item:container.node_id %}
+                    <li class="level-{{ container.level+1 }} {{ 'node' if not child.nodeshape == 7 else 'container' }}">
+                        <span style="color: {% if child.nodeshape == 7 %}{{ light_color_mapping|get_item:child.nodecolor }}{% else %}{{ color_mapping|get_item:child.nodecolor }}{% endif %};">
+                            {{ child.ref_num }} - {{ child.nodecaption }}
+                        </span>
+                        <input type="checkbox" name="selected_nodes" value="{{ child.node_id }}"
+                               {% if child.node_id in selected_node_ids %}checked{% endif %}>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

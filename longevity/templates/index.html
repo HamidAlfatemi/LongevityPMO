@@ -8,17 +8,75 @@
 {% endblock %}
 
 {% block content %}
-	<div class="title-container">
-	    <h1 class="title">Longevity Project Management Office</h1>
-	</div>
+	<!-- <div class="title-container">
+	    <h1 class="title">Longevity Portfolio Management Office</h1>
+	</div> -->
 	<div class="image-container">
-	    <img src="{% static 'Images/mainpage0.jpg' %}" alt="Main Page Image" class="full-width-image">
+	    <img src="{% static 'Images/mainpage2.jpg' %}" alt="Main Page Image" class="full-width-image">
 	    <div class="image-text">
-	        <h2 class="image-on-text">We Scan Aging, Find Missing Research, and Initiate Projects for them.</h2>
+	        <!-- <h2 class="image-on-text">We Scan Aging, Find Missing Research, and Initiate Projects for them.</h2> -->
+	        <h5 class="title">The New Version of 'Systems Biology of Human Aging (SBHA) – Network Model' is Online.</h5>
         </div>
 	</div>
     <!-- <p>If you are a researcher, VC, manufacturer, consultant, or interested in the field of longevity, this website is meant to serve you. Feel like home.</p> -->
-	<div class="container-red">
+	<!-- <div class="container-red">
         <h2 class="header-red">This website is under construction.</h2>
-	</div>
+	</div> -->
+    <section class="content-section">
+        <br id="about-lpmo">
+		<h2 class="normaltitle">Longevity Portfolio Management Office</h2>
+        <p class="normaltext">
+            <a>There is a large community of brilliant scientists, researchers, and numerous academic, industrial, and business organizations worldwide working to understand and solve the challenges of human aging. Everyone is addressing some sub-problem of the broader issue. In fact, it can be considered a major project composed of several sub-projects—or more accurately, a portfolio with many programs and projects.
+            </a>
+			<br>
+			<a>If all of the challenges can be organized into one portfolio, all longevity movement can be managed as one. This does not necessarily mean centralized control; rather, it means having a common platform or virtual office managed by the community in an agile manner.
+			</a>
+			<br>
+			<a>We have just started to have a portfolio management office (PMO) initiated for Longevity. Our mission is to create a system that identifies the priorities in longevity and assists in optimizing longevity research through cutting-edge studies, advanced technologies, and data-driven insights.
+			</a>
+			<br>
+			<img src="{% static 'Images/Portfolio.jpg' %}" alt="Portfolio" class="intext-image">
+			<br>
+			<a>By managing, assisting, or at least monitoring the challenges in the longevity field as a whole, many overlaps, unnecessary competitions, and opportunities for collaboration can be discovered throughout the portfolio.
+			</a>
+			<br>
+			<a>Many common problems, obstacles, bottlenecks, and risks faced by longevity projects and modern intervention technologies can be discovered, prioritized and overcome through initiation of enabling projects - which can also be managed by the PMO.
+			</a>
+			<br>
+			<a>Additionally, enabling operations can be launched to run the PMO and ensure that the longevity global data is continuously updated and complete for stakeholders’ access.</a>
+			<br>
+			<a>While many ongoing research projects contain confidential information, joining Longevity Portfolio doesn’t mean that research projects are to share information or have the intention to collaborate. Anyway, an outreach process can be initiated and executed to identify, communicate with, and motivate researchers and organizations to subscribe to the Longevity PMO if they find it beneficial.
+			</a>
+			<br>
+			<br id="about-sbha">
+		</p>
+		<h2 class="normaltitle">Sytems Biology of Human Aging (SBHA)</h2>
+        <p class="normaltext">
+			<a>Solving a problem starts with understanding it. Aging is a complex, multifactorial process. First of all, we need to have the SBHA be continually and dynamically updated to reflect the latest research outcomes on the theories and mechanisms of aging, providing detailed insight into the human aging common process.
+			</a>
+			<br>
+			<a>As an initial step, we converted the SBHA into a relational database. The SBHA database has the potential to map to and relate detailed systems biology pathways, genomic databases, longevity ecosystem databases, biomarker databases, and scientific literature into a globally integrated data warehouse.
+			</a>
+			<br>
+			<a>We also developed a Cytoscape.js chart to visualize the SBHA database, enabling users to apply queries and filters to explore the data effectively.</a>
+			<br>
+			<a>CRUD pages for adding and editing of the nodes and edges, as well as some dditional data will be added soon.</a>
+		</p>
+	</section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the URL contains a hash (e.g., #about-lpmo or #about-sbha)
+            if (window.location.hash) {
+                const element = document.querySelector(window.location.hash);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: "smooth" });
+                    }, 100); // Delay to allow the page to fully load
+                }
+            }
+        });
+    </script>
+
 {% endblock %}
+

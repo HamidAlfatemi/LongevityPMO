@@ -16,7 +16,6 @@ import os
 
 # Define the base directory for the project
 BASE_DIR = Path(__file__).resolve().parent.parent
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
@@ -25,11 +24,10 @@ STATICFILES_DIRS = [
 ]
 
 # For production (use this when you deploy)
-# STATIC_ROOT = BASE_DIR / "staticfiles"  # This is where collectstatic will collect static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # This is where collectstatic will collect static files
 
 # Enable Gzip compression and caching of static files in production
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Define the directory where collectstatic will collect static files for deployment
 
 # Quick-start development settings - unsuitable for production
@@ -47,7 +45,8 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='default-insecure-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # False
 
-ALLOWED_HOSTS = ['longevitypmo.com', '69.49.245.120', 'www.longevitypmo.com']
+#ALLOWED_HOSTS = ['longevitypmo.com', '69.49.245.120', 'www.longevitypmo.com']
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 

@@ -1,14 +1,118 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <header class="mainheader">
-	<div class="container1">
-		<img src="{% static 'Images/Logo.jpg' %}" alt="logo" class="logo">
-		<div class="hamburger">&#9776;</div>
+    <div class="container1">
+        <img src="{% static 'Images/Logo 01.jpg' %}" alt="logo" class="logo">
+        <div class="hamburger">&#9776;</div>
         <nav class="navbar">
-			<ul class="menu">
-                <li><a href="{% url 'homepage' %}">Home</a></li>
-                <li><a href="{% url 'sbha' %}">SBHA</a></li>
+            <ul class="menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="#" id="aboutToggle">About</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'index' %}#about-lpmo">LPMO</a></li>
+                        <li><a href="{% url 'index' %}#about-sbha">SBHA</a></li>
+                    </ul>
+                </li>
+				<li><a href="#" id="sbhaToggle">SBHA</a>
+				<!-- <li><a>SBHA</a> -->
+                    <ul class="submenu">
+                        <li><a href="{% url 'containerlist' %}">Select Containers and Nodes</a></li>
+                        <li><a href="{% url 'node_to_node' %}">Shortest Path Between two Nodes</a></li>
+                        <li><a href="{% url 'one_node' %}">Pathways of one Node</a></li>
+                        <li><a href="{% url 'legend' %}" target="_blank" rel="noopener noreferrer">Legend</a></li>
+                        <li><a href="http://www.legendarypharma.com/furberchart.pdf" target="_blank" rel="noopener noreferrer">PDF Version</a></li>
+                    </ul>
+                </li>
             </ul>
-		</nav>
+        </nav>
     </div>
 </header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+        const navbar = document.querySelector('.navbar');
+        if (hamburger && navbar) {
+            hamburger.addEventListener('click', function() {
+                navbar.classList.toggle('active');
+            });
+        }
+
+        function toggleSubmenu(toggleElement) {
+            const parentLi = toggleElement.parentElement;
+            const allMenus = document.querySelectorAll(".menu > li");
+
+            // Close all other open submenus
+            allMenus.forEach(menu => {
+                if (menu !== parentLi) {
+                    menu.classList.remove("active");
+                }
+            });
+
+            // Toggle the clicked menu's active state
+            parentLi.classList.toggle("active");
+        }
+
+        // Toggle submenu for the SBHA item via click
+        const sbhaToggle = document.getElementById('sbhaToggle');
+        if (sbhaToggle) {
+            sbhaToggle.addEventListener('click', function(e) {
+                e.preventDefault();  // Prevent the default link behavior
+                // Toggle the "active" class on the parent <li>
+                // const parentLi = sbhaToggle.parentElement;
+                // parentLi.classList.toggle('active');
+				toggleSubmenu(sbhaToggle);
+            });
+        }
+		
+        const aboutToggle = document.getElementById('aboutToggle');
+        if (aboutToggle) {
+            aboutToggle.addEventListener('click', function(e) {
+                e.preventDefault();  // Prevent the default link behavior
+                // Toggle the "active" class on the parent <li>
+                // const parentLi = aboutToggle.parentElement;
+                // parentLi.classList.toggle('active');
+				toggleSubmenu(aboutToggle);
+            });
+        }
+
+        // Close submenu when clicking outside the menu
+        document.addEventListener("click", function (event) {
+            const menus = document.querySelectorAll(".menu > li");
+            let isClickInsideMenu = false;
+
+            menus.forEach(menu => {
+                if (menu.contains(event.target)) {
+                    isClickInsideMenu = true;
+                }
+            });
+
+            if (!isClickInsideMenu) {
+                menus.forEach(menu => menu.classList.remove("active"));
+            }
+        });
+
+        // Close submenu when a submenu item is clicked
+        document.querySelectorAll(".submenu a").forEach(item => {
+            item.addEventListener("click", function () {
+                document.querySelectorAll(".menu > li").forEach(menu => menu.classList.remove("active"));
+            });
+        });
+
+        document.addEventListener("click", function (event) {
+            const hamburger = document.querySelector(".hamburger");
+            const navbar = document.querySelector(".navbar");
+
+            // Check if the click is outside both the hamburger and the navbar
+            if (!hamburger.contains(event.target) && !navbar.contains(event.target)) {
+                navbar.classList.remove("active"); // Close the menu
+            }
+        });
+
+    });
+
+    //document.querySelector('.hamburger').addEventListener('click', function() {
+    //    document.querySelector('.navbar').classList.toggle('active');
+    //});
+	
+</script>

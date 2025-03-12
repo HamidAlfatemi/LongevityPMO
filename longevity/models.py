@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 class AcPerson(models.Model):
     acp_id = models.AutoField(db_column='ACP_id', primary_key=True, serialize=True)
@@ -282,6 +283,7 @@ class Edge(models.Model):
     color = models.IntegerField(db_column='Color', choices=COLOR_CHOICES, blank=True, null=True)
     edgetype = models.IntegerField(db_column='EdgeType', blank=True, null=True)
     edgedesc = models.TextField(db_column='EdgeDesc', blank=True, null=True)
+    # cystyle = models.CharField(db_column='cystyle', max_length=450, blank=True, null=True)
     beginrefnum = models.CharField(max_length=3, blank=True, null=True)
     endrefnum = models.CharField(max_length=3, blank=True, null=True)
     edgefunction = models.CharField(db_column='edgefunction', max_length=254, blank=True, null=True)
@@ -329,8 +331,8 @@ class Externalfactor(models.Model):
 
 class extfactnpint(models.Model):
     efnpint_id = models.AutoField(primary_key=True, serialize=True)
-    npi = models.ForeignKey('npint', models.DO_NOTHING, db_column='npi_id')
-    ef = models.ForeignKey(Externalfactor, models.DO_NOTHING, db_column='ef_id')
+    np = models.ForeignKey('nanoparticle', models.DO_NOTHING, db_column='np_id', blank=True, null=True)
+    ef = models.ForeignKey(Externalfactor, models.DO_NOTHING, db_column='ef_id', blank=True, null=True)
 
     class Meta:
         db_table = 'extfactnpint'
@@ -774,93 +776,6 @@ class Medicalrecord(models.Model):
     class Meta:
         db_table = 'medicalrecord'
 
-
-class nanoparticle(models.Model):
-    HYDROPHOBICITY_METHOD_CHOICES = [
-        (1, 'Contact Angle Measurement'),
-        (2, 'Partition Coefficient (Log P)'),
-        (3, 'Hydrophobic Interaction Chromatography (HIC)'),
-        (4, 'Hydropathy Index (Kyte-Doolittle Scale'),
-        (5, 'Water Solubility'),
-    ]
-    SHAPE_CHOICES = [
-        (1, 'Spherical'),
-        (2, 'Rod-shaped (nanorods)'),
-        (3, 'Cubic'),
-        (4, 'Platelet-shaped (nanosheets)'),
-        (5, 'Tubular (nanotubes)'),
-        (6, 'Star-shaped (nanostars)'),
-        (7, 'Branched (nanobranches)'),
-        (8, 'Flower-shaped (nanoflowers)'),
-        (9, 'Hollow (nanocages, nanospheres)'),
-    ]
-    IMMUNRESIST_CHOICES = [
-        (1, 'Phagocytosis Assays'),
-        (2, 'Complement Activation Assays'),
-        (3, 'Cytokine Release Assays'),
-        (4, 'Surface Protein Adsorption Studies'),
-        (5, 'In Vivo Biodistribution Studies'),
-    ]
-    OFFTARGET_CHOICES = [
-        (1, 'Flow Cytometry'),
-        (2, 'Imaging Techniques'),
-        (3, 'Mass Spectrometry'),
-        (4, 'Bio-distribution Studies'),
-        (5, 'Proteomics and Genomics Approaches'),
-    ]
-    np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
-    nptitle = models.CharField(db_column='nptitle', max_length=100, blank=True, null=True)
-    npdesc = models.TextField(db_column='npdesc', blank=True, null=True)
-    shape = models.IntegerField(db_column='shape', choices=SHAPE_CHOICES, blank=True, null=True)
-    mindimx = models.DecimalField(db_column='mindimx', max_digits=4, decimal_places=0, blank=True, null=True)
-    mindimy = models.DecimalField(db_column='mindimy', max_digits=4, decimal_places=0, blank=True, null=True)
-    mindimz = models.DecimalField(db_column='mindimz', max_digits=4, decimal_places=0, blank=True, null=True)
-    maxdimx = models.DecimalField(db_column='maxdimx', max_digits=4, decimal_places=0, blank=True, null=True)
-    maxdimy = models.DecimalField(db_column='maxdimy', max_digits=4, decimal_places=0, blank=True, null=True)
-    maxdimz = models.DecimalField(db_column='maxdimz', max_digits=4, decimal_places=0, blank=True, null=True)
-    minnegcharge = models.DecimalField(db_column='minnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    maxnegcharge = models.DecimalField(db_column='maxnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    minposcharge = models.DecimalField(db_column='minposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    maxposcharge = models.DecimalField(db_column='maxposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    hydrophobicity = models.FloatField(db_column='hydrophobicity', blank=True, null=True)
-    hydrophmethod = models.IntegerField(db_column='hydrophmethod', choices=HYDROPHOBICITY_METHOD_CHOICES, blank=True, null=True)
-    immuneresistance = models.FloatField(db_column='immuneresistance', blank=True, null=True)
-    immunmethod = models.IntegerField(db_column='immunmethod', choices=IMMUNRESIST_CHOICES, blank=True, null=True)
-    targetingefficiency = models.DecimalField(db_column='targetingefficiency', max_digits=6, decimal_places=2, blank=True, null=True)
-    cellularuptake = models.DecimalField(db_column='cellularuptake', max_digits=6, decimal_places=2, blank=True, null=True)
-    immunogenicity = models.TextField(db_column='immunogenicity', blank=True, null=True)
-    offtarget = models.FloatField(db_column='offtarget', blank=True, null=True)
-    offtargetmethod = models.IntegerField(db_column='offtargetmethod', choices=OFFTARGET_CHOICES, blank=True, null=True)
-    halflife = models.DecimalField(db_column='HalfLife', max_digits=3, decimal_places=0, blank=True, null=True)
-    circulationrate = models.DecimalField(db_column='circulationrate', max_digits=3, decimal_places=0, blank=True, null=True)
-    clearancerate = models.DecimalField(db_column='clearancerate', max_digits=3, decimal_places=0, blank=True, null=True)
-    tracked = models.IntegerField(db_column='Tracked', blank=True, null=True)
-    peg = models.TextField(db_column='PEG', blank=True, null=True)
-    npreq = models.ForeignKey('self', models.DO_NOTHING, db_column='npreq_id', blank=True, null=True)
-    
-
-    #nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
-
-    # nc = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
-    # tl = models.ForeignKey('Targetingligand', models.DO_NOTHING, db_column='TL_id', blank=True, null=True)
-    # agent = models.ForeignKey(Cellenteragent, models.DO_NOTHING, db_column='Agent_id', blank=True, null=True)
-    # linker = models.ForeignKey(Linker, models.DO_NOTHING, db_column='Linker_id', blank=True, null=True)
-    # linkerdesc = models.TextField(db_column='LinkerDesc', blank=True, null=True)
-    # shape = models.TextField(db_column='Shape', blank=True, null=True)
-    # dimx = models.DecimalField(db_column='Dimx', max_digits=4, decimal_places=0, blank=True, null=True)
-    # dimy = models.DecimalField(db_column='Dimy', max_digits=4, decimal_places=0, blank=True, null=True)
-    # dimz = models.DecimalField(db_column='Dimz', max_digits=4, decimal_places=0, blank=True, null=True)
-    # echarge = models.DecimalField(db_column='ECharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    # ecdist = models.TextField(db_column='ECDist', blank=True, null=True)
-    # immuneresist = models.TextField(db_column='ImmuneResist', blank=True, null=True)
-    # specificity = models.DecimalField(db_column='Specificity', max_digits=6, decimal_places=2, blank=True, null=True)
-    # efficiency = models.DecimalField(db_column='Efficiency', max_digits=8, decimal_places=0, blank=True, null=True)
-    # effectspeed = models.TextField(db_column='EffectSpeed', blank=True, null=True)
-    # excretion = models.TextField(db_column='Excretion', blank=True, null=True)
-
-    class Meta:
-        db_table = 'nanoparticle'
-
 class comptype(models.Model):
     ct_id = models.AutoField(db_column='ct_id', primary_key=True, serialize=True)
     ctypetitle = models.CharField(db_column='ctypetitle', max_length=50, blank=True, null=True)
@@ -926,28 +841,28 @@ class Node(models.Model):
     node_id = models.AutoField(db_column='Node_id', primary_key=True, serialize=True)
     ref_num = models.CharField(db_column='Ref_num', max_length=3, blank=True, null=True)
     nodecaption = models.CharField(db_column='NodeCaption', max_length=254, blank=True, null=True)
-    agingfunction = models.CharField(db_column='agingfunction', max_length=254, blank=True, null=True)
+    agingfunction = models.TextField(db_column='agingfunction', max_length=254, blank=True, null=True)
     nodeshape = models.IntegerField(db_column='NodeShape', choices=NODESHAPE_CHOICES, blank=True, null=True)
     dashed = models.BooleanField(default=False)
     nodecolor = models.IntegerField(db_column='NodeColor', choices=NODECOLOR_CHOICES, blank=True, null=True)
     container = models.IntegerField(db_column='Container', choices=CONTAINER_CHOICES, blank=True, null=True)
-    # 1- Tissue, Organ, & Whole Body Physiology & Pathology - Node_id=313 - Ref_num=900
-    # 2- Whole Cells or Tissues - Node_id=314 - Ref_num=801
     # 3- Extracellular Spaces: ECM, Blood Plasma, Lymph, CSF - Node_id=312 - Ref_num=200
-    # 4- Cytosolic Compartment of the Cell - Node_id=315 - Ref_num=802
-    # 5- Lysosome – Hydrolysis - for recycling. Accumulation in nonmitotic cells - Node_id=316 - Ref_num=803
-    # 6- Macroautophagy - Node_id=246 - Ref_num=800
-    # 7- Mitochondria in nonmitotic cell - Node_id=317 - Ref_num=804
-    # 8- Cell Nucleus – Genetics - Node_id=318 - Ref_num=805
-    # 9- Endoplasmic Reticulum - Node_id=319 - Ref_num=806
-    # 10- Cell Membrane - Node_id=320 - Ref_num=807
-    # 11- Secretion - Node_id=321 - Ref_num=808
-    # 12- Environmental Factors - Node_id=322 - Ref_num=809
-    # 13- Endoplasmic Reticulum Membrane - Node_id=323 - Ref_num=810
-    # 14- Nucleus Membrane - Node_id=324 - Ref_num=811
-    # 15- Mitochondria Membrane - Node_id=325 - Ref_num=812
-    # 16- Lysosome Membrane - Node_id=326 - Ref_num=813
-    # 17- Intervention - Node_id=327 - Ref_num=814
+        # 11- Secretion - Node_id=321 - Ref_num=808 -> 800
+    # 4- Cytosolic Compartment of the Cell - Node_id=315 - Ref_num=802 -> 801
+        # 10- Cell Membrane - Node_id=320 - Ref_num=807 -> 802
+        # 5- Lysosome – Hydrolysis - for recycling. Accumulation in nonmitotic cells - Node_id=316 - Ref_num=803
+            # 16- Lysosome Membrane - Node_id=326 - Ref_num=813 -> 804
+        # 6- Macroautophagy - Node_id=246 - Ref_num=800 -> 805
+        # 7- Mitochondria in nonmitotic cell - Node_id=317 - Ref_num=804 -> 806
+            # 15- Mitochondria Membrane - Node_id=325 - Ref_num=812 -> 807
+        # 8- Cell Nucleus – Genetics - Node_id=318 - Ref_num=805 -> 808
+            # 14- Nucleus Membrane - Node_id=324 - Ref_num=811 -> 809
+        # 9- Endoplasmic Reticulum - Node_id=319 - Ref_num=806 -> 810
+            # 13- Endoplasmic Reticulum Membrane - Node_id=323 - Ref_num=810 -> 811
+    # 2- Whole Cells or Tissues - Node_id=314 - Ref_num=801 -> 812
+    # 1- Tissue, Organ, & Whole Body Physiology & Pathology - Node_id=313 - Ref_num=900
+    # 12- Environmental Factors - Node_id=322 - Ref_num=809 -> 950
+    # 17- Intervention - Node_id=327 - Ref_num=814 -> 951
     nodedesc = models.TextField(db_column='NodeDesc', blank=True, null=True)
     vmortality = models.DecimalField(db_column='vmortality', max_digits=3, decimal_places=0, blank=True, null=True)
     vspeed = models.DecimalField(db_column='vspeed', max_digits=3, decimal_places=0, blank=True, null=True) # Value of speed of progress
@@ -956,7 +871,8 @@ class Node(models.Model):
     ventropy = models.DecimalField(db_column='ventropy', max_digits=3, decimal_places=0, blank=True, null=True) # Value of the increase in entropy or impair of homeostasis
     adsens = models.DecimalField(db_column='adsens', max_digits=6, decimal_places=2, blank=True, null=True) # Acceptable Diagnosis Sensitivity
     adspec = models.DecimalField(db_column='adspec', max_digits=6, decimal_places=2, blank=True, null=True) # Acceptable Diagnosis Specificity
-    parent_n = models.ForeignKey('self', models.DO_NOTHING, db_column='Parent_n_id', blank=True, null=True, related_name='children')
+    parent_n = models.ForeignKey('self', on_delete=models.CASCADE, db_column='Parent_n_id', blank=True, null=True, related_name='children')
+    # cystyle = models.CharField(db_column='cystyle', max_length=450, blank=True, null=True)
     width = models.IntegerField(db_column='width', blank=True, null=True)
     height = models.IntegerField(db_column='height', blank=True, null=True)
     posx = models.IntegerField(db_column='posx', blank=True, null=True)
@@ -966,6 +882,12 @@ class Node(models.Model):
     posny = models.DecimalField(db_column='posny', max_digits=9, decimal_places=4, blank=True, null=True)
     def __str__(self):
         return f"{self.ref_num} - {self.nodecaption}"
+        
+    def delete(self, *args, **kwargs):
+        if self.children.exists():
+            raise ValidationError("Cannot delete a container while it contains nodes.")
+        super().delete(*args, **kwargs)
+
 
     class Meta:
         db_table = 'node'
@@ -980,7 +902,7 @@ class normweight(models.Model):
     ]
     nw_id = models.AutoField(db_column='nw_id', primary_key=True, serialize=True)
     node = models.ForeignKey(Node, models.DO_NOTHING, db_column='Node_id')
-    purpose = models.IntegerField(db_column='purpose', choices=NODESHAPE_CHOICES, blank=True, null=True)
+    purpose = models.IntegerField(db_column='purpose', choices=PURPOSE_CHOICES, blank=True, null=True)
     wmortality = models.DecimalField(db_column='wmortality', max_digits=3, decimal_places=0, blank=True, null=True)
     wspeed = models.DecimalField(db_column='wspeed', max_digits=3, decimal_places=0, blank=True, null=True) # Value of speed of progress
     wfrequency = models.DecimalField(db_column='wfrequency', max_digits=3, decimal_places=0, blank=True, null=True) # Value of frequency of occurrence
@@ -1195,15 +1117,22 @@ class SAE(models.Model):
     class Meta:
         db_table = 'sae'
 
-class DoseUnit(models.Model):
-    unit_id = models.AutoField(db_column='unit_id', primary_key=True, serialize=True)
-    doseunit = models.CharField(db_column='doseunit', max_length=50, blank=True, null=True)
-    abbreviation = models.CharField(db_column='abbreviation', max_length=20, blank=True, null=True)
+class toxicitymeasure(models.Model):
+    TMTYPE_CHOICES = [
+        (1, 'NOAEL'), # notoxic effect level
+        (2, 'MTD'), # maximum tolerated dose
+        (3, 'NTEL'), # no toxic effect level
+    ]
+    tm_id = models.AutoField(db_column='tm_id', primary_key=True, serialize=True)
+    tmtype = models.IntegerField(db_column='tmtype', choices=TMTYPE_CHOICES, blank=True, null=True)
+    tixicity = models.FloatField(db_column='toxicity', blank=True, null=True) 
+    unit = models.ForeignKey('toxicitymeasure', models.DO_NOTHING, db_column='unit_id', blank=True, null=True)
     def __str__(self):
-        return self.doseunit
+        return f"{self.tmtype} - {self.toxicity} - {self.unit.unit}"
 
     class Meta:
-        db_table = 'doseunit'
+        db_table = 'toxicitymeasure'
+
 
 
 class InterventionSAE(models.Model):
@@ -1211,8 +1140,7 @@ class InterventionSAE(models.Model):
     intervention = models.ForeignKey('Intervention', models.DO_NOTHING, db_column='Intervention_id')
     ae = models.ForeignKey('SAE', models.DO_NOTHING, db_column='AE_id')
     isaedesc = models.TextField(db_column='isaedesc', blank=True, null=True)
-    doselimit = models.DecimalField(db_column='doselimit', max_digits=10, decimal_places=2, blank=True, null=True)
-    unit = models.ForeignKey(DoseUnit, models.DO_NOTHING, db_column='unit_id', blank=True, null=True)
+    tm = models.ForeignKey('toxicitymeasure', models.DO_NOTHING, db_column='tm_id', blank=True, null=True)
     doseduration = models.IntegerField(db_column='doseduration', blank=True, null=True)
     
     def __str__(self):
@@ -1254,6 +1182,94 @@ class isaecond(models.Model):
 
     class Meta:
         db_table = 'isae_cond'
+
+
+class nanoparticle(models.Model):
+    HYDROPHOBICITY_METHOD_CHOICES = [
+        (1, 'Contact Angle Measurement'),
+        (2, 'Partition Coefficient (Log P)'),
+        (3, 'Hydrophobic Interaction Chromatography (HIC)'),
+        (4, 'Hydropathy Index (Kyte-Doolittle Scale'),
+        (5, 'Water Solubility'),
+    ]
+    SHAPE_CHOICES = [
+        (1, 'Spherical'),
+        (2, 'Rod-shaped (nanorods)'),
+        (3, 'Cubic'),
+        (4, 'Platelet-shaped (nanosheets)'),
+        (5, 'Tubular (nanotubes)'),
+        (6, 'Star-shaped (nanostars)'),
+        (7, 'Branched (nanobranches)'),
+        (8, 'Flower-shaped (nanoflowers)'),
+        (9, 'Hollow (nanocages, nanospheres)'),
+    ]
+    IMMUNRESIST_CHOICES = [
+        (1, 'Phagocytosis Assays'),
+        (2, 'Complement Activation Assays'),
+        (3, 'Cytokine Release Assays'),
+        (4, 'Surface Protein Adsorption Studies'),
+        (5, 'In Vivo Biodistribution Studies'),
+    ]
+    OFFTARGET_CHOICES = [
+        (1, 'Flow Cytometry'),
+        (2, 'Imaging Techniques'),
+        (3, 'Mass Spectrometry'),
+        (4, 'Bio-distribution Studies'),
+        (5, 'Proteomics and Genomics Approaches'),
+    ]
+    np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
+    nptitle = models.CharField(db_column='nptitle', max_length=100, blank=True, null=True)
+    npdesc = models.TextField(db_column='npdesc', blank=True, null=True)
+    shape = models.IntegerField(db_column='shape', choices=SHAPE_CHOICES, blank=True, null=True)
+    mindimx = models.DecimalField(db_column='mindimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    mindimy = models.DecimalField(db_column='mindimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    mindimz = models.DecimalField(db_column='mindimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimx = models.DecimalField(db_column='maxdimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimy = models.DecimalField(db_column='maxdimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimz = models.DecimalField(db_column='maxdimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    minnegcharge = models.DecimalField(db_column='minnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    maxnegcharge = models.DecimalField(db_column='maxnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    minposcharge = models.DecimalField(db_column='minposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    maxposcharge = models.DecimalField(db_column='maxposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    hydrophobicity = models.FloatField(db_column='hydrophobicity', blank=True, null=True)
+    hydrophmethod = models.IntegerField(db_column='hydrophmethod', choices=HYDROPHOBICITY_METHOD_CHOICES, blank=True, null=True)
+    immuneresistance = models.FloatField(db_column='immuneresistance', blank=True, null=True)
+    immunmethod = models.IntegerField(db_column='immunmethod', choices=IMMUNRESIST_CHOICES, blank=True, null=True)
+    targetingefficiency = models.DecimalField(db_column='targetingefficiency', max_digits=6, decimal_places=2, blank=True, null=True)
+    cellularuptake = models.DecimalField(db_column='cellularuptake', max_digits=6, decimal_places=2, blank=True, null=True)
+    immunogenicity = models.TextField(db_column='immunogenicity', blank=True, null=True)
+    offtarget = models.FloatField(db_column='offtarget', blank=True, null=True)
+    offtargetmethod = models.IntegerField(db_column='offtargetmethod', choices=OFFTARGET_CHOICES, blank=True, null=True)
+    halflife = models.DecimalField(db_column='HalfLife', max_digits=3, decimal_places=0, blank=True, null=True)
+    circulationrate = models.DecimalField(db_column='circulationrate', max_digits=3, decimal_places=0, blank=True, null=True)
+    clearancerate = models.DecimalField(db_column='clearancerate', max_digits=3, decimal_places=0, blank=True, null=True)
+    tracked = models.IntegerField(db_column='Tracked', blank=True, null=True)
+    peg = models.TextField(db_column='PEG', blank=True, null=True)
+    tm = models.ForeignKey('toxicitymeasure', models.DO_NOTHING, db_column='tm_id', blank=True, null=True)
+    npreq = models.ForeignKey('self', models.DO_NOTHING, db_column='npreq_id', blank=True, null=True)
+    
+
+    #nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
+
+    # nc = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
+    # tl = models.ForeignKey('Targetingligand', models.DO_NOTHING, db_column='TL_id', blank=True, null=True)
+    # agent = models.ForeignKey(Cellenteragent, models.DO_NOTHING, db_column='Agent_id', blank=True, null=True)
+    # linker = models.ForeignKey(Linker, models.DO_NOTHING, db_column='Linker_id', blank=True, null=True)
+    # linkerdesc = models.TextField(db_column='LinkerDesc', blank=True, null=True)
+    # shape = models.TextField(db_column='Shape', blank=True, null=True)
+    # dimx = models.DecimalField(db_column='Dimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    # dimy = models.DecimalField(db_column='Dimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    # dimz = models.DecimalField(db_column='Dimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    # echarge = models.DecimalField(db_column='ECharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    # ecdist = models.TextField(db_column='ECDist', blank=True, null=True)
+    # immuneresist = models.TextField(db_column='ImmuneResist', blank=True, null=True)
+    # specificity = models.DecimalField(db_column='Specificity', max_digits=6, decimal_places=2, blank=True, null=True)
+    # efficiency = models.DecimalField(db_column='Efficiency', max_digits=8, decimal_places=0, blank=True, null=True)
+    # effectspeed = models.TextField(db_column='EffectSpeed', blank=True, null=True)
+    # excretion = models.TextField(db_column='Excretion', blank=True, null=True)
+
+    class Meta:
+        db_table = 'nanoparticle'
 
 
 class NodeIntervention(models.Model):
@@ -1326,8 +1342,8 @@ class npint(models.Model):
 
 class nplit(models.Model):
     npl_id = models.AutoField(primary_key=True, serialize=True)
-    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='np_id')
-    lit = models.ForeignKey(Literature, models.DO_NOTHING, db_column='lit_id')
+    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='np_id', null=True, blank=True)
+    lit = models.ForeignKey(Literature, models.DO_NOTHING, db_column='lit_id', null=True, blank=True)
 
     class Meta:
         db_table = 'nplit'
@@ -1624,8 +1640,8 @@ class Pricelist(models.Model):
 
 class ProNp(models.Model):
     pnp_id = models.AutoField(primary_key=True, serialize=True)
-    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='NP_id')
-    prot = models.ForeignKey('Protocol', models.DO_NOTHING, db_column='Prot_id')
+    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='NP_id', null=True, blank=True)
+    prot = models.ForeignKey('Protocol', models.DO_NOTHING, db_column='Prot_id', null=True, blank=True)
 
     class Meta:
         db_table = 'pro_np'
@@ -1644,7 +1660,11 @@ class Project(models.Model):
         (1, 'Required'),
         (2, 'Projects defined  to help intervention discovery and development processes leap one step forward'),
         (3, 'Help the holistic approach'),
-        # Add more levels as needed
+    ]
+    PLEVEL_CHOICES = [
+        (1, 'Portfolio'),
+        (2, 'Program'),
+        (3, 'Project'),
     ]
     project_id = models.AutoField(db_column='Project_id', primary_key=True, serialize=True)
     projtitle = models.CharField(db_column='ProjTitle', max_length=255, blank=True, null=True)
@@ -1654,6 +1674,7 @@ class Project(models.Model):
     program = models.ForeignKey('self', models.DO_NOTHING, db_column='Program_id', blank=True, null=True)
     projdesc = models.TextField(db_column='ProjDesc', blank=True, null=True)
     projstatus = models.IntegerField(db_column='ProjStatus', choices=PROJ_STATUS_CHOICES, blank=True, null=True)
+    plevel = models.IntegerField(db_column='plevel', choices=PLEVEL_CHOICES, blank=True, null=True)
     def __str__(self):
         return self.projtitle
 
@@ -1711,6 +1732,32 @@ class Subject(models.Model):
 
     class Meta:
         db_table = 'subject'
+
+    # Project subjects may include:
+    # Modern Intervention Technology Development
+    # Gene Therapy Intervention
+    # Tissue Regeneration
+    # Nanoparticle therapy
+    # Rejuvenation Intervention
+    # Intervention Discovery
+    # Diagnostic Method
+    # Drug Discovery
+    # Clinical Trials Phase I
+    # Clinical Trials Phase II
+    # Clinical Trials Phase III
+    # Lab Protocol Development
+    # Optimization/Industrialization
+    # Promotion to Market
+    # Theory of Aging Research
+    # Biomarker Discovery
+    # Solution for a draw-back
+    # Cellular/Molecular Pathway of Aging
+    # Intervention Development
+    # Stem Cell Therapy
+    # Diagnose Assay
+    # Research on Cellular/Molecular Pathway of Aging
+    # Life-Style Research
+    # Mind Transfer Research
 
 
 class ProjectSubject(models.Model):
@@ -2006,10 +2053,10 @@ class unit(models.Model):
 
 class npcomponent(models.Model):
     npc_id = models.AutoField(db_column='npc_id', primary_key=True, serialize=True)
-    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='np_id')
-    comp = models.ForeignKey(component, models.DO_NOTHING, db_column='comp_id')
+    np = models.ForeignKey(nanoparticle, models.DO_NOTHING, db_column='np_id', null=True, blank=True)
+    comp = models.ForeignKey(component, models.DO_NOTHING, db_column='comp_id', null=True, blank=True)
     amount = models.FloatField(db_column='amount', blank=True, null=True)
-    unit = models.ForeignKey(unit, models.DO_NOTHING, db_column='unit_id')
+    unit = models.ForeignKey(unit, models.DO_NOTHING, db_column='unit_id', null=True, blank=True)
 
     class Meta:
         db_table = 'npcomponent'

@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %}Containers List{% endblock %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div class="top-controls">
+    <h1>Select Containers</h1>
+    <button class="command-button" type="button" id="selectAllButton">Select All</button>
+    <button class="command-button" type="button" id="deselectAllButton">Deselect All</button>
+</div>
+
+<form method="post" action="{% url 'process_selected_containers' %}">
+    {% csrf_token %}
+    <div id="ContainersTree" class="tree">
+        {% for container_id, container_l1 in containers_l1.items %}
+            <ul id="container-{{ container_l1.node_id }}">
+                <li data-container-id="{{ container_l1.node_id }}">
+                    <span style="border: 5px solid {{ color_mapping|get_item:container_l1.nodecolor }}; background-color: {{ light_color_mapping|get_item:container_l1.nodecolor }}; margin: 4px; border-radius: 7px">
+                        <input type="checkbox" name="selected_containers" value="{{ container_l1.node_id }}"
+                            {% if container_l1.node_id in selected_node_ids %}checked{% endif %}
+                            style="margin-left: 10px;">
+                        <span>
+                            [{{ container_l1.ref_num }}]
+                        </span>
+                        <span>
+                            {{ container_l1.nodecaption }}
+                        </span>
+                    </span>
+					<ul class="children">
+                        <!-- List containers at level 2 -->
+						{% for container_l2 in grouped_containers|get_item:container_l1.node_id %}
+							<ul class="children" style="margin-left: 20px" id="container-{{ container_l2.node_id }}">
+                                <li data-parent-id="{{ container_l1.node_id }}">
+                                    <span style="border: 5px solid {{ color_mapping|get_item:container_l2.nodecolor }}; background-color: {{ light_color_mapping|get_item:container_l2.nodecolor }}; border-radius: 7px">
+                                        <input type="checkbox" name="selected_containers" value="{{ container_l2.node_id }}"
+                                            {% if container_l2.node_id in selected_node_ids %}checked{% endif %}
+                                            style="margin-left: 10px">
+                                        <span>
+                                            [{{ container_l2.ref_num }}]
+                                        </span>
+                                        <span>
+                                            {{ container_l2.nodecaption }}
+                                        </span>
+                                    </span>
+                                    <ul class="children">
+                                        <!-- List containers at level 3 -->
+                                        {% for container_l3 in grouped_containers|get_item:container_l2.node_id %}
+                                            <ul class="children" style="margin-left: 20px" id="container-{{ container_l3.node_id }}">
+                                                <li data-parent-id="{{ container_l2.node_id }}">
+                                                    <span style="border: 5px solid {{ color_mapping|get_item:container_l3.nodecolor }}; background-color: {{ light_color_mapping|get_item:container_l3.nodecolor }}; border-radius: 7px">
+                                                        <input type="checkbox" name="selected_containers" value="{{ container_l3.node_id }}"
+                                                            {% if container_l3.node_id in selected_node_ids %}checked{% endif %}
+                                                            style="margin-left: 10px">
+                                                        <span>
+                                                            [{{ container_l3.ref_num }}]
+                                                        </span>
+                                                        <span>
+                                                            {{ container_l3.nodecaption }}
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+		{% endfor %}
+    </div>
+    <div id="error-message" style="color: red; display: none;">Please select at least one container.</div>
+	
+    <div class="bottom-controls">
+        <button class="command-button" type="submit">See the list of Nodes</button>
+		<br>
+	</div>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const containerForm = document.getElementById('containerForm');
+        if (containerForm) {
+            containerForm.addEventListener('submit', function(event) {
+                const checkboxes = document.querySelectorAll('input[name="selected_containers"]:checked');
+                if (checkboxes.length === 0) {
+                    event.preventDefault();
+                    const errorMessage = document.getElementById('error-message');
+                    errorMessage.style.display = 'block';
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 3000);
+                }
+            });
+        }
+
+        const selectAllButton = document.getElementById('selectAllButton');
+        if (selectAllButton) {
+            selectAllButton.addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="selected_containers"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+            });
+        }
+
+        const deselectAllButton = document.getElementById('deselectAllButton');
+        if (deselectAllButton) {
+            deselectAllButton.addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('input[name="selected_containers"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            });
+        }
+
+        // Add event listener to each container checkbox
+        // document.addEventListener("DOMContentLoaded", () => {
+        const containerCheckboxes = document.querySelectorAll('input[type="checkbox"][name="selected_containers"]');
+        containerCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener("change", (event) => {
+                const containerId = event.target.value; // Assuming value is the container's ID
+                toggleChildren(containerId, event.target.checked);
+            });
+        });
+    });
+    //});
+
+    // Function to toggle selection of child checkboxes when a container is checked/unchecked
+    function toggleChildren(containerId, isChecked) {
+        const parentElement = document.querySelector(`#container-${containerId}`);
+		
+        if (parentElement) {
+            const childCheckboxes = parentElement.querySelectorAll('input[type="checkbox"]');
+            childCheckboxes.forEach((checkbox) => {
+                checkbox.checked = isChecked;
+            });
+        }
+    }
+
+
+</script>
+
+{% endblock %}

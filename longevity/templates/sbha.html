@@ -4,26 +4,49 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}SBHA{% endblock %}</title>
-	<link rel="stylesheet" href="{% static 'css/cytoscape-styles.css' %}">
 </head>
 
 {% block content %}
+<style>
+    #cy {
+        position: absolute;
+        width: {{ calculated_width }}px;
+        height: {{ calculated_height }}px;
+        display: block;
+        border: 1px solid #000;
+    }
+    #cy.zoomed {
+        transform: scale(4);
+        transform-origin: top left;
+    }
+</style>
     <div class="container">
 	    <h1>Systems Biology of Human Aging - Network Model</h1>
-		<h2>By: John D. Furber<br>© 2000 - 2019 John D. Furber<br>All rights reserved.<br><br>Legendary Pharmaceuticals</h2>
-		<h3>PO Box 14200
+		<h2>By John D. Furber, © 2000 - 2019 John D. Furber. All rights reserved. Legendary Pharmaceuticals</h2>
+		 <!-- PO Box 14200
 		    <br>Gainesville FL 32604-2200 USA
-			<br>JohnFurber@LegendaryPharma.com
-			<br><br>Download PDF version to print: <a href="http://www.LegendaryPharma.com/chartbg.html" target="_blank">www.LegendaryPharma.com/chartbg.html</a>
-			<br><br>Developed in Cytoscape.js by: Hamid H. Alfatemi
-			<br><br>© 2016-2021, 2023, The Cytoscape Consortium
-		</h3>
+			<br>JohnFurber@LegendaryPharma.com -->
+		<p>
+		    Download PDF version:
+			<a href="http://www.LegendaryPharma.com/chartbg.html" target="_blank">www.LegendaryPharma.com/chartbg.html</a>
+		</p>
+		<h3>Created with Cytoscape.js. © 2016-2021, 2023, The Cytoscape Consortium</h3>
+        <h5> 
+            Number of Nodes: {{ node_count }} 
+            &nbsp;&nbsp;&nbsp; Number of Edges: {{ edge_count }} 
+            &nbsp;&nbsp;&nbsp; {% if container_count > 0 %} Number of Containers: {{ container_count }} {% endif %}
+        </h5>
+			<!-- <br><br>Developed in Cytoscape.js by: Hamid H. Alfatemi
+			<br><br>© 2016-2021, 2023, The Cytoscape Consortium -->
     </div>
     <div id="cy"></div>
     <!-- Copyright (c) 2016-2021, 2023, The Cytoscape Consortium -->
-    <script src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
+    <!-- <script src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
     <script src="{% static 'webcola/WebCola/cola.min.js' %}"></script>
-    <script src="{% static 'cytoscape-cola/cytoscape-cola.js' %}"></script>
+    <script src="{% static 'cytoscape-cola/cytoscape-cola.js' %}"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.5.1/cytoscape-cola.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

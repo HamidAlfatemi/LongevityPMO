@@ -77,8 +77,8 @@ from .models import isaecond
 admin.site.register(isaecond)
 from .models import InterventionSAE
 admin.site.register(InterventionSAE)
-from .models import DoseUnit
-admin.site.register(DoseUnit)
+# from .models import DoseUnit
+# admin.site.register(DoseUnit)
 from .models import ISAELiterature
 admin.site.register(ISAELiterature)
 from .models import Subject
