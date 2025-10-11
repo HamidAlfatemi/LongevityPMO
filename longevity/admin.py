@@ -117,3 +117,11 @@ from .models import nodecelltype
 admin.site.register(nodecelltype)
 from .models import edgecelltype
 admin.site.register(edgecelltype)
+from .models import Contactinfo
+admin.site.register(Contactinfo)
+from .models import Person
+admin.site.register(Person)
+from .models import Field
+admin.site.register(Field)
+from .models import PersonField
+admin.site.register(PersonField)

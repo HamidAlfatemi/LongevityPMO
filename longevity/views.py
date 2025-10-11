@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from .models import Node, Edge
+from django.contrib import messages
+from .models import Node, Edge, Contactinfo, Person, Organization, OrganizationPerson, Contactinfo, Field, FieldEducation
 from django.db import connection
+from django.db import transaction
 from django.db.models import Q
 from django.db.models import F, ExpressionWrapper, fields
 from collections import defaultdict, deque
@@ -12,6 +14,89 @@ def legend(request):
 def index(request):
     return render(request, 'index.html')
 
+def onpdlanding(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            if not Contactinfo.objects.filter(contact=email, conttype=3).exists():
+                Contactinfo.objects.create(
+                    contact=email,
+                    conttype=3,
+                    contdesc='In ONPD waiting list'
+                )
+                messages.success(request, "You’ve been added to the ONPD waitlist. Thank you!")
+            else:
+                messages.info(request, "You’re already on the ONPD waitlist.")
+        else:
+            messages.error(request, "Please enter a valid email address.")
+        return redirect('onpdlanding')  # This assumes you have a named URL pattern
+    return render(request, 'onpdlanding.html')
+
+def join_cofounder(request):
+    contact_fields = {
+        'Telephone number': 'tel',
+        'Cell-phone number': 'cell',
+        'Email': 'email',
+        'Web-site URL': 'url',
+        'LinkedIn': 'linkedin',
+        'WhatsApp': 'wa',
+        'Twitter': 'twitter',
+        'Instagram': 'instagram',
+        'Telegram': 'telegram',
+    }
+
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
+                # Save person
+                p = Person.objects.create(
+                    firstname=request.POST.get('firstname'),
+                    lastname=request.POST.get('lastname'),
+                    jobtitle=request.POST.get('jobtitle')
+                )
+
+                # Save or get organization
+                orgtitle = request.POST.get('orgtitle')
+                if orgtitle:
+                    org, _ = Organization.objects.get_or_create(orgtitle=orgtitle)
+                    OrganizationPerson.objects.create(person=p, organization=org)
+
+                # Save contact info
+                contact_map = {
+                    'tel': 1, 'cell': 2, 'email': 3, 'url': 4,
+                    'linkedin': 5, 'wa': 6, 'twitter': 7, 'instagram': 8, 'telegram': 9
+                }
+                for key, conttype in contact_map.items():
+                    value = request.POST.get(key)
+                    if value:
+                        Contactinfo.objects.create(
+                            conttype=conttype,
+                            contact=value,
+                            person=p
+                        )
+
+                # Save disciplines (fields)
+                # disciplines = request.POST.get('disciplines', '').split(',')
+                disciplines = request.POST.getlist('disciplines[]')
+                # for d in map(str.strip, disciplines):
+                    # if d:
+                        # field, _ = Field.objects.get_or_create(fieldtitle=d)
+                        # # If you have a PersonField model instead of FieldEducation:
+                        # # PersonField.objects.create(person=p, field=field)
+                        # FieldEducation.objects.create(field=field, edu_id=None)  # adapt if needed
+                for disc in disciplines:
+                    disc = disc.strip()
+                    if not disc:
+                        continue
+                field_obj, _ = Field.objects.get_or_create(fieldtitle__iexact=disc, defaults={'fieldtitle': disc})
+                PersonField.objects.get_or_create(person=person, field=field_obj)
+
+                messages.success(request, "Thanks for joining as a co-founder candidate!")
+                return redirect('join_cofounder')
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+
+    return render(request, 'join_cofounder.html', {'contact_fields': contact_fields})
 
 def get_color_mappings():
     color_mapping = {

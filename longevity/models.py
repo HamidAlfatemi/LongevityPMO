@@ -68,12 +68,24 @@ class Cellage(models.Model):
 
 
 class Contactinfo(models.Model):
+    CONTTYPE_CHOICES = [
+        (1, 'Telephone number'),
+        (2, 'Cell-phone number'),
+        (3, 'Email'),
+        (4, 'Web-site URL'),
+        (5, 'LinkedIn'),
+        (6, 'WhataApp'),
+        (7, 'Twitter'),
+        (8, 'Instagram'),
+        (9, 'Telegram'),
+    ]
     ci_id = models.AutoField(db_column='CI_id', primary_key=True, serialize=True)
-    conttype = models.IntegerField(db_column='ContType', blank=True, null=True)
+    conttype = models.IntegerField(db_column='ContType', choices=CONTTYPE_CHOICES, blank=True, null=True)
     contact = models.CharField(db_column='Contact', max_length=255, blank=True, null=True)
     organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='Organization_id', blank=True, null=True)
     person = models.ForeignKey('Person', models.DO_NOTHING, db_column='Person_id', blank=True, null=True)
     lit = models.ForeignKey('Literature', models.DO_NOTHING, db_column='Lit_id', blank=True, null=True)
+    contdesc = models.TextField(db_column='contdesc', blank=True, null=True)
 
     class Meta:
         db_table = 'contactinfo'
@@ -402,7 +414,6 @@ class Gene(models.Model):
     class Meta:
         db_table = 'gene'
         ordering = ['gsymbol']
-
 
 class IcfParameter(models.Model):
     icfp_id = models.AutoField(primary_key=True, serialize=True)
@@ -936,6 +947,16 @@ class celltype(models.Model):
 
         db_table = 'celltype'
 
+class intcelltype(models.Model):
+    ict_id = models.AutoField(db_column='ict_id', primary_key=True, serialize=True)
+    intervention = models.ForeignKey(Intervention, on_delete=models.CASCADE, db_column='intervention_id', blank=True, null=True)
+    ct = models.ForeignKey(celltype, on_delete=models.CASCADE, db_column='ct_id', blank=True, null=True)
+    def __str__(self):
+        return f"{self.intervention.interventiontitle} - {self.celltype.cttitle}"
+
+    class Meta:
+        db_table = 'intcelltype'
+
 class nodecelltype(models.Model):
     nct_id = models.AutoField(db_column='nct_id', primary_key=True, serialize=True)
     node = models.ForeignKey(Node, on_delete=models.CASCADE, db_column='node_id', blank=True, null=True)
@@ -975,6 +996,16 @@ class nodetissue(models.Model):
     class Meta:
         db_table = 'nodetissue'
 
+class inttissue(models.Model):
+    it_id = models.AutoField(db_column='it_id', primary_key=True, serialize=True)
+    intervention = models.ForeignKey(Intervention, on_delete=models.CASCADE, db_column='intervention_id', blank=True, null=True)
+    tissue = models.ForeignKey(tissue, on_delete=models.CASCADE, db_column='tissue_id', blank=True, null=True)
+    def __str__(self):
+        return f"{self.intervention.interventiontitle} - {self.tissue.tissuetitle}"
+
+    class Meta:
+        db_table = 'inttissue'
+
 class edgetissue(models.Model):
     et_id = models.AutoField(db_column='et_id', primary_key=True, serialize=True)
     edge = models.ForeignKey(Edge, on_delete=models.CASCADE, db_column='edge_id', blank=True, null=True)
@@ -1010,11 +1041,35 @@ class protein(models.Model):
     proteinname = models.CharField(db_column='proteinname', max_length=100, blank=True, null=True)
     uniportid = models.CharField(db_column='uniportid', max_length=6, blank=True, null=True)
     gene = models.ForeignKey(Gene, on_delete=models.CASCADE, db_column='gene_id', blank=True, null=True)
+
     def __str__(self):
         return self.proteinname
-    class Meta:
 
+    class Meta:
         db_table = 'protein'
+
+class receptor(models.Model):
+    receptor_id = models.AutoField(db_column='receptor_id', primary_key=True, serialize=True)
+    receptorname = models.CharField(db_column='receptorname', max_length=50, blank=True, null=True)
+    receptordesc = models.TextField(db_column='receptordesc', blank=True, null=True)
+
+    def __str__(self):
+        return self.receptorname
+
+    class Meta:
+        db_table = 'receptor'
+
+class proteinreceptor(models.Model):
+    pr_id = models.AutoField(primary_key=True, serialize=True)
+    receptor = models.ForeignKey('receptor', models.DO_NOTHING, db_column='receptor_id')
+    protein = models.ForeignKey('protein', models.DO_NOTHING, db_column='protein_id')
+
+    def __str__(self):
+        return f"{self.protein.proteinname} - {self.receptor.receptorname}"
+
+    class Meta:
+        db_table = 'proteinreceptor'
+
 
 class nodeprotein(models.Model):
     np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
@@ -1119,16 +1174,24 @@ class SAE(models.Model):
 
 class toxicitymeasure(models.Model):
     TMTYPE_CHOICES = [
-        (1, 'NOAEL'), # notoxic effect level
-        (2, 'MTD'), # maximum tolerated dose
-        (3, 'NTEL'), # no toxic effect level
+        (1, 'NOAEL (no Observed Adverse Effect Level)'),
+        (2, 'NOEL (No Observed Effect Level)'),
+        (3, 'MTD (maximum tolerated dose)'),
+        (4, 'NTEL (no toxic effect level)'),
+        (5, 'LD50 (Lethal Dose, 50%)'),
+        (6, 'IC50 (inhibitory concentration 50%)'),
+        (7, 'EC50 (Effective Concentration 50%)'),
+        (8, 'ED50 (Effective Dose 50%)'),
+        (9, 'TD50 (Toxic Dose 50%)'),
+        (10, 'LOAEL (Lowest Observed Adverse Effect Level)'),
     ]
     tm_id = models.AutoField(db_column='tm_id', primary_key=True, serialize=True)
     tmtype = models.IntegerField(db_column='tmtype', choices=TMTYPE_CHOICES, blank=True, null=True)
-    tixicity = models.FloatField(db_column='toxicity', blank=True, null=True) 
-    unit = models.ForeignKey('toxicitymeasure', models.DO_NOTHING, db_column='unit_id', blank=True, null=True)
+    toxicityvalue = models.FloatField(db_column='toxicityvalue', blank=True, null=True) 
+    unit = models.ForeignKey('unit', models.DO_NOTHING, db_column='unit_id', blank=True, null=True)
+    
     def __str__(self):
-        return f"{self.tmtype} - {self.toxicity} - {self.unit.unit}"
+        return f"{self.tmtype} - {self.toxicityvalue} - {self.unit.unit}"
 
     class Meta:
         db_table = 'toxicitymeasure'
@@ -1184,6 +1247,49 @@ class isaecond(models.Model):
         db_table = 'isae_cond'
 
 
+class nptype(models.Model):
+    npt_id = models.AutoField(db_column='npt_id', primary_key=True, serialize=True)
+    pnpt = models.ForeignKey('self', models.DO_NOTHING, db_column='pnpt_id', blank=True, null=True)
+    npttitle = models.CharField(db_column='npttitle', max_length=30, blank=True, null=True)
+    nptdesc = models.TextField(db_column='nptdesc', blank=True, null=True)
+
+    def __str__(self):
+        return self.nptype
+
+    class Meta:
+        db_table = 'nptype'
+
+    # 1. Organic Nanoparticles:
+        # •	Polymeric nanoparticles:
+        # These are made from synthetic polymers and include nanospheres and nanocapsules, often used for drug delivery. 
+        # •	Lipid nanoparticles:
+        # These are composed of lipids and can be used to encapsulate drugs or other substances. 
+        # •	Dendrimers:
+        # These are branched, tree-like molecules that can be designed with specific properties. 
+        # •	Micelles:
+        # These are spherical aggregates of molecules with a hydrophilic (water-loving) exterior and a hydrophobic (water-repelling) interior, often used for drug delivery. 
+        # •	Liposomes:
+        # These are spherical vesicles made of lipid bilayers, used for drug delivery and other applications. 
+        # •	Biomolecule-derived nanoparticles:
+        # These are derived from biological molecules like proteins or carbohydrates. 
+    # 2. Inorganic Nanoparticles:
+        # •	Metal nanoparticles:
+        # These include gold, silver, and other metal nanoparticles, which exhibit unique optical and catalytic properties. 
+        # •	Metal oxide nanoparticles:
+        # Examples include titanium dioxide and zinc oxide, widely used in various applications like sunscreens and catalysts. 
+        # •	Ceramic nanoparticles:
+        # These are made from ceramic materials and can have applications in structural materials and energy storage. 
+        # •	Semiconductor nanoparticles:
+        # These include quantum dots, which have tunable optical and electronic properties. 
+    # 3. Carbon-Based Nanoparticles:
+        # •	Carbon nanotubes (CNTs):
+        # These are cylindrical structures made of carbon atoms, known for their strength and electrical conductivity. 
+        # •	Fullerenes:
+        # These are spherical or ellipsoidal molecules composed of carbon atoms, like buckyballs (C60). 
+        # •	Graphene:
+        # This is a single-layer sheet of carbon atoms, known for its exceptional strength and electrical conductivity.
+
+
 class nanoparticle(models.Model):
     HYDROPHOBICITY_METHOD_CHOICES = [
         (1, 'Contact Angle Measurement'),
@@ -1217,6 +1323,11 @@ class nanoparticle(models.Model):
         (4, 'Bio-distribution Studies'),
         (5, 'Proteomics and Genomics Approaches'),
     ]
+    PROFILETYPE_CHOICES = [
+        (1, 'Reference'),
+        (2, 'Studied'),
+        (3, 'Research Goal'),
+    ]
     np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
     nptitle = models.CharField(db_column='nptitle', max_length=100, blank=True, null=True)
     npdesc = models.TextField(db_column='npdesc', blank=True, null=True)
@@ -1247,6 +1358,8 @@ class nanoparticle(models.Model):
     peg = models.TextField(db_column='PEG', blank=True, null=True)
     tm = models.ForeignKey('toxicitymeasure', models.DO_NOTHING, db_column='tm_id', blank=True, null=True)
     npreq = models.ForeignKey('self', models.DO_NOTHING, db_column='npreq_id', blank=True, null=True)
+    npt = models.ForeignKey('nptype', models.DO_NOTHING, db_column='npt_id', blank=True, null=True)
+    profiletype = models.IntegerField(db_column='profiletype', choices=PROFILETYPE_CHOICES, blank=True, null=True)
     
 
     #nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
@@ -1270,7 +1383,6 @@ class nanoparticle(models.Model):
 
     class Meta:
         db_table = 'nanoparticle'
-
 
 class NodeIntervention(models.Model):
     ni_id = models.AutoField(db_column='NI_id', primary_key=True, serialize=True)
@@ -1408,6 +1520,22 @@ class Orgtype(models.Model):
         db_table = 'orgtype'
         db_table_comment = '1- Univerity\n2- Faculty - A department of University.\n'
 
+    # 1- Univerity
+    # 2- Faculty - A department of University.
+    # 3- Discovery Research - Research organizations who work on drug formulations or other interventions and sell the IP to drug companies
+    # 4- Clinical Research - Clinical Research Organizations contract for clinical trials of discovered drugs.
+    # 5- Research Laboratory
+    # 6- Industrialization - Consult companies that work on designing manufacturing products and production lines for newly developed drugs. 
+    # 7- Investor
+    # 8- Promotion
+    # 9- Retailer
+    # 10- Regulatory
+    # 11- Manufacturer
+    # 12- CT Site – clinical trials site
+    # 13- Clinic / Hospital / Treatment Centre
+    # 14- Medical Diagnose Lab
+    # 15- Material Supplier
+
 class orgot(models.Model):
     oot_id = models.AutoField(primary_key=True, serialize=True)
     organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
@@ -1435,13 +1563,15 @@ class service(models.Model):
     class Meta:
         db_table = 'service'
 
-class servot(models.Model):
-    sot_id = models.AutoField(db_column='sot_id', primary_key=True, serialize=True)
+class servorg(models.Model):
+    so_id = models.AutoField(db_column='so_id', primary_key=True, serialize=True)
     serv_id = models.ForeignKey('service', models.DO_NOTHING, db_column='serv_id')
-    ot_id = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='ot_id')
+    # ot_id = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='ot_id')
+    organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
+    tat = models.DecimalField(db_column='tat', max_digits=4, decimal_places=0, blank=True, null=True)
 
     class Meta:
-        db_table = 'servot'
+        db_table = 'servorg'
 
 class benefittype(models.Model):
     bt_id = models.AutoField(db_column='bt_id', primary_key=True, serialize=True)
@@ -1575,6 +1705,8 @@ class Person(models.Model):
     jobtitle = models.CharField(db_column='JobTitle', max_length=100, blank=True, null=True)
     persondesc = models.TextField(db_column='PersonDesc', blank=True, null=True)
     plrole = models.IntegerField(db_column='PLRole', blank=True, null=True)
+    def __str__(self):
+        return f"{self.firstname} - {self.lastname}"
 
     class Meta:
         db_table = 'person'
@@ -1600,7 +1732,7 @@ class PersonEducation(models.Model):
 
 class PersonField(models.Model):
     pf_id = models.AutoField(primary_key=True, serialize=True)
-    field = models.OneToOneField(Field, models.DO_NOTHING, db_column='Field_id')
+    field = models.ForeignKey(Field, models.DO_NOTHING, db_column='Field_id')
     person = models.ForeignKey(Person, models.DO_NOTHING, db_column='Person_id')
 
     class Meta:
@@ -1628,7 +1760,7 @@ class Perstype(models.Model):
 class Pricelist(models.Model):
     pl_id = models.AutoField(db_column='PL_id', primary_key=True, serialize=True)
     mat = models.ForeignKey(Material, models.DO_NOTHING, db_column='Mat_id', blank=True, null=True)
-    supl = models.ForeignKey('Supplier', models.DO_NOTHING, db_column='Supl_id', blank=True, null=True)
+    # supl = models.ForeignKey('Supplier', models.DO_NOTHING, db_column='Supl_id', blank=True, null=True)
     priceitem = models.TextField(db_column='PriceItem', blank=True, null=True)
     plquant = models.DecimalField(db_column='PLQuant', max_digits=9, decimal_places=4, blank=True, null=True)
     plquality = models.IntegerField(db_column='PLQuality', blank=True, null=True)
@@ -1712,6 +1844,57 @@ class collaborg(models.Model):
 
     class Meta:
         db_table = 'collaborg'
+
+class certification(models.Model):
+    cert_id = models.AutoField(primary_key=True, serialize=True)
+    certtype = models.IntegerField(db_column='certtype', blank=True, null=True) # This field might be removed later
+    certtitle = models.CharField(db_column='certtitle', max_length=30, blank=True, null=True)
+    certdesc = models.TextField(db_column='certdesc', blank=True, null=True)
+
+    def __str__(self):
+        return  self.certtitle
+
+    class Meta:
+        db_table = 'certification'
+
+class certpl(models.Model):
+    cpl_id = models.AutoField(primary_key=True, serialize=True)
+    cert = models.ForeignKey(certification, models.DO_NOTHING, db_column='cert_id', blank=True, null=True)
+    pl = models.ForeignKey(Pricelist, models.DO_NOTHING, db_column='pl_id', blank=True, null=True)
+    score = models.IntegerField(db_column='score', blank=True, null=True)
+    link = models.CharField(db_column='link', max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return  f"{self.certification.certtitle} - {self.pricelist.material.mattitle}"
+
+    class Meta:
+        db_table = 'certpl'
+
+class certorg(models.Model):
+    co_id = models.AutoField(primary_key=True, serialize=True)
+    cert = models.ForeignKey(certification, models.DO_NOTHING, db_column='cert_id', blank=True, null=True)
+    organization = models.ForeignKey(Organization, models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
+    score = models.IntegerField(db_column='score', blank=True, null=True)
+    link = models.CharField(db_column='link', max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return  f"{self.certification.certtitle} - {self.organization.orgtitle}"
+
+    class Meta:
+        db_table = 'certorg'
+
+class certso(models.Model):
+    cso_id = models.AutoField(primary_key=True, serialize=True)
+    so = models.ForeignKey(servorg, models.DO_NOTHING, db_column='so_id', blank=True, null=True)
+    cert = models.ForeignKey(certification, models.DO_NOTHING, db_column='cert_id', blank=True, null=True)
+    score = models.IntegerField(db_column='score', blank=True, null=True)
+    link = models.CharField(db_column='link', max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return  f"{self.certification.certtitle} - {self.servorg.service.servtitle}"
+
+    class Meta:
+        db_table = 'certso'
 
 class collabpers(models.Model):
     cp_id = models.AutoField(primary_key=True, serialize=True)
@@ -1938,6 +2121,7 @@ class StakeholderRole(models.Model):
     role_id = models.AutoField(db_column='Role_id', primary_key=True, serialize=True)
     shrole = models.CharField(db_column='SHRole', max_length=255, blank=True, null=True)
     shroledesc = models.TextField(db_column='SHRoleDesc', blank=True, null=True)
+    prole = models.ForeignKey('self', models.DO_NOTHING, db_column='prole_id', blank=True, null=True)
 
     class Meta:
         db_table = 'stakeholderrole'
@@ -1957,10 +2141,10 @@ class StakeholderPers(models.Model):
     sp_id = models.AutoField(primary_key=True, serialize=True)
     person = models.ForeignKey(Person, models.DO_NOTHING, db_column='Person_id')
     project = models.ForeignKey(Project, models.DO_NOTHING, db_column='Project_id')
-
     
     class Meta:
         db_table = 'stakeholderpers'
+
 
 class StrategyIntervention(models.Model):
     si_id = models.AutoField(primary_key=True, serialize=True)
@@ -1973,12 +2157,12 @@ class StrategyIntervention(models.Model):
         db_table = 'strategy_intervention'
 
 
-class Supplier(models.Model):
-    supl_id = models.AutoField(db_column='Supl_id', primary_key=True, serialize=True)
-    organization = models.ForeignKey(Organization, models.DO_NOTHING, db_column='Organization_id', blank=True, null=True)
+# class Supplier(models.Model):
+    # supl_id = models.AutoField(db_column='Supl_id', primary_key=True, serialize=True)
+    # organization = models.ForeignKey(Organization, models.DO_NOTHING, db_column='Organization_id', blank=True, null=True)
 
-    class Meta:
-        db_table = 'supplier'
+    # class Meta:
+        # db_table = 'supplier'
 
 
 class Sympimprove(models.Model):
@@ -2060,6 +2244,14 @@ class npcomponent(models.Model):
 
     class Meta:
         db_table = 'npcomponent'
+
+class comprecep(models.Model):
+    cr_id = models.AutoField(db_column='cr_id', primary_key=True, serialize=True)
+    comp = models.ForeignKey(component, models.DO_NOTHING, db_column='comp_id', null=True, blank=True)
+    receptor = models.ForeignKey(receptor, models.DO_NOTHING, db_column='receptor_id', null=True, blank=True)
+
+    class Meta:
+        db_table = 'comprecep'
 
 class Visit(models.Model):
     visit_id = models.AutoField(db_column='Visit_id', primary_key=True, serialize=True)

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Join as a Co-founder</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>First Name: <input type="text" name="firstname" required></label><br>
+    <label>Last Name: <input type="text" name="lastname" required></label><br>
+    <label>Job Title: <input type="text" name="jobtitle"></label><br>
+    <label>Organization: <input type="text" name="orgtitle"></label><br>
+    <!-- <label>Discipline(s): <input type="text" name="disciplines" placeholder="Separate multiple by comma"></label><br> -->
+	<label>Discipline(s): </label><br>
+    <input type="text" name="disciplines[]" placeholder="Discipline 1">
+    <input type="text" name="disciplines[]" placeholder="Discipline 2">
+
+    <h4>Contact Info:</h4>
+    {% for label, key in contact_fields.items %}
+        <label>{{ label }}: <input type="text" name="{{ key }}"></label><br>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

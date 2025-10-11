@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+{% block title %}Optimum Nanoparticle Design{% endblock %}
+{% load custom_filters %}
+{% load static %}
+
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONPD | Optimum Nanoparticles Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header>
+        <h2>Optimum Nanoparticles Design (ONPD)</h2>
+		<h5 style="color: #398c8a;">A platform to make nanomedicine design modular, scalable, and affordable.</h5>
+    </header>
+
+    <!-- <section class="hero">
+        <h1>Accelerating Nanoparticle-Based Intervention Development</h1>
+        <p>Design, optimize, validate, and scale therapeutic and diagnostic nanoparticles through an intelligent, unified platform.</p>
+    </section> -->
+
+    <section class="hero" style="position: relative; background: url('{% static 'Images/onpd.png' %}') center center / cover no-repeat; color: white; padding: 4rem 2rem; text-align: center;">
+
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 0;"></div>
+
+        <div style="position: relative; z-index: 1;">
+            <h1>Making Nanoparticle Innovation Faster, Cheaper, and Scalable</h1>
+            <h2 style="color: #ffffff;">Bridging researchers, funders, and innovators to turn nanoparticle science into scalable therapies.</h2>
+        </div>
+
+    </section>
+
+	<div>
+		<section id="cofounder-call" class="paragraph">
+            <!-- <div class="container" style="max-width: 800px; margin: auto; padding: 2rem;"> -->
+                <h2 class="normaltitle">The Problems We Address</h2>
+				<p class="normaltext">
+                    Despite incredible advances in nanomedicine, researchers and innovators face major roadblocks that slow down progress and increase costs. ONPD is designed to directly address these pain points.
+                </p>
+                <div style="display: flex; justify-content: center">
+                    <img src="{% static 'Images/problems.png' %}" alt="Problems" class="full-width-image">
+                </div>
+		</section>
+		<section class="paragraph">
+                <p class="normaltext">
+					<strong>Emerging Pressures</strong>
+                </p>
+				<ul style="list-style-type: disc; margin: 1rem auto; text-align: left; max-width: 1000px;">
+                    <li><strong>Funding Disruptions:</strong> Sudden NIH policy shifts and grant delays threaten continuity in nanoparticle research and innovation.</li>
+                    <li><strong>Funding Drought:</strong> Venture capital for early-stage biotech and nanomedicine sharply declined in mid-2025, leaving many startups underfunded and unable to advance preclinical R&D.</li>
+                    <li><strong>Supply Chain Disruptions:</strong> New 2025 U.S. tariffs on imported APIs, reagents, and equipment - especially from China and India - have disrupted global supply chains, increased production costs, and caused delays in drug and nanoparticle manufacturing.</li>
+                </ul>
+                <p class="normaltext">
+					<strong>Structural Challenges</strong>
+                </p>
+                <ul style="list-style-type: disc; margin: 1rem auto; text-align: left; max-width: 1000px;">
+                    <!-- <li><strong>Fragmented Knowledge:</strong> Data on nanoparticle types, properties, and behaviors are scattered across publications and patents.</li> -->
+                    <li><strong>Fragmented and Uncoordinated Data:</strong> Research on nanoparticle types, properties, and behaviors is scattered across publications, patents, and isolated labs, with no unified strategy for collection, verification, or integration, leading to persistent gaps and missed connections.</li>
+					<li><strong>Reproducibility Crisis:</strong> Lack of access to exact materials, protocols, or IP leads to inconsistent results and duplicated efforts.</li>
+                    <li><strong>Lack of standardization:</strong> Nanoparticle-specific standards for synthesis, characterization, biological testing, regulatory approval, and clinical evaluation remain limited or absent.</li>
+                    <li><strong>Disconnected Stakeholders:</strong> Researchers, manufacturers, IP holders, and regulators often operate in silos.</li>
+                    <li><strong>Procurement Bottlenecks:</strong> Identifying and sourcing precise precursors or compatible materials can be time-consuming and opaque.</li>
+                    <li><strong>IP & Licensing Barriers:</strong> Researchers waste time or risk infringement due to unclear patent landscapes or lack of licensing pathways.</li>
+				</ul>
+            <!-- </div> -->
+        </section>
+
+		<section id="about-onpd" class="paragraph">
+			<h2 class="normaltitle">What is ONPD Portal?</h2>
+            <!-- <p style="margin-bottom: 0.4em;">
+				<!-- The Optimum Nanoparticles Design (ONPD) Platform is a specialized digital infrastructure that accelerates the development of therapeutic and diagnostic nanoparticles. It connects researchers, material suppliers, laboratories, IP owners, regulatory bodies, and the pharmaceutical industry - addressing the growing complexity, fragmentation, and cost of designing or reproducing effective nanoparticle-based solutions for biomedical innovation.
+			    <strong> The nanomedicine R&D landscape - like much of biotech - is under pressure:</strong>
+				Public funding is shrinking, venture capital is retreating, and supply chains are strained. Researchers face scattered data, incompatible materials, and costly IP barriers. Progress is stalling, not for lack of ideas, but lack of integration.
+			</p> -->
+			<p style="margin-bottom: 0.4em;">
+				The <strong>Optimum Nanoparticles Design (ONPD) Portal</strong> is a specialized digital infrastructure designed to overcome challenges in the field of nanomedicine development. By connecting fragmented knowledge, aligning key players: researchers, suppliers, labs, IP holders - and enabling scalable development, ONPD transforms today’s bottlenecks into tomorrow’s breakthroughs.
+			</p>
+            <p style="margin-bottom: 0.4em;">
+				It also addresses deeper systemic issues: the complexity, fragmentation, and high cost of designing or replicating effective nanoparticle-based biomedical solutions.
+			</p>
+			<div id="readMoreContent">
+			    <p>
+                    At the heart of the platform is a curated and expanding database of nanoparticles, each annotated with detailed physical, chemical, and biological characteristics; components; synthesis and testing protocols; associated intellectual property (IP) status and ownership (of the patented formulations), supplier information for materials/components; and laboratory protocols. Researchers working on novel therapies can specify their desired nanoparticle features, and the platform matches them with the most suitable, feasible or already-developed nanoparticle options - saving time, reducing duplication, and ensuring compliance with existing IPs.
+				</p>
+				<p>
+				    Users of the platform include nanomedicine and modern intervention researchers, public and private research labs, universities, material suppliers, IP owners, and laboratories offering synthesis or characterization services. Material suppliers can upload their products and price lists directly to the system, ensuring real-time access to updated procurement options. The platform also offers lab protocols and price estimations.
+                </p>
+                <p>
+				    IP owners can register their patented nanoparticles, define usage terms (e.g., academic research, licensing for R&D, or commercial use), and engage with researchers interested in licensing or collaborating. Through an IP Owner Dashboard, they retain full control over how their IP is accessed or used. In return, they gain global visibility, monetization opportunities through licensing, and analytics insights on demand and usage patterns, all while ensuring legal protection and compliance.
+                </p>
+                <p>Two core operational activities support the platform: onboarding users and managing brokering. Onboarding involves attracting and activating diverse users: researchers, material suppliers, labs, and IP holders - through guided interfaces, tailored content, verification procedures, and assisted data uploads. This ensures that each user group can contribute meaningful content to the platform, whether it's materials, protocols, or IP records. Brokering adds further value by facilitating material procurement for research projects. The platform acts as a smart intermediary: aggregating supplier offers, suggesting optimized sourcing paths, estimating costs, and - when needed - directly brokering materials with reasonable margins. This reduces procurement friction for users while enabling supplier participation at scale.
+                </p>
+			</div>
+            <!-- <div class="text-center mt-4"> -->
+			<div style="text-align: center; margin-top: 1rem;">
+                <!-- <button id="readMoreBtn" class="text-blue-600 hover:underline font-semibold"> -->
+				<button id="readMoreBtn" style="background: none; color: #007a99; border: none; cursor: pointer; font-weight: bold;">
+                    Read More ▼
+                </button>
+            </div>
+			<div style="display: flex; justify-content: center">
+                <img src="{% static 'Images/onpd00.png' %}" alt="ONPD" class="full-width-image">
+            </div>
+		</section>
+    <!-- </div> -->
+
+	<!-- <div class="container"> -->
+        <section class="paragraph">
+            <!-- <h2 class="normaltitle">What is ONPD Portal?</h2> -->
+            <p style="text-align:center">In brief, ONPD is unified ecosystem for research, manufacturing, and regulatory compliance in the nanomedicine era.</p>
+        </section>
+
+        <section class="features">
+            <div class="card">
+                <i class="fas fa-robot"></i>
+                <h4>Smart Design Tools</h4>
+                <p>AI-assisted matching and design of nanoparticle formulations.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-flask"></i>
+                <h4>Protocol & Supplier Access</h4>
+                <p>Validated synthesis protocols and integrated supplier database.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-industry"></i>
+                <h4>Scale-up & Manufacturing</h4>
+                <p>Guidance for industrialization and mass production readiness.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-globe"></i>
+                <h4>Global Harmonization</h4>
+                <p>Track regulatory alignment across key global regions.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-heartbeat"></i>
+                <h4>Public Health Impact</h4>
+                <p>Moving toward enabling access to advanced, personalized therapies worldwide.</p>
+            </div>
+        </section>
+		<!-- Find more fas icons at: https://fontawesome.com/search?f=classic&s=solid&o=r -->
+		
+	<!-- <div class="container"> -->
+        <section class="paragraph">
+			<h2 class="normaltitle">Who ONPD is for?</h2>
+			<!-- <p style="text-align:center">Serving researchers, suppliers, IP holders, laboratories, manufacturers, and the pharmaceutical industry in designing, accessing, and scaling therapeutic and diagnostic nanoparticles.</p> -->
+			<p class="normaltext">Serving researchers, suppliers, IP holders, laboratories, manufacturers, and the pharmaceutical industry in designing, accessing, and scaling therapeutic and diagnostic nanoparticles.</p>
+        </section>
+		<section>
+            <div class="features">
+                <div class="card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h4>Researchers</h4>
+                    <p>Access nanoparticle data, design tools, and protocols.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-atom"></i>
+                    <h4>Manufacturers</h4>
+                    <p>Connect to scalable methods, material sources, and CMC guides.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h4>Regulatory Experts</h4>
+                    <p>Track global compliance needs with harmonized pipelines.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <h4>Pharma Innovators</h4>
+                    <p>Explore delivery technologies for emerging therapeutics.</p>
+                </div>
+
+                <div class="card">
+                    <i class="fas fa-vials"></i>
+                    <h4>Suppliers</h4>
+                    <p>Showcase products directly to researchers and manufacturers with real-time pricing and demand analytics.</p>
+                </div>
+				
+                <div class="card">
+                    <i class="fas fa-file-contract"></i>
+                    <h4>IP Owners</h4>
+                    <p>Monetize patented nanoparticle technologies through smart licensing and global visibility.</p>
+                </div>
+				
+                <div class="card">
+                    <i class="fas fa-hand-holding-dollar"></i>
+                    <h4>Capital Providers</h4>
+                    <p>Discover fundable innovations, assess nanoparticle readiness, and track development pipelines.</p>
+                </div>
+				
+                <div class="card">
+                    <i class="fas fa-university"></i>
+                    <h4>Translational Centers & TTOs</h4>
+                    <p>Bridge academic discoveries with industry adoption through exposure and licensing support.</p>
+                </div>
+				
+                <div class="card">
+                    <i class="fas fa-microscope"></i>
+                    <h4>CROs & CDMOs</h4>
+                    <p>Offer synthesis, testing, and scaling services to a targeted community of innovators.</p>
+                </div>
+				
+                <div class="card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h4>Standards & Policy Bodies</h4>
+                    <p>Shape the future of nanoparticle innovation through harmonized protocols and best practices.</p>
+                </div>
+				
+            </div>
+        </section>
+		
+	<!-- </div> -->
+ 	
+
+		<section id="waitinglist" class="paragraph">
+            <!-- <h2>Join Our Journey</h2> -->
+            <!-- <div class="container" style="max-width: 1000px; margin: auto; padding: 2rem;"> -->
+                <h2 class="normaltitle">Join the ONPD Waitlist</h2>
+                <!-- <p>Be part of shaping the future of nanomedicine. We’re building the platform. You can build the future with us.</p> -->
+                <!-- <a href="/contact/" style="color:#007a99;font-weight:bold;">Contact Us</a> -->
+                <p class="normaltext">
+                    We're currently preparing to launch the Optimum Nanoparticles Design Platform.  
+                    If you'd like early access or project updates, please email us directly at  
+                    <a href="mailto:info@longevitypmo.com" style="color: #007a99; font-weight: bold;">info@longevitypmo.com</a>.
+                </p>
+				<br>
+				<p class="small-muted">
+                    We're taking extra care with your data and won't collect personal information through this site until our infrastructure is fully secured.
+                </p>
+        </section>
+			<!-- </div> -->
+        
+		
+		<!-- <section style="text-align: center;">
+            <div class="cta">
+			    <form method="post" action="">
+                    {% csrf_token %}
+                    <input type="email" name="email" placeholder="Your email address" required>
+                    <button type="submit">Join the Waitlist</button>
+                </form>
+                <div id="floating-message-container">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="floating-message {{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+		</section> -->
+	    <!-- <section>
+            <!-- <div class="cta">
+		        <a href="{% url 'join_cofounder' %}" class="cta-button">Join as a Co-founder</a>
+            </div>
+            <h2>Join as a co-founder</h2>
+            <p>Be part of shaping the future of nanomedicine. We’re building the platform. You can build the future with us.</p>
+        </section> -->
+        <section id="alrady-motion" class="paragraph">
+            <!-- <div class="container" style="max-width: 1000px; margin: auto; padding: 2rem;"> -->
+                <h2 class="normaltitle">Already in Motion</h2>
+			    <!-- <p style="normaltext">ONPD is already in motion. We’ve completed an AI-driven market sensing report to identify unmet needs and future demands. Our core backend database — built to manage complex scientific data — is fully developed and ready for data entry through Django Admin. It’s designed as the foundation of an evolving AI system that will not only store and organize nanoparticle knowledge, but also learn from it to support smarter design, matching, and decision-making. The website is live and continuously evolving. We’re now focused on onboarding visionary co-founders, early contributors, and pilot users to accelerate the next phase.</p> -->
+                <p class="normaltext">
+				    ONPD is already in motion. We’ve completed an AI-driven market sensing report to identify unmet needs and future demands. Our core backend database - built to manage complex scientific data - is fully developed and ready for data entry through Django Admin. It’s designed as the foundation of an evolving AI system that will not only store and organize nanoparticle knowledge, but also learn from it to support smarter design, matching, and decision-making. Its growth will be powered by a structured data acquisition strategy - combining literature mining, expert contributions, and verified experimental results - to ensure the platform remains comprehensive, accurate, and up-to-date. The website is live and continuously evolving. We’re now focused on onboarding visionary co-founders, early contributors, and pilot users to accelerate the next phase.
+				</p>
+			<!-- </div> -->
+        </section>
+        
+		<section id="cofounder-call" class="paragraph">
+            <h2 class="normaltitle">Open Seats for Visionary Co-founders</h2>
+             <p class="normaltext">
+                We’re in the earliest phase of building ONPD, and open to visionary co-founders who can help shape both the product and the mission.
+            </p>
+            <p class="normaltext">
+                We especially welcome collaborators with backgrounds in:
+            </p>
+            <ul style="list-style-type: disc; margin: 1rem auto; text-align: left; max-width: 1000px;">
+                <li><strong>Full-stack development</strong> (preferably Django)</li>
+                <li><strong>Nanomedicine</strong> or nanoparticle-based R&D</li>
+                <li><strong>Scientific database structuring</strong></li>
+                <li><strong>UX/UI design</strong> (optional)</li>
+            </ul>
+            <p class="normaltext">
+                If you're passionate about accelerating innovation in nanomedicine and want to co-create a meaningful platform from the ground up, we’d love to hear from you.
+            </p>
+            <p class="normaltext">
+                ➤ Please email us at <a href="mailto:info@longevitypmo.com" style="color: #007a99; font-weight: bold;">info@longevitypmo.com</a> and tell us a bit about yourself.
+            </p>
+        </section>
+		
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const message = document.querySelector(".floating-message");
+            if (message) {
+                // Dismiss after 5 seconds
+                setTimeout(() => message.style.display = 'none', 5000);
+
+                // Dismiss on click/tap
+                message.addEventListener("click", () => message.style.display = 'none');
+
+                // Dismiss on scroll
+                window.addEventListener("scroll", () => message.style.display = 'none', { once: true });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const btn = document.getElementById('readMoreBtn');
+            const content = document.getElementById('readMoreContent');
+
+            btn.addEventListener('click', function () {
+                content.classList.toggle('visible');
+                btn.textContent = content.classList.contains('visible') ? 'Read Less ▲' : 'Read More ▼';
+            });
+        });
+
+    </script>
+
+</body>
+</html>
+{% endblock %}

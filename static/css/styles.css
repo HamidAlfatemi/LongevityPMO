@@ -21,8 +21,8 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.8;
     font-weight: 750;
     font-family: Arial, sans-serif;
-    /* color: #000000; */
-    background-color: #ffffff;
+    color: #000000;
+    /* background-color: #ffffff; */
 }
 
 h1 {
@@ -50,8 +50,10 @@ h5, h6 {
 }
 
 /* Sticky Header */
+
 .normaltitle {
-	color: #008888;
+	/* color: #008888; */
+	text-align: center;
 }
 
 .mainheader {
@@ -64,11 +66,28 @@ h5, h6 {
     height: 45px;
 }
 
+header {
+    /* background: #004c6d;
+    color: #fff; */
+    padding: 1.5rem 2rem;
+    text-align: center;
+}
+
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #333;
 }
+
+section {
+    padding: 2rem 0;
+}
+
 
 .tree li {
 /*    padding: 2px; */
@@ -179,6 +198,9 @@ body {
     position: relative;
     z-index: 1;
     background-color: rgba(0, 0, 0, 0);
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .container h1, .container h2, .container h3 {
@@ -199,6 +221,23 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 0px;
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(120deg, #004c6d, #007a99);
+    color: white;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
 }
 
 .logo {
@@ -298,10 +337,41 @@ body {
 
 /* Full-Width Image */
 .full-width-image {
-    width: 100%;
+    width: 80%;
     height: auto;
+    /* background: white;
+    padding: 1rem; */
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    /* text-align: center; */
 	/*margin: 10;
 	padding: 10; */
+}
+
+/* On screens smaller than 768px (typical tablets/phones) */
+@media (max-width: 768px) {
+    .full-width-image {
+        width: 100%;
+    }
+}
+
+.portfolio-image {
+    width: 70%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    /* background: white;
+    padding: 1rem; */
+    /* text-align: center; */
+	/*margin: 10;
+	padding: 10; */
+}
+
+/* On screens smaller than 768px (typical tablets/phones) */
+@media (max-width: 768px) {
+    .portfolio-image {
+        width: 100%;
+    }
 }
 
 .intext-image {
@@ -314,11 +384,17 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white; /* Or another color that contrasts with the image */
-    background-color: rgba(0, 221, 0, 1); /* Optional background to improve readability */
+    color: rgba(0, 221, 0, 1); /* white; */
+    background-color: #fff; /*rgba(0, 221, 0, 1); */
     padding: 10px;
     font-size: 1rem;
     /* font-family: Arial, sans-serif; */
+}
+
+.paragraph {
+    max-width: 1200px;
+	margin: auto;
+	padding: 2rem;
 }
 
 /* Explanation Paragraph */
@@ -448,3 +524,84 @@ body {
 	color: #0000bb;
 }
 
+.cta {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    display: inline-block;
+	position: relative;
+}
+.cta input[type="email"] {
+    padding: 0.5rem;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.cta button {
+    padding: 0.5rem 1rem;
+    background: #007a99;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.features, .audience {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+	max-width: 1140px;
+    text-align: center;
+	margin: auto;
+}
+
+.card {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.card i {
+    font-size: 2rem;
+    color: #007a99;
+    margin-bottom: 0.5rem;
+}
+
+.floating-message {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #007a99;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+    max-width: 80%;
+    text-align: center;
+}
+.floating-message.success { background-color: #28a745; }  /* green */
+.floating-message.info { background-color: #17a2b8; }     /* blue */
+.floating-message.error { background-color: #dc3545; }    /* red */
+
+#readMoreContent {
+  display: none;
+}
+
+#readMoreContent.visible {
+  display: block;
+}
+
+.small-muted {
+  /* font-size: 0.875rem; /* equivalent to "small" */
+  color: #777; /* or #777 or any soft gray */
+  font-style: italic;
+  /* align-items: center; */
+  /* max-width: 80%; */
+  text-align: center; */
+}
