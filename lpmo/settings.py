@@ -17,11 +17,6 @@ import os
 # Define the base directory for the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # This is the directory where you place your global static files
-]
 
 # For production (use this when you deploy)
 #STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # This is where collectstatic will collect static files
@@ -34,31 +29,67 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # Initialize environment variables
-env = environ.Env()
+#env = environ.Env()
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
 # Read the .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Use the SECRET_KEY from the .env file
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='default-insecure-secret-key')
+#SECRET_KEY = env('DJANGO_SECRET_KEY', default='default-insecure-secret-key')
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='insecure-default-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # False
+#DEBUG = True # False
+DEBUG = env('DEBUG', default=False)
 
 #ALLOWED_HOSTS = ['longevitypmo.com', '69.49.245.120', 'www.longevitypmo.com']
-ALLOWED_HOSTS = ['localhost']
+#ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+
+# ---------------------------
+# DATABASE CONFIGURATION
+# ---------------------------
+# On Render, DATABASE_URL will come from Supabase (PostgreSQL)
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+DATABASES = {
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'longevity',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'srt270',
+        # 'HOST': 'localhost', # '69.49.245.120',
+        # 'PORT': '5432',
+        # 'OPTIONS': {
+            # 'options': '-c search_path=pmo,public'
+        # }
+    # }
+    'default': env.db(
+        'DATABASE_URL',
+        default='postgres://postgres:srt270@localhost:5432/longevity'
+    )
+}
+DATABASES['default']['OPTIONS'] = {
+    'options': '-c search_path=pmo,public'
+}
+
+# ---------------------------
+# STATIC FILES CONFIG
+# ---------------------------
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static", # This is the directory where you place your global static files
+]
 
 # Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'longevity'
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +101,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'longevity'
+]
+
 
 WHITENOISE_MANIFEST_STRICT = False
 
@@ -95,22 +137,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'lpmo.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'longevity',
-        'USER': 'postgres',
-        'PASSWORD': 'srt270',
-        'HOST': 'localhost', # '69.49.245.120',
-        'PORT': '5432',
-        'OPTIONS': {
-            'options': '-c search_path=pmo,public'
-        }
-    }
-}
 
 #important security settings. Uncomment after buying SSL certificate
 # SECURE_HSTS_SECONDS = 3600

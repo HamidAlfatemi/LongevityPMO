@@ -1,4 +1,23 @@
+# Node / frontend
 node_modules/
-staticfiles/
-.env
 *.lock
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local databases
+*.db
+
+# Django collected static files
+/staticfiles/
+
+# Environment & secrets
+.env
+
+# IDE & system files
+.vscode/
+*.log
+.DS_Store
+Thumbs.db
