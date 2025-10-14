@@ -11,7 +11,7 @@ __pycache__/
 *.db
 
 # Django collected static files
-/staticfiles/
+staticfiles/
 
 # Environment & secrets
 .env
