@@ -29,8 +29,26 @@ def onpdlanding(request):
                 messages.info(request, "You’re already on the ONPD waitlist.")
         else:
             messages.error(request, "Please enter a valid email address.")
-        return redirect('onpdlanding')  # This assumes you have a named URL pattern
+        return redirect('onpdlanding')
     return render(request, 'onpdlanding.html')
+
+def leia(request):
+    if request.method == 'POST':
+        # email = request.POST.get('email')
+        # if email:
+            # if not Contactinfo.objects.filter(contact=email, conttype=3).exists():
+                # Contactinfo.objects.create(
+                    # contact=email,
+                    # conttype=3,
+                    # contdesc='In LEIA waiting list'
+                # )
+                # messages.success(request, "You’ve been added to the LEIA waitlist. Thank you!")
+            # else:
+                # messages.info(request, "You’re already on the LEIA waitlist.")
+        # else:
+            # messages.error(request, "Please enter a valid email address.")
+        return redirect('leia')
+    return render(request, 'leia.html')
 
 def join_cofounder(request):
     contact_fields = {
@@ -603,9 +621,39 @@ def sbha(request):
             calculated_width = (14.3 * node_count + 1310)*.67
             calculated_height = (31.3 * node_count + 643)
 
+
+        ############### Added at 2025/11/05 ####################
+        import json
+        from django.core.serializers.json import DjangoJSONEncoder
+
+        nodes_json = json.dumps([
+            {
+                "data": {
+                    "id": node.node_id,
+                    "label": f"[{node.ref_num}]\n{node.nodecaption or ''}",
+                    "parent": node.parent_n_id,
+                },
+                "style": node.style,
+            }
+            for node in nodes
+        ], cls=DjangoJSONEncoder)
+
+        edges_json = json.dumps([
+            {
+                "data": {
+                    "source": edge.begin.node_id,
+                    "target": edge.end.node_id,
+                },
+                "style": edge.style,
+            }
+            for edge in edges
+        ], cls=DjangoJSONEncoder)
+        ########################################################
+
+        graph_data = json.dumps({'nodes': json.loads(nodes_json), 'edges': json.loads(edges_json)})
+   
         return render(request, 'sbha.html', {
-            'nodes': nodes,
-            'edges': edges,
+            'graph_data': graph_data,
             'node_count': node_count,
             'edge_count': edge_count,
             'container_count': container_count,

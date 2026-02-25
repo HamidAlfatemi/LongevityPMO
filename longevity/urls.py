@@ -13,6 +13,7 @@ urlpatterns = [
     path('node_to_node/', views.node_to_node, name='node_to_node'),
     path('one_node/', views.one_node, name='one_node'),
     path('onpd/', views.onpdlanding, name='onpdlanding'),
+    path('leia/', views.leia, name='leia'),
     path('join_cofounder/', views.join_cofounder, name='join_cofounder'),
 ]
 

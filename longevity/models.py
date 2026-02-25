@@ -1482,7 +1482,6 @@ class OrgOrg(models.Model):
 
 class Organization(models.Model):
     organization_id = models.AutoField(db_column='Organization_id', primary_key=True, serialize=True)
-    # ot = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='OT_id', blank=True, null=True)
     orgtitle = models.CharField(db_column='OrgTitle', max_length=200, blank=True, null=True)
     parent_org_id = models.BigIntegerField(db_column='Parent_org_id', blank=True, null=True)
     olrole = models.IntegerField(db_column='OLRole', blank=True, null=True)

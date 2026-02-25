@@ -88,63 +88,66 @@ section {
     padding: 2rem 0;
 }
 
+section2 {
+    padding: 2rem 0;
+}
+
+/*.tree {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+} */
 
 .tree li {
 /*    padding: 2px; */
-    margin-bottom: 4px; /* uniform gap after each row */
+    /* margin-bottom: 4px; /* uniform gap after each row */
+    margin: 5px 0;
+    padding-left: 20px; /* Indentation for child containers */
+    margin-top: 1px
+	margin-bottom: 1px; }
 }
 
 .children > li {
     margin-top: 4px; /* ensure there's a gap above each child */
 }
 
+.bottom-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+	width: 100%;
+}
+
 /* Make the search input wider, with h1-like font */
 .search-input {
     width: 60%;              /* Adjust width as needed */
     font-size: 1.25rem;         /* Adjust to match your h1 font size */
-    padding: 5px;          /* Add some padding */
-    border: 2px solid #ccc;  /* A light border */
-    border-radius: 5px;      /* Rounded corners */
+    /* padding: 5px;          /* Add some padding */
+    /* border: 2px solid #ccc;  /* A light border */
+    /* border-radius: 5px;      /* Rounded corners */
     box-sizing: border-box;  /* Ensure padding is included in width */
 	margin-left: 10px;
-}
-
-/* Style the search button to look more attractive */
-.command-button {
-    font-size: 1.25rem;          /* Match h1 or adjust as needed */
-    padding: 5px;       /* Vertical and horizontal padding */
-    border: none;             /* Remove default border */
-    background-color: #33CCCC;/* A pleasing blue, adjust as desired */
-    color: white;             /* White text */
-    border-radius: 5px;       /* Rounded corners */
-    cursor: pointer;          /* Pointer on hover */
-    margin-left: 10px;         /* Space between input and button */
-    /* transition: background-color 0.3s ease; /* Smooth hover effect */
-
-}
-
-.command-button:hover {
-    background-color: #007BF6; /* Slightly darker on hover */
-}
-
-.bottom-controls {
-    display: flex;
-    justify-content: center; /* Centers items horizontally */
-    align-items: center;     /* Centers items vertically */
-    gap: 40px;
+	padding:6px;
+	margin:4px; 
+	border-radius:4px;
+	border:1px solid #ccc; }
 }
 
 .checkbox-item {
     display: flex;
     align-items: center;
-    gap: 5px; /* A smaller gap between the checkbox and its caption */
+    gap: 1px; /* A smaller gap between the checkbox and its caption */
 }
 
 .top-controls {
     display: flex;
     align-items: center;     /* Centers items vertically */
-	gap: 60px;
+	/*gap: 60px; */
     flex-wrap: wrap; /* Allows wrapping when the screen is small */
+	gap:10px;
 }
 
 .top-controls h1 {
@@ -156,6 +159,10 @@ section {
 	text-align: center !important;
 	color: #00aa00 !important;
 	padding: 10px
+}
+
+.title2 {
+	color: #398c8a !important;
 }
 
 .header-red {
@@ -228,6 +235,23 @@ section {
     padding: 4rem 2rem;
     background: linear-gradient(120deg, #004c6d, #007a99);
     color: white;
+    position: relative;
+    background: url('../Images/longevitypmo.png') center center / cover no-repeat;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h1 {
@@ -238,6 +262,84 @@ section {
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
+}
+
+.leiatitle {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(120deg, #004c6d, #007a99);
+    color: white;
+    position: relative;
+    background: url('../Images/leia0.png') center center / cover no-repeat;
+}
+
+.leiatitle-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.leiatitle-content {
+    position: relative;
+    z-index: 1;
+}
+
+.leiatitle h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+.leiatitle p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+} 
+
+.onpdtitle {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(120deg, #004c6d, #007a99);
+    color: white;
+    position: relative;
+    background: url('../Images/onpd.png') center center / cover no-repeat;
+}
+
+ .onpdtitle-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.onpdtitle-content {
+    position: relative;
+    z-index: 1;
+}
+
+.onpdtitle h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+.onpdtitle p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+} 
+
+.portfolio-image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.portfolio-image {
+    max-width: 100%;
+    height: auto;
 }
 
 .logo {
@@ -279,9 +381,6 @@ section {
     color: #008888; /* Change to desired color when hovered */
 }
 
-/* .menu li:hover > .submenu {
-    display: block;
-} */
 
 .submenu {
     position: absolute;
@@ -294,12 +393,13 @@ section {
     z-index: 9999;
 }
 
-/* Ensure submenu doesn't go out of screen */
-/* .menu li:hover > .submenu {
+.menu li ul.submenu {
+    display: none;
+}
+
+.menu li.active ul.submenu {
     display: block;
-    left: 0;
-    right: auto;
-} */
+}
 
 /* When the parent li has the 'active' class, show the submenu */
 .menu li.active > .submenu {
@@ -348,6 +448,54 @@ section {
 	padding: 10; */
 }
 
+.boxbullets {
+	list-style-type: disc;
+	margin: 1rem auto;
+	text-align: left;
+	max-width: 1000px;
+	padding-left: 20px;
+}
+
+.bullets {
+	list-style-type: disc;
+	margin: 1rem auto;
+	text-align: left;
+	max-width: 1000px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-family: Arial, sans-serif;
+}
+
+.readmore {
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.readmore-botton {
+	background: none;
+	color: #007a99;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+/* Style the search button to look more attractive */
+.command-button {
+    font-size: 1.25rem;
+    padding: 5px;
+    border: none;
+    background-color: #33CCCC;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.command-button:hover {
+    /* background-color: #007BF6; /* Slightly darker on hover */
+	background:#284b63;
+}
+
 /* On screens smaller than 768px (typical tablets/phones) */
 @media (max-width: 768px) {
     .full-width-image {
@@ -360,11 +508,11 @@ section {
     height: auto;
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    /* background: white;
-    padding: 1rem; */
-    /* text-align: center; */
-	/*margin: 10;
-	padding: 10; */
+}
+
+.link {
+	color: #007a99;
+	font-weight: bold;
 }
 
 /* On screens smaller than 768px (typical tablets/phones) */
@@ -605,3 +753,143 @@ section {
   /* max-width: 80%; */
   text-align: center; */
 }
+
+/* ===== Styles moved from header.html ===== */
+
+/* Add margin to the page */
+body {
+    margin: 5px;
+}
+
+/* Style the tree */
+.tree ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.level-1 { margin-left: 0px; }
+.level-2 { margin-left: 20px; }
+.level-3 { margin-left: 40px; }
+.level-4 { margin-left: 60px; }
+
+.tree .collapsible {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tree .children {
+    display: block;
+    margin-bottom: 1px; /* corrected spelling: margin-bottom */
+}
+
+.tree .active > .children {
+    display: block;
+}
+
+.tree .arrow {
+    margin-right: 5px;
+}
+
+/* Layout for titles */
+.header-row,
+.header-row div {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.header-row div {
+    border-bottom: 2px solid #000;
+}
+
+.ref-number {
+    width: 30%;
+}
+
+.caption {
+    width: 50%;
+}
+
+.select {
+    width: 20%;
+    text-align: center;
+}
+
+.column-titles {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+/* ===== Strict CSP safe styles for containerlist.html ===== */
+
+/* Common box for container nodes */
+.container-box {
+    display: inline-block;
+    border-width: 5px;
+    border-style: solid;
+    margin: 0px;
+    border-radius: 7px;
+    padding: 0px 6px;
+    gap: 0px;
+}
+
+/* Level-specific adjustments (optional visual hierarchy) */
+.node-l1 { font-weight: 600; }
+.node-l2 { font-weight: 500; }
+.node-l3 { font-weight: 400; }
+
+/* Children indentation */
+.children-indent {
+    margin-left: 20px;
+}
+
+/* Checkbox spacing */
+.checkbox-indent {
+    margin-left: 10px;
+}
+
+/* Error message */
+.error-message {
+    color: red;
+    display: none;
+}
+
+/* ====== moved from inline styles (nodelist) ====== */
+
+/* generic node container (was margin:1px; border-radius:7px; border:5px solid X; background: Y) */
+.node-box {
+    margin: 1px;
+    border-radius: 7px;
+    display: inline-block;
+    padding: 1px 6px;   /* small padding like before */
+    border-width: 5px;
+    border-style: solid;
+    box-sizing: border-box;
+}
+
+/* small node items (li nodes that had border:2px ...) */
+.node-item {
+    margin: 1px;
+    padding: 2px 6px;
+    border-width: 2px;
+    border-style: solid;
+    box-sizing: border-box;
+}
+
+/* small left-margin utility classes (used for nested levels) */
+.ml-20 { margin-left: 20px !important; }
+.ml-40 { margin-left: 40px !important; }
+
+/* children lists default */
+.children { display: block; }
+
+/* keep consistent arrow spacing */
+.collapsible .arrow,
+.arrow { margin-right: 5px; }
+
+/* other small controls used in this template (already used earlier) */
+
+
+
+
