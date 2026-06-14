@@ -21,18 +21,282 @@ django.setup()
 
 # Import the Theory model after Django setup
 # from longevity.models import Node # Theory
-from longevity.models import Node, Edge
+from longevity.models import Drawbacktype, StakeholderRole # Node, Edge
 
-nodes = Node.objects.all()
-for node in nodes:
-    node.cystyle = determine_style(node.nodeshape, node.nodecolor, node.dashed, node.width, node.height, node.nodecaption)
-    node.save()
+Drawbacktype.objects.all().delete()
 
-for edge in Edge.objects.all():
-    edge.cystyle = edge_style(edge.edgeshape, edge.color, edge.edgetype)
-    # edge.beginrefnum = edge.begin.ref_num
-    # edge.endrefnum = edge.end.ref_num
-    edge.save()
+parent_dbt1 = Drawbacktype.objects.create(dbttitle='Intervention or Diagnostic Method', dbtdesc='')
+child_dbt = Drawbacktype.objects.create(dbttitle='invasiveness', dbtdesc='', parentdbt=parent_dbt1)
+child_dbt = Drawbacktype.objects.create(dbttitle='severe adverse effects', dbtdesc='', parentdbt=parent_dbt1)
+child_dbt = Drawbacktype.objects.create(dbttitle='low efficacy for safe dosage', dbtdesc='', parentdbt=parent_dbt1)
+child_dbt = Drawbacktype.objects.create(dbttitle='toxicity', dbtdesc='', parentdbt=parent_dbt1)
+child_dbt = Drawbacktype.objects.create(dbttitle='poor excretion', dbtdesc='', parentdbt=parent_dbt1)
+child_dbt = Drawbacktype.objects.create(dbttitle='high costs', dbtdesc='', parentdbt=parent_dbt1)
+child_dbt = Drawbacktype.objects.create(dbttitle='technical treatment complications', dbtdesc='', parentdbt=parent_dbt1)
+
+parent_dbt2 = Drawbacktype.objects.create(dbttitle='Stakeholders and Organizations', dbtdesc='')
+child_dbt = Drawbacktype.objects.create(dbttitle='Job-to-be-done (JTBD)', dbtdesc='', parentdbt=parent_dbt2)
+child_dbt = Drawbacktype.objects.create(dbttitle='Challenge / Pain point', dbtdesc='', parentdbt=parent_dbt2)
+child_dbt = Drawbacktype.objects.create(dbttitle='Unmet Need', dbtdesc='', parentdbt=parent_dbt2)
+child_dbt = Drawbacktype.objects.create(dbttitle='User Story', dbtdesc='', parentdbt=parent_dbt2)
+child_dbt = Drawbacktype.objects.create(dbttitle='Market gap', dbtdesc='', parentdbt=parent_dbt2)
+child_dbt = Drawbacktype.objects.create(dbttitle='Scientific gap', dbtdesc='', parentdbt=parent_dbt2)
+child_dbt = Drawbacktype.objects.create(dbttitle='Regulatory and operational barrier', dbtdesc='', parentdbt=parent_dbt2)
+#child_dbt = Drawbacktype.objects.create(dbttitle='technical treatment complications', dbtdesc='', parentdbt=parent_dbt2)
+
+parent_dbt3 = Drawbacktype.objects.create(dbttitle='Other General Drawbacks', dbtdesc='')
+child_dbt = Drawbacktype.objects.create(dbttitle='Problem/Barrier', dbtdesc='', parentdbt=parent_dbt3)
+child_dbt = Drawbacktype.objects.create(dbttitle='Bottleneck', dbtdesc='', parentdbt=parent_dbt3)
+
+
+StakeholderRole.objects.all().delete()
+
+prole1 = StakeholderRole.objects.create(shrole='Research Organizations and Services', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Research Institutions', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Independent Research Institutions', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Independent Research Institutions', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Health Research Institutions', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Biotech Companies', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Universities', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Academic Translational Centers', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Academic/Contract labs', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Emerging Technologies and Startups', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Interdisciplinary Research Networks', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Biogerontology and Geriatrics Research Centers', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Biobanks', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Patient-Centered Research Collaborations', shroledesc='', prole=prole1)
+child_role = StakeholderRole.objects.create(shrole='Microbiome and Gut Health Experts', shroledesc='', prole=prole1)
+
+prole2 = StakeholderRole.objects.create(shrole='Researchers and Research-&-Innovation Teams', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='PhD students', shroledesc='', prole=prole2)
+child_role = StakeholderRole.objects.create(shrole='Professors', shroledesc='', prole=prole2)
+child_role = StakeholderRole.objects.create(shrole='Postdoc Researchers/Teams', shroledesc='', prole=prole2)
+
+prole3 = StakeholderRole.objects.create(shrole='Longevity Research and Innovation Support Organizations', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Longevity Nonprofit Foundations', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Research Funding Agencies', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Venture Capitalists (VCs)', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Innovation Incubators and Accelerators', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Technology Transfer Offices (TTOs)', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Grant-Making Foundations', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Corporate Venture Capitals', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Crowdfunding Platforms', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Angel Investors', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Innovation Clusters and Consortia', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Private Equity Firms', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='Family Offices', shroledesc='', prole=prole3)
+child_role = StakeholderRole.objects.create(shrole='High-net-worth individuals', shroledesc='', prole=prole3)
+
+prole4 = StakeholderRole.objects.create(shrole='IP Owners', shroledesc='')
+
+prole5 = StakeholderRole.objects.create(shrole='Databases', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Nanoparticle Databases', shroledesc='', prole=prole5)
+
+prole6 = StakeholderRole.objects.create(shrole='Business Services/Environment', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Business Plan Consultants and Advisors', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Innovation Hubs and Incubators', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Strategic Partnerships and Collaboration Facilitators', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Regulatory Affairs Consultants', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Marketing and Branding Agencies', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Intellectual Property (IP) Attorneys', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Financial and Accounting Services', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Health Technology Assessment (HTA) Organizations', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Aging-Related Trade Associations', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Health Economists and Health Policy Experts', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Healthcare economics analysts', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Influencers and creators', shroledesc='', prole=prole6)
+child_role = StakeholderRole.objects.create(shrole='Brokers', shroledesc='', prole=prole6)
+
+prole7 = StakeholderRole.objects.create(shrole='Training/Education', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Healthcare Professional Associations', shroledesc='', prole=prole7)
+child_role = StakeholderRole.objects.create(shrole='Medical Education and Training Institutions', shroledesc='', prole=prole7)
+child_role = StakeholderRole.objects.create(shrole='Educational Institutions and Training Providers', shroledesc='', prole=prole7)
+child_role = StakeholderRole.objects.create(shrole='Event Organizers', shroledesc='', prole=prole7)
+child_role = StakeholderRole.objects.create(shrole='Health Education and Empowerment Programs', shroledesc='', prole=prole7)
+
+prole8 = StakeholderRole.objects.create(shrole='Biotech', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Biotechnology Companies', shroledesc='', prole=prole8)
+
+prole9 = StakeholderRole.objects.create(shrole='Personalized Medicine and Genetic Testing Services', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Full multi-omics platforms', shroledesc='', prole=prole9)
+
+prole10 = StakeholderRole.objects.create(shrole='Cloud Services', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Electronic Health Records (EHRs) and Health Information Systems', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Telehealth and Telemedicine Platforms', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Health Information Exchange (HIE) Platforms', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Data Analytics and Insights', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Clinical Trial Management Systems', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Supply Chain Management and Logistics', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Healthcare AI and Machine Learning Applications', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Patient Engagement Platforms', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Security and Compliance Services', shroledesc='', prole=prole10)
+child_role = StakeholderRole.objects.create(shrole='Collaboration and Communication Tools', shroledesc='', prole=prole10)
+
+prole11 = StakeholderRole.objects.create(shrole='Regulatory/Advocacy/Ethics Environment', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Healthcare Regulatory Bodies/Agencies', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Regulatory Compliance and Quality Assurance Services', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Advocacy and Education Organizations', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Data Security and Privacy Consultants', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Patient Data Privacy Advocates', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Consultancy Services', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Ethics Advisory', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Legal and Regulatory Compliance Advisors', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Regulatory Compliance and Quality Assurance Services', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Legal and Intellectual Property Services', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Patient Advocacy and Support Organizations/Groups', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Anti-Aging/Longevity Clinics and Wellness Centers', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Public Health Organizations', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Ethics Committees and Institutional Review Boards (IRBs)', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Environmental and Social Determinants of Health Experts', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Global Health Organizations', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Ethical and Bioethical Committees', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Government Health Agencies and Policies', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Government Health Agencies and Policies', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Environmental and Urban Planning and Architecture for Aging Cities', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='Public Health Campaign Organizations', shroledesc='', prole=prole11)
+child_role = StakeholderRole.objects.create(shrole='International Standards Organizations', shroledesc='', prole=prole11)
+
+prole12 = StakeholderRole.objects.create(shrole='Standardization & Policy Institutions', shroledesc='')
+
+prole13 = StakeholderRole.objects.create(shrole='Insurance', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Health Insurance Providers', shroledesc='', prole=prole13)
+child_role = StakeholderRole.objects.create(shrole='Health Financing and Insurance Innovations', shroledesc='', prole=prole13)
+child_role = StakeholderRole.objects.create(shrole='Pharmacy Benefit Managers (PBMs)', shroledesc='', prole=prole13)
+
+prole14 = StakeholderRole.objects.create(shrole='Cultural Support', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Cultural and Arts Organizations', shroledesc='', prole=prole14)
+child_role = StakeholderRole.objects.create(shrole='Intergenerational Programs', shroledesc='', prole=prole14)
+child_role = StakeholderRole.objects.create(shrole='Health Literacy Campaigns', shroledesc='', prole=prole14)
+child_role = StakeholderRole.objects.create(shrole='Media and Communication Agencies', shroledesc='', prole=prole14)
+
+prole15 = StakeholderRole.objects.create(shrole='Lifestyle Services', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Nutritional and Lifestyle Services', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Health and Wellness Centers', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Health and Wellness Coaches', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Fitness and Wellness Facilities', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Holistic and Integrative/Alternative Medicine and Health Practitioners', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Culinary and Nutrition Experts', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Corporate Wellness Programs', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Biohacking Communities', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='Mindfulness and Mental Wellness Apps', shroledesc='', prole=prole15)
+child_role = StakeholderRole.objects.create(shrole='End-of-Life Planning Services', shroledesc='', prole=prole15)
+
+prole16 = StakeholderRole.objects.create(shrole='Industrial Environment', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Analytical and Testing Services', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Contract Development and Manufacturing Organizations (CDMOs)', shroledesc='', prole=prole16)
+
+child_role1 = StakeholderRole.objects.create(shrole='Medical Device Manufacturers', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Diagnostic Equipment Manufacturers', shroledesc='', prole=child_role1)
+child_role = StakeholderRole.objects.create(shrole='Imaging Machines Manufacturers', shroledesc='', prole=child_role1)
+child_role = StakeholderRole.objects.create(shrole='Surgical Instruments Manufacturers', shroledesc='', prole=child_role1)
+child_role = StakeholderRole.objects.create(shrole='And Implantable Devices Manufacturers', shroledesc='', prole=child_role1)
+
+child_role2 = StakeholderRole.objects.create(shrole='Raw Material Suppliers', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Chemical Suppliers', shroledesc='', prole=child_role2)
+child_role = StakeholderRole.objects.create(shrole='Biological Suppliers', shroledesc='', prole=child_role2)
+child_role = StakeholderRole.objects.create(shrole='API Manufacturers', shroledesc='', prole=child_role2)
+child_role = StakeholderRole.objects.create(shrole='Intermediates Manufacturers', shroledesc='', prole=child_role2)
+
+child_role = StakeholderRole.objects.create(shrole='Nutritional, Nutraceuticals and Dietary Supplement Manufacturers', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Fitness and Wellness Tech Companies', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Regenerative Agriculture and Sustainable Food Practices', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Consumer Electronics, Health Apps, and Wearable Tech Companies', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Robotics and Assistive Technologies', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Aging-in-Place Solutions', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Packaging Material Suppliers', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Contract Manufacturing Organizations (CMOs)', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Technology and Equipment Suppliers', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Cleaning and Sterilization Services', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Environmental Monitoring Services', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Training and Education Providers', shroledesc='', prole=prole16)
+child_role = StakeholderRole.objects.create(shrole='Other relevant Suppliers/Manufacturers', shroledesc='', prole=prole16)
+
+prole17 = StakeholderRole.objects.create(shrole='Distribution Chain', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Logistics and Distribution Companies', shroledesc='', prole=prole17)
+child_role = StakeholderRole.objects.create(shrole='Pharmaceutical Distribution and Wholesale Companies', shroledesc='', prole=prole17)
+child_role = StakeholderRole.objects.create(shrole='Wholesalers and Distributors', shroledesc='', prole=prole17)
+child_role = StakeholderRole.objects.create(shrole='Supply Chain Management Services', shroledesc='', prole=prole17)
+child_role = StakeholderRole.objects.create(shrole='Marketing and Advertising Agencies', shroledesc='', prole=prole17)
+child_role = StakeholderRole.objects.create(shrole='Pharmacies and Retailers', shroledesc='', prole=prole17)
+child_role = StakeholderRole.objects.create(shrole='Cold Chain Logistics Providers', shroledesc='', prole=prole17)
+child_role = StakeholderRole.objects.create(shrole='Pharmacies and Dispensing Services', shroledesc='', prole=prole17)
+
+prole18 = StakeholderRole.objects.create(shrole='Discovery and Development', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Contract Research Organizations (CROs)', shroledesc='', prole=prole18)
+child_role = StakeholderRole.objects.create(shrole='Clinical Research Organizations (CROs)', shroledesc='', prole=prole18)
+
+prole19 = StakeholderRole.objects.create(shrole='Bioinformatic/IT Services', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Bioinformatics and Computational Biology Services', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Bioinformatics and Aging Biomarker Analysis Services', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='IT and Software Providers', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Health Information Technology (Health IT) Companies', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Health Information Sharing Platforms', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Shared Decision-Making Platforms', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Virtual Patient Communities', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Patient-Reported Outcome Platforms', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Social Engagement Platforms for Seniors', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Blockchain and Health Data Security Providers', shroledesc='', prole=prole19)
+child_role = StakeholderRole.objects.create(shrole='Mobile Health App Developers', shroledesc='', prole=prole19)
+
+prole20 = StakeholderRole.objects.create(shrole='Healthcare Services', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Diagnostics and Testing Services', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Healthcare Facilities Management Services', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Prescribers (Medical Doctors and Healthcare Providers)', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Clinics and Hospitals', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Nursing Homes and Long-Term Care Facilities', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Diagnostic Services', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Home Healthcare Services', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Rehabilitation Centers', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Remote Monitoring Services', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Blood and Tissue Banks', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Behavioral Health and Mental Wellness Services', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Senior Transportation and Mobility Services', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Personalized Health and Wellness Retreats', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Community and Social Care Coordinators', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Alternative Therapies and Traditional Medicine Practitioners', shroledesc='', prole=prole20)
+child_role = StakeholderRole.objects.create(shrole='Healthcare Waste Management Services', shroledesc='', prole=prole20)
+
+prole21 = StakeholderRole.objects.create(shrole='Patients/Seniors', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Recipients of diagnoses, interventions, and other related services', shroledesc='', prole=prole21)
+child_role = StakeholderRole.objects.create(shrole='Participants in Clinical Trials', shroledesc='', prole=prole21)
+
+prole22 = StakeholderRole.objects.create(shrole='Global/International Entities', shroledesc='')
+child_role = StakeholderRole.objects.create(shrole='Global Research Collaborations', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Global Business Support Entities', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='International Collaboration Platforms', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='International Regulatory Bodies', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Global Health Organizations', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='International Patient Advocacy Groups', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='International Nonprofit Foundations', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Global Technology Providers', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Cross-Cultural Health and Wellness Experts', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='International Fitness and Wellness Tech Companies', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Global Academies of Sciences and Medicine', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Global Health Education and Literacy Programs', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Global Patient-Centered Initiatives', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Cross-Border Healthcare Delivery Models', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='Global Supply Chain and Logistics Providers', shroledesc='', prole=prole22)
+child_role = StakeholderRole.objects.create(shrole='International Trade and Commerce Organizations', shroledesc='', prole=prole22)
+
+prole23 = StakeholderRole.objects.create(shrole='Relevant Companies and Startups', shroledesc='')
+
+
+
+# all_dbts = Drawbacktype.objects.all()
+# for dbt in all_dbts:
+    # parentdbt = dbt.parentdbt.dbt_id if dbt.parentdbt else None
+    # # print(f'{theory}: Parent ID: {parent_t}')
+
+# nodes = Node.objects.all()
+# for node in nodes:
+    # node.cystyle = determine_style(node.nodeshape, node.nodecolor, node.dashed, node.width, node.height, node.nodecaption)
+    # node.save()
+
+# for edge in Edge.objects.all():
+    # edge.cystyle = edge_style(edge.edgeshape, edge.color, edge.edgetype)
+    # # edge.beginrefnum = edge.begin.ref_num
+    # # edge.endrefnum = edge.end.ref_num
+    # edge.save()
     
 #Node.objects.filter(dash = 1).update(dashed = True)
 # Edge.objects.all().update(edgetype=F('edgetype') + 1)
@@ -265,90 +529,90 @@ for edge in Edge.objects.all():
     # # parent_t = theory.parent_t.theory_id if theory.parent_t else None
     # # print(f'{theory}: Parent ID: {parent_t}')
     
-def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption):
-    shape_styles = { # define style based on node.nodeshape
-        1: {'shape': 'rectangle', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
-        2: {'shape': 'polygon', 'shape-polygon-points': '-1, -0.3,   1, -1,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '7px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
-        3: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   1, -0.3,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '-6px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
-        4: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   0.31, -1,   1, -0.3,   1, 0.3,   0.31, 1,   -1, 1', 'height': '115px', 'text-margin-x': '-6px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
-        5: {'shape': 'polygon', 'shape-polygon-points': '-1, -0.3,   -0.31, -1,   1, -1,   1, 1,   -0.31, 1,   -1, 0.3', 'height': '115px', 'text-margin-x': '-6px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap', 'text-margin-x': '10px'},
-        6: {'shape': 'ellipse', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
-        7: {'shape': 'round-rectangle', 'border-width': 10, 'text-valign': 'top', 'text-margin-y': '100px', 'text-halign': 'center', 'color': '#000', 'text-wrap': 'wrap', 'font-weight': 'bold', 'font-size': '40px', 'padding': '100px'}
-    }
+# def determine_style(nodeshape, nodecolor, dash, width, height, nodecaption):
+    # shape_styles = { # define style based on node.nodeshape
+        # 1: {'shape': 'rectangle', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        # 2: {'shape': 'polygon', 'shape-polygon-points': '-1, -0.3,   1, -1,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '7px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        # 3: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   1, -0.3,   1, 1,   -1, 1', 'height': '130px', 'text-margin-x': '-6px', 'text-margin-y': '15px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        # 4: {'shape': 'polygon', 'shape-polygon-points': '-1, -1,   0.31, -1,   1, -0.3,   1, 0.3,   0.31, 1,   -1, 1', 'height': '115px', 'text-margin-x': '-6px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        # 5: {'shape': 'polygon', 'shape-polygon-points': '-1, -0.3,   -0.31, -1,   1, -1,   1, 1,   -0.31, 1,   -1, 0.3', 'height': '115px', 'text-margin-x': '-6px', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap', 'text-margin-x': '10px'},
+        # 6: {'shape': 'ellipse', 'width': width, 'height': height, 'text-max-width': len(nodecaption)*2.05, 'border-width': 10, 'text-valign': 'center', 'text-halign': 'center', 'background-color': '#fff', 'color': '#000', 'text-wrap': 'wrap'},
+        # 7: {'shape': 'round-rectangle', 'border-width': 10, 'text-valign': 'top', 'text-margin-y': '100px', 'text-halign': 'center', 'color': '#000', 'text-wrap': 'wrap', 'font-weight': 'bold', 'font-size': '40px', 'padding': '100px'}
+    # }
 
-    color_styles = { # define color based on node.nodecolor
-        1: {'border-color': '#0000DD'}, # Blue
-        2: {'border-color': '#CC9900'}, # Light Brown
-        3: {'border-color': '#3399FF'}, # Light Blue
-        4: {'border-color': '#993300'}, # Brown 
-        5: {'border-color': '#FF33CC'}, # Pink 
-        6: {'border-color': '#00BB00'}, # Green
-        7: {'border-color': '#9900CC'}, # Purple 
-        8: {'border-color': '#EE0000'}, # Red
-        9: {'border-color': '#000000'}, # Black
-        10: {'border-color': '#FF8000'}, # Orange
-        11: {'border-color': '#FFFF00'} # Yellow
-    }
+    # color_styles = { # define color based on node.nodecolor
+        # 1: {'border-color': '#0000DD'}, # Blue
+        # 2: {'border-color': '#CC9900'}, # Light Brown
+        # 3: {'border-color': '#3399FF'}, # Light Blue
+        # 4: {'border-color': '#993300'}, # Brown 
+        # 5: {'border-color': '#FF33CC'}, # Pink 
+        # 6: {'border-color': '#00BB00'}, # Green
+        # 7: {'border-color': '#9900CC'}, # Purple 
+        # 8: {'border-color': '#EE0000'}, # Red
+        # 9: {'border-color': '#000000'}, # Black
+        # 10: {'border-color': '#FF8000'}, # Orange
+        # 11: {'border-color': '#FFFF00'} # Yellow
+    # }
 
-    border_styles = { # define border style based on node.dashed
-        0: {'border-style': 'solid'},
-        1: {'border-style': 'dashed'}
-    }
+    # border_styles = { # define border style based on node.dashed
+        # 0: {'border-style': 'solid'},
+        # 1: {'border-style': 'dashed'}
+    # }
     
-    shape_style = shape_styles.get(nodeshape, {'shape': 'rectangle'})
-    color_style = color_styles.get(nodecolor, {'border-color': '#000000'}) # default border color is black
-    border_style = border_styles.get(dash, {'border-style': 'solid'})
+    # shape_style = shape_styles.get(nodeshape, {'shape': 'rectangle'})
+    # color_style = color_styles.get(nodecolor, {'border-color': '#000000'}) # default border color is black
+    # border_style = border_styles.get(dash, {'border-style': 'solid'})
     
-    if nodeshape == 7: # node is a container
-        background_color = get_lighter_color(nodecolor)  # lighter color of boders for the background of the containers
-        shape_style['background-color'] = background_color
+    # if nodeshape == 7: # node is a container
+        # background_color = get_lighter_color(nodecolor)  # lighter color of boders for the background of the containers
+        # shape_style['background-color'] = background_color
 
-    return {**shape_style, **color_style, **border_style}
+    # return {**shape_style, **color_style, **border_style}
 
-def edge_style(edgeshape, color, edgetype):
-    width_styles = { # define width and pattern of the Edge based on edge.edgeshape
-        1: {'width': 6},
-        2: {'width': 15},
-        3: {'width': 15, 'line-style': 'dotted'}
-    }
+# def edge_style(edgeshape, color, edgetype):
+    # width_styles = { # define width and pattern of the Edge based on edge.edgeshape
+        # 1: {'width': 6},
+        # 2: {'width': 15},
+        # 3: {'width': 15, 'line-style': 'dotted'}
+    # }
 
-    linecolor_styles = { # define color of the Edge based on edge.color
-        1: {'line-color': '#0000DD', 'target-arrow-color': '#0000DD'},  # Blue
-        2: {'line-color': '#CC9900', 'target-arrow-color': '#CC9900'},  # Light Brown
-        3: {'line-color': '#3399FF', 'target-arrow-color': '#3399FF'},  # Light Blue
-        4: {'line-color': '#993300', 'target-arrow-color': '#993300'}, # Brown 
-        5: {'line-color': '#FF33CC', 'target-arrow-color': '#FF33CC'}, # Pink 
-        6: {'line-color': '#00BB00', 'target-arrow-color': '#00BB00'}, # Green
-        7: {'line-color': '#9900CC', 'target-arrow-color': '#9900CC'}, # Purple 
-        8: {'line-color': '#EE0000', 'target-arrow-color': '#EE0000'}, # Red
-        9: {'line-color': '#000000', 'target-arrow-color': '#000000'} # Black
-    }
+    # linecolor_styles = { # define color of the Edge based on edge.color
+        # 1: {'line-color': '#0000DD', 'target-arrow-color': '#0000DD'},  # Blue
+        # 2: {'line-color': '#CC9900', 'target-arrow-color': '#CC9900'},  # Light Brown
+        # 3: {'line-color': '#3399FF', 'target-arrow-color': '#3399FF'},  # Light Blue
+        # 4: {'line-color': '#993300', 'target-arrow-color': '#993300'}, # Brown 
+        # 5: {'line-color': '#FF33CC', 'target-arrow-color': '#FF33CC'}, # Pink 
+        # 6: {'line-color': '#00BB00', 'target-arrow-color': '#00BB00'}, # Green
+        # 7: {'line-color': '#9900CC', 'target-arrow-color': '#9900CC'}, # Purple 
+        # 8: {'line-color': '#EE0000', 'target-arrow-color': '#EE0000'}, # Red
+        # 9: {'line-color': '#000000', 'target-arrow-color': '#000000'} # Black
+    # }
 
-    arrow_styles = { # define arrow head of the Edge based on edge.edgetype
-        1: {'target-arrow-shape': 'triangle'},
-        2: {'target-arrow-shape': 'tee', 'target-arrow-color': '#00BB00'},
-        3: {'target-arrow-shape': 'tee', 'target-arrow-color': '#EE0000'},
-        4: {'target-arrow-shape': 'tee', 'target-arrow-color': '#000000'}
-    }
+    # arrow_styles = { # define arrow head of the Edge based on edge.edgetype
+        # 1: {'target-arrow-shape': 'triangle'},
+        # 2: {'target-arrow-shape': 'tee', 'target-arrow-color': '#00BB00'},
+        # 3: {'target-arrow-shape': 'tee', 'target-arrow-color': '#EE0000'},
+        # 4: {'target-arrow-shape': 'tee', 'target-arrow-color': '#000000'}
+    # }
     
-    width_style = width_styles.get(edgeshape, {'width': 5})
-    linecolor_style = linecolor_styles.get(color, {'line-color': '#000000'})
-    arrow_style=arrow_styles.get(edgetype, {'target-arrow-shape': 'triangle'})
+    # width_style = width_styles.get(edgeshape, {'width': 5})
+    # linecolor_style = linecolor_styles.get(color, {'line-color': '#000000'})
+    # arrow_style=arrow_styles.get(edgetype, {'target-arrow-shape': 'triangle'})
 
-    return {**width_style, **linecolor_style, **arrow_style}
+    # return {**width_style, **linecolor_style, **arrow_style}
 
-def get_lighter_color(nodecolor):
-    lighter_colors = {
-        1: '#B7B7FF',  # Blue
-        2: '#FFE69F',  # Light Brown
-        3: '#B9DCFF',  # Light Blue
-        4: '#FFCFB7',  # Brown 
-        5: '#FFCDF2',  # Pink 
-        6: '#B7FFB7',  # Green
-        7: '#E9ABFF',  # Purple 
-        8: '#FFB3B3',  # Red
-        9: '#CCCCCC',   # Black
-        10: '#FFC58B',   # Orange
-        11: '#FFFFAA'   # Yellow
-    }
-    return lighter_colors.get(nodecolor, '#FFFFFF')
+# def get_lighter_color(nodecolor):
+    # lighter_colors = {
+        # 1: '#B7B7FF',  # Blue
+        # 2: '#FFE69F',  # Light Brown
+        # 3: '#B9DCFF',  # Light Blue
+        # 4: '#FFCFB7',  # Brown 
+        # 5: '#FFCDF2',  # Pink 
+        # 6: '#B7FFB7',  # Green
+        # 7: '#E9ABFF',  # Purple 
+        # 8: '#FFB3B3',  # Red
+        # 9: '#CCCCCC',   # Black
+        # 10: '#FFC58B',   # Orange
+        # 11: '#FFFFAA'   # Yellow
+    # }
+    # return lighter_colors.get(nodecolor, '#FFFFFF')

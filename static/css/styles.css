@@ -100,6 +100,65 @@ section2 {
   padding: 0;
 } */
 
+
+/* ####################### */
+/* Styles for 'Who we are' */
+/* ####################### */
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.team-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+}
+
+/* .team-photo {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 4px solid #e5e5e5;
+} */
+
+.team-photo {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    /* object-position: center top; */
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.team-card h3 {
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+}
+
+.team-role {
+    color: #666;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ############################## */
+/* End of styles for 'Who we are' */
+/* ############################## */
+
+
 .tree li {
 /*    padding: 2px; */
     /* margin-bottom: 4px; /* uniform gap after each row */
@@ -228,6 +287,40 @@ section2 {
     justify-content: space-between;
     align-items: center;
     padding: 0 0px;
+}
+
+.lisa {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(120deg, #004c6d, #007a99);
+    color: white;
+    position: relative;
+    background: url('../Images/lisa.png') center center / cover no-repeat;
+}
+
+.lisa-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.lisa-content {
+    position: relative;
+    z-index: 1;
+}
+
+.lisa h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+.lisa p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
 }
 
 .hero {
@@ -579,7 +672,7 @@ section2 {
         position: absolute;
         top: 3px;
         right: 20px;
-        z-index: 1000;        
+        z-index: 10001;        
     }
 
     .navbar {
@@ -889,7 +982,6 @@ body {
 .arrow { margin-right: 5px; }
 
 /* other small controls used in this template (already used earlier) */
-
 
 
 

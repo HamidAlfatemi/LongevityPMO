@@ -14,6 +14,8 @@ urlpatterns = [
     path('one_node/', views.one_node, name='one_node'),
     path('onpd/', views.onpdlanding, name='onpdlanding'),
     path('leia/', views.leia, name='leia'),
+    path('lpmo/', views.lpmo, name='lpmo'),
     path('join_cofounder/', views.join_cofounder, name='join_cofounder'),
+    path('whoweare/', views.whoweare, name='whoweare'),
 ]
 

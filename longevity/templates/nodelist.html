@@ -7,47 +7,47 @@
 
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-<body data-renderview="{{ renderview }}">
+<div id="page-data"
+     data-renderview="{{ renderview }}">
 
-<div class="top-controls">
-    {% if renderview == "nodetonode" %}
-        <h1>Select Two Nodes</h1>
-    {% elif renderview == "onenode" %}
-        <h1>Select One Node</h1>
-    {% elif renderview == "containers" %}
-        <h1>Select Containers and Nodes</h1>
-        <button class="command-button" type="button" id="selectAllButton">Select All</button>
-    {% endif %}
-    <button class="command-button" type="button" id="deselectAllButton">Deselect All</button>
+    <div class="top-controls">
+        {% if renderview == "nodetonode" %}
+            <h1>Select Two Nodes</h1>
+        {% elif renderview == "onenode" %}
+            <h1>Select One Node</h1>
+        {% elif renderview == "containers" %}
+            <h1>Select Containers and Nodes</h1>
+            <button class="command-button" type="button" id="selectAllButton">Select All</button>
+        {% endif %}
+        <button class="command-button" type="button" id="deselectAllButton">Deselect All</button>
+    
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for containers or nodes..." onkeypress="handleKeyPress(event)">
 
-    <!-- Search bar with a button -->
-    <input type="text" id="searchInput" class="search-input" placeholder="Search for containers or nodes..." onkeypress="handleKeyPress(event)">
+        <button type="button" id="searchButton" class="command-button">Filter</button>
+        <button type="button" id="removefilter" class="command-button">Remove Filter</button>
 
-    <button type="button" id="searchButton" class="command-button">Filter</button>
-    <button type="button" id="removefilter" class="command-button">Remove Filter</button>
+        <br><br>
+    </div>
 
-    <br><br>
-</div>
-
-<form method="post" action="{% url 'sbha' %}" target="_blank">
+    <form method="post" action="{% url 'sbha' %}" target="_blank">
 
     {% csrf_token %}
     <div id="nodesTree" class="tree">
         {% for container_id, container_l1 in containers_l1.items %}
             <ul id="container-{{ container_l1.node_id }}">
                 <li data-container-id="{{ container_l1.node_id }}">
-                    
-					<span class="collapsible node-box" 
+                  
+                    <span class="collapsible node-box" 
                         data-node-color="{{ color_mapping|get_item:container_l1.nodecolor }}" 
                         data-light-node-color="{{ light_color_mapping|get_item:container_l1.nodecolor }}">
 
                         {% if renderview == "containers" %}
                             <input type="checkbox" name="selected_nodes" value="{{ container_l1.node_id }}"
                                 {% if container_l1.node_id in selected_node_ids %}checked{% endif %}
-								class="checkbox">
+                                class="checkbox">
                         {% endif %}
                         
-						<span class="arrow" data-level="1" data-id="{{ container_l1.node_id }}">▼</span>
+                        <span class="arrow" data-level="1" data-id="{{ container_l1.node_id }}">▼</span>
 
                         <span>
                             [{{ container_l1.ref_num }}]
@@ -196,8 +196,8 @@
 	   <pr>
 	</div>
 	<pr>
-</form>
+    </form>
 
-<script src="{% static 'js/main.js' %}"></script>
+</div>
 
 {% endblock %}

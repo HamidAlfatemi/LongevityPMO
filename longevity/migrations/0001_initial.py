@@ -218,13 +218,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('field_id', models.AutoField(db_column='Field_id', primary_key=True, serialize=False)),
                 ('fieldtitle', models.CharField(blank=True, db_column='FieldTitle', max_length=255, null=True)),
-                ('engagement', models.IntegerField(blank=True, db_column='Engagement', null=True)),
+                # ('engagement', models.IntegerField(blank=True, choices=[(1, 'Domain Focus'), (2, 'Expertise'), (3, 'Strategic Direction'), (4, 'Capability'), (5, 'Education'), (6, 'Interested'), (7, 'Experienced'), (8, 'Talented'), (9, 'Occupation')], db_column='Engagement', null=True),
                 ('fielddesc', models.TextField(blank=True, db_column='FieldDesc', null=True)),
             ],
             options={
                 'db_table': 'field',
             },
         ),
+                # ('engagement', models.IntegerField(blank=True, db_column='Engagement', null=True)),
         migrations.CreateModel(
             name='Gene',
             fields=[
@@ -648,7 +649,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='StakeholderRole',
             fields=[
-                ('role_id', models.AutoField(db_column='Role_id', primary_key=True, serialize=False)),
+                ('role_id', models.AutoField(db_column='role_id', primary_key=True, serialize=False)),
                 ('shrole', models.CharField(blank=True, db_column='SHRole', max_length=255, null=True)),
                 ('shroledesc', models.TextField(blank=True, db_column='SHRoleDesc', null=True)),
             ],
@@ -783,16 +784,16 @@ class Migration(migrations.Migration):
                 'db_table': 'sympimprove',
             },
         ),
-        migrations.CreateModel(
-            name='Supplier',
-            fields=[
-                ('supl_id', models.AutoField(db_column='Supl_id', primary_key=True, serialize=False)),
-                ('organization', models.ForeignKey(blank=True, db_column='Organization_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.organization')),
-            ],
-            options={
-                'db_table': 'supplier',
-            },
-        ),
+        # migrations.CreateModel(
+            # name='Supplier',
+            # fields=[
+                # ('supl_id', models.AutoField(db_column='Supl_id', primary_key=True, serialize=False)),
+                # ('organization', models.ForeignKey(blank=True, db_column='Organization_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.organization')),
+            # ],
+            # options={
+                # 'db_table': 'supplier',
+            # },
+        # ),
         migrations.CreateModel(
             name='StrategyIntervention',
             fields=[
@@ -826,18 +827,18 @@ class Migration(migrations.Migration):
                 'db_table': 'stakeholderpers',
             },
         ),
-        migrations.CreateModel(
-            name='StakeholderOrg',
-            fields=[
-                ('so_id', models.AutoField(primary_key=True, serialize=False)),
-                ('organization', models.ForeignKey(db_column='Organization_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.organization')),
-                ('project', models.ForeignKey(db_column='Project_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.project')),
-                ('role', models.ForeignKey(db_column='Role_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.stakeholderrole')),
-            ],
-            options={
-                'db_table': 'stakeholderorg',
-            },
-        ),
+        # migrations.CreateModel(
+            # name='StakeholderOrg',
+            # fields=[
+                # ('so_id', models.AutoField(primary_key=True, serialize=False)),
+                # ('organization', models.ForeignKey(db_column='Organization_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.organization')),
+                # ('project', models.ForeignKey(db_column='Project_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.project')),
+                # ('role', models.ForeignKey(db_column='Role_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.stakeholderrole')),
+            # ],
+            # options={
+                # 'db_table': 'stakeholderorg',
+            # },
+        # ),
         migrations.CreateModel(
             name='Signature',
             fields=[
@@ -974,17 +975,17 @@ class Migration(migrations.Migration):
                 ('plquality', models.IntegerField(blank=True, db_column='PLQuality', null=True)),
                 ('price', models.DecimalField(blank=True, db_column='Price', decimal_places=2, max_digits=8, null=True)),
                 ('mat', models.ForeignKey(blank=True, db_column='Mat_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.material')),
-                ('supl', models.ForeignKey(blank=True, db_column='Supl_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.supplier')),
             ],
             options={
                 'db_table': 'pricelist',
             },
         ),
+                #('supl', models.ForeignKey(blank=True, db_column='Supl_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.supplier')),
         migrations.CreateModel(
             name='PersPerstyp',
             fields=[
                 ('pp_id', models.AutoField(primary_key=True, serialize=False)),
-                ('person', models.OneToOneField(db_column='Person_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.person')),
+                ('person', models.ForeignKey(db_column='Person_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.person')),
                 ('pt', models.ForeignKey(db_column='PT_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.perstype')),
             ],
             options={
@@ -1017,7 +1018,7 @@ class Migration(migrations.Migration):
             name='PersonField',
             fields=[
                 ('pf_id', models.AutoField(primary_key=True, serialize=False)),
-                ('field', models.OneToOneField(db_column='Field_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.field')),
+                ('field', models.ForeignKey(db_column='Field_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.field')),
                 ('person', models.ForeignKey(db_column='Person_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.person')),
             ],
             options={
@@ -1733,7 +1734,7 @@ class Migration(migrations.Migration):
             name='Contactinfo',
             fields=[
                 ('ci_id', models.AutoField(db_column='CI_id', primary_key=True, serialize=False)),
-                ('conttype', models.IntegerField(blank=True, db_column='ContType', null=True)),
+                # ('conttype', models.IntegerField(blank=True, db_column='ContType', null=True)),
                 ('contact', models.CharField(blank=True, db_column='Contact', max_length=255, null=True)),
                 ('lit', models.ForeignKey(blank=True, db_column='Lit_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.literature')),
                 ('organization', models.ForeignKey(blank=True, db_column='Organization_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.organization')),

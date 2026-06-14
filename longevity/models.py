@@ -122,6 +122,100 @@ class Convenience(models.Model):
         db_table = 'convenience'
 
 
+class nanoparticle(models.Model):
+    HYDROPHOBICITY_METHOD_CHOICES = [
+        (1, 'Contact Angle Measurement'),
+        (2, 'Partition Coefficient (Log P)'),
+        (3, 'Hydrophobic Interaction Chromatography (HIC)'),
+        (4, 'Hydropathy Index (Kyte-Doolittle Scale'),
+        (5, 'Water Solubility'),
+    ]
+    SHAPE_CHOICES = [
+        (1, 'Spherical'),
+        (2, 'Rod-shaped (nanorods)'),
+        (3, 'Cubic'),
+        (4, 'Platelet-shaped (nanosheets)'),
+        (5, 'Tubular (nanotubes)'),
+        (6, 'Star-shaped (nanostars)'),
+        (7, 'Branched (nanobranches)'),
+        (8, 'Flower-shaped (nanoflowers)'),
+        (9, 'Hollow (nanocages, nanospheres)'),
+    ]
+    IMMUNRESIST_CHOICES = [
+        (1, 'Phagocytosis Assays'),
+        (2, 'Complement Activation Assays'),
+        (3, 'Cytokine Release Assays'),
+        (4, 'Surface Protein Adsorption Studies'),
+        (5, 'In Vivo Biodistribution Studies'),
+    ]
+    OFFTARGET_CHOICES = [
+        (1, 'Flow Cytometry'),
+        (2, 'Imaging Techniques'),
+        (3, 'Mass Spectrometry'),
+        (4, 'Bio-distribution Studies'),
+        (5, 'Proteomics and Genomics Approaches'),
+    ]
+    PROFILETYPE_CHOICES = [
+        (1, 'Reference'),
+        (2, 'Studied'),
+        (3, 'Research Goal'),
+    ]
+    np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
+    nptitle = models.CharField(db_column='nptitle', max_length=100, blank=True, null=True)
+    npdesc = models.TextField(db_column='npdesc', blank=True, null=True)
+    shape = models.IntegerField(db_column='shape', choices=SHAPE_CHOICES, blank=True, null=True)
+    mindimx = models.DecimalField(db_column='mindimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    mindimy = models.DecimalField(db_column='mindimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    mindimz = models.DecimalField(db_column='mindimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimx = models.DecimalField(db_column='maxdimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimy = models.DecimalField(db_column='maxdimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    maxdimz = models.DecimalField(db_column='maxdimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    minnegcharge = models.DecimalField(db_column='minnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    maxnegcharge = models.DecimalField(db_column='maxnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    minposcharge = models.DecimalField(db_column='minposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    maxposcharge = models.DecimalField(db_column='maxposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    hydrophobicity = models.FloatField(db_column='hydrophobicity', blank=True, null=True)
+    hydrophmethod = models.IntegerField(db_column='hydrophmethod', choices=HYDROPHOBICITY_METHOD_CHOICES, blank=True, null=True)
+    immuneresistance = models.FloatField(db_column='immuneresistance', blank=True, null=True)
+    immunmethod = models.IntegerField(db_column='immunmethod', choices=IMMUNRESIST_CHOICES, blank=True, null=True)
+    targetingefficiency = models.DecimalField(db_column='targetingefficiency', max_digits=6, decimal_places=2, blank=True, null=True)
+    cellularuptake = models.DecimalField(db_column='cellularuptake', max_digits=6, decimal_places=2, blank=True, null=True)
+    immunogenicity = models.TextField(db_column='immunogenicity', blank=True, null=True)
+    offtarget = models.FloatField(db_column='offtarget', blank=True, null=True)
+    offtargetmethod = models.IntegerField(db_column='offtargetmethod', choices=OFFTARGET_CHOICES, blank=True, null=True)
+    halflife = models.DecimalField(db_column='HalfLife', max_digits=3, decimal_places=0, blank=True, null=True)
+    circulationrate = models.DecimalField(db_column='circulationrate', max_digits=3, decimal_places=0, blank=True, null=True)
+    clearancerate = models.DecimalField(db_column='clearancerate', max_digits=3, decimal_places=0, blank=True, null=True)
+    tracked = models.IntegerField(db_column='Tracked', blank=True, null=True)
+    peg = models.TextField(db_column='PEG', blank=True, null=True)
+    tm = models.ForeignKey('toxicitymeasure', models.DO_NOTHING, db_column='tm_id', blank=True, null=True)
+    npreq = models.ForeignKey('self', models.DO_NOTHING, db_column='npreq_id', blank=True, null=True)
+    npt = models.ForeignKey('nptype', models.DO_NOTHING, db_column='npt_id', blank=True, null=True)
+    profiletype = models.IntegerField(db_column='profiletype', choices=PROFILETYPE_CHOICES, blank=True, null=True)
+    
+
+    #nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
+
+    # nc = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
+    # tl = models.ForeignKey('Targetingligand', models.DO_NOTHING, db_column='TL_id', blank=True, null=True)
+    # agent = models.ForeignKey(Cellenteragent, models.DO_NOTHING, db_column='Agent_id', blank=True, null=True)
+    # linker = models.ForeignKey(Linker, models.DO_NOTHING, db_column='Linker_id', blank=True, null=True)
+    # linkerdesc = models.TextField(db_column='LinkerDesc', blank=True, null=True)
+    # shape = models.TextField(db_column='Shape', blank=True, null=True)
+    # dimx = models.DecimalField(db_column='Dimx', max_digits=4, decimal_places=0, blank=True, null=True)
+    # dimy = models.DecimalField(db_column='Dimy', max_digits=4, decimal_places=0, blank=True, null=True)
+    # dimz = models.DecimalField(db_column='Dimz', max_digits=4, decimal_places=0, blank=True, null=True)
+    # echarge = models.DecimalField(db_column='ECharge', max_digits=5, decimal_places=1, blank=True, null=True)
+    # ecdist = models.TextField(db_column='ECDist', blank=True, null=True)
+    # immuneresist = models.TextField(db_column='ImmuneResist', blank=True, null=True)
+    # specificity = models.DecimalField(db_column='Specificity', max_digits=6, decimal_places=2, blank=True, null=True)
+    # efficiency = models.DecimalField(db_column='Efficiency', max_digits=8, decimal_places=0, blank=True, null=True)
+    # effectspeed = models.TextField(db_column='EffectSpeed', blank=True, null=True)
+    # excretion = models.TextField(db_column='Excretion', blank=True, null=True)
+
+    class Meta:
+        db_table = 'nanoparticle'
+
 class Costanalysis(models.Model):
     cost_id = models.AutoField(db_column='Cost_id', primary_key=True, serialize=True)
     costitem = models.TextField(db_column='CostItem', blank=True, null=True)
@@ -209,11 +303,35 @@ class Drawbacktype(models.Model):
     dbt_id = models.AutoField(db_column='DBT_id', primary_key=True, serialize=True)
     dbttitle = models.CharField(db_column='DBTTitle', max_length=100, blank=True, null=True)
     dbtdesc = models.TextField(db_column='DBTDesc', blank=True, null=True)
+    parentdbt = models.ForeignKey('self', models.DO_NOTHING, db_column='parentdbt_id', blank=True, null=True)
     def __str__(self):
-        return self.dbtitle
+        return self.dbttitle
 
     class Meta:
         db_table = 'drawbacktype'
+
+# Drawback Type
+# There are usually a few types of drawbacks for every proposed intervention or diagnostic method. They may include:
+# ·	Invasiveness
+# ·	severe adverse effects
+# ·	low efficacy for safe dosage
+# ·	toxicity
+# ·	poor excretion
+# ·	high costs
+# ·	technical treatment complications
+# ·	…
+# Drawback types for stakeholders and organizations can:
+# ·	Job-to-be-done (JTBD)
+# ·	Challenge / Pain point
+# ·	Unmet Need
+# ·	User Story
+# ·	Market gap
+# ·	Scientific gap
+# ·	Regulatory and operational barrier
+# ·	...
+# Other general drawback types may include:
+# ·	Problem/Barrier
+# ·	Bottleneck
 
 
 class Drawback(models.Model):
@@ -361,9 +479,20 @@ class Facility(models.Model):
 
 
 class Field(models.Model):
+    ENGAGEMENT_CHOICES = [
+        (1, 'Domain Focus'),
+        (2, 'Expertise'),
+        (3, 'Strategic Direction'),
+        (4, 'Capability'),
+        (5, 'Education'),
+        (6, 'Interested'),
+        (7, 'Experienced'),
+        (8, 'Talented'),
+        (9, 'Occupation'),
+    ]
     field_id = models.AutoField(db_column='Field_id', primary_key=True, serialize=True)
     fieldtitle = models.CharField(db_column='FieldTitle', max_length=255, blank=True, null=True)
-    engagement = models.IntegerField(db_column='Engagement', blank=True, null=True)
+    engagement = models.IntegerField(db_column='Engagement', choices=ENGAGEMENT_CHOICES, blank=True, null=True)
     fielddesc = models.TextField(db_column='FieldDesc', blank=True, null=True)
 
     class Meta:
@@ -891,6 +1020,7 @@ class Node(models.Model):
     cyrend = models.IntegerField(db_column='cyrend', blank=True, null=True)
     posnx = models.DecimalField(db_column='posnx', max_digits=9, decimal_places=4, blank=True, null=True)
     posny = models.DecimalField(db_column='posny', max_digits=9, decimal_places=4, blank=True, null=True)
+    networkmodel = models.IntegerField(db_column='networkmodel', blank=True, null=True) # 1= SBHA  2= Longevity Stakeholder Map
     def __str__(self):
         return f"{self.ref_num} - {self.nodecaption}"
         
@@ -1187,7 +1317,7 @@ class toxicitymeasure(models.Model):
     ]
     tm_id = models.AutoField(db_column='tm_id', primary_key=True, serialize=True)
     tmtype = models.IntegerField(db_column='tmtype', choices=TMTYPE_CHOICES, blank=True, null=True)
-    toxicityvalue = models.FloatField(db_column='toxicityvalue', blank=True, null=True) 
+    # toxicityvalue = models.FloatField(db_column='toxicityvalue', blank=True, null=True) 
     unit = models.ForeignKey('unit', models.DO_NOTHING, db_column='unit_id', blank=True, null=True)
     
     def __str__(self):
@@ -1290,99 +1420,6 @@ class nptype(models.Model):
         # This is a single-layer sheet of carbon atoms, known for its exceptional strength and electrical conductivity.
 
 
-class nanoparticle(models.Model):
-    HYDROPHOBICITY_METHOD_CHOICES = [
-        (1, 'Contact Angle Measurement'),
-        (2, 'Partition Coefficient (Log P)'),
-        (3, 'Hydrophobic Interaction Chromatography (HIC)'),
-        (4, 'Hydropathy Index (Kyte-Doolittle Scale'),
-        (5, 'Water Solubility'),
-    ]
-    SHAPE_CHOICES = [
-        (1, 'Spherical'),
-        (2, 'Rod-shaped (nanorods)'),
-        (3, 'Cubic'),
-        (4, 'Platelet-shaped (nanosheets)'),
-        (5, 'Tubular (nanotubes)'),
-        (6, 'Star-shaped (nanostars)'),
-        (7, 'Branched (nanobranches)'),
-        (8, 'Flower-shaped (nanoflowers)'),
-        (9, 'Hollow (nanocages, nanospheres)'),
-    ]
-    IMMUNRESIST_CHOICES = [
-        (1, 'Phagocytosis Assays'),
-        (2, 'Complement Activation Assays'),
-        (3, 'Cytokine Release Assays'),
-        (4, 'Surface Protein Adsorption Studies'),
-        (5, 'In Vivo Biodistribution Studies'),
-    ]
-    OFFTARGET_CHOICES = [
-        (1, 'Flow Cytometry'),
-        (2, 'Imaging Techniques'),
-        (3, 'Mass Spectrometry'),
-        (4, 'Bio-distribution Studies'),
-        (5, 'Proteomics and Genomics Approaches'),
-    ]
-    PROFILETYPE_CHOICES = [
-        (1, 'Reference'),
-        (2, 'Studied'),
-        (3, 'Research Goal'),
-    ]
-    np_id = models.AutoField(db_column='np_id', primary_key=True, serialize=True)
-    nptitle = models.CharField(db_column='nptitle', max_length=100, blank=True, null=True)
-    npdesc = models.TextField(db_column='npdesc', blank=True, null=True)
-    shape = models.IntegerField(db_column='shape', choices=SHAPE_CHOICES, blank=True, null=True)
-    mindimx = models.DecimalField(db_column='mindimx', max_digits=4, decimal_places=0, blank=True, null=True)
-    mindimy = models.DecimalField(db_column='mindimy', max_digits=4, decimal_places=0, blank=True, null=True)
-    mindimz = models.DecimalField(db_column='mindimz', max_digits=4, decimal_places=0, blank=True, null=True)
-    maxdimx = models.DecimalField(db_column='maxdimx', max_digits=4, decimal_places=0, blank=True, null=True)
-    maxdimy = models.DecimalField(db_column='maxdimy', max_digits=4, decimal_places=0, blank=True, null=True)
-    maxdimz = models.DecimalField(db_column='maxdimz', max_digits=4, decimal_places=0, blank=True, null=True)
-    minnegcharge = models.DecimalField(db_column='minnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    maxnegcharge = models.DecimalField(db_column='maxnegcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    minposcharge = models.DecimalField(db_column='minposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    maxposcharge = models.DecimalField(db_column='maxposcharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    hydrophobicity = models.FloatField(db_column='hydrophobicity', blank=True, null=True)
-    hydrophmethod = models.IntegerField(db_column='hydrophmethod', choices=HYDROPHOBICITY_METHOD_CHOICES, blank=True, null=True)
-    immuneresistance = models.FloatField(db_column='immuneresistance', blank=True, null=True)
-    immunmethod = models.IntegerField(db_column='immunmethod', choices=IMMUNRESIST_CHOICES, blank=True, null=True)
-    targetingefficiency = models.DecimalField(db_column='targetingefficiency', max_digits=6, decimal_places=2, blank=True, null=True)
-    cellularuptake = models.DecimalField(db_column='cellularuptake', max_digits=6, decimal_places=2, blank=True, null=True)
-    immunogenicity = models.TextField(db_column='immunogenicity', blank=True, null=True)
-    offtarget = models.FloatField(db_column='offtarget', blank=True, null=True)
-    offtargetmethod = models.IntegerField(db_column='offtargetmethod', choices=OFFTARGET_CHOICES, blank=True, null=True)
-    halflife = models.DecimalField(db_column='HalfLife', max_digits=3, decimal_places=0, blank=True, null=True)
-    circulationrate = models.DecimalField(db_column='circulationrate', max_digits=3, decimal_places=0, blank=True, null=True)
-    clearancerate = models.DecimalField(db_column='clearancerate', max_digits=3, decimal_places=0, blank=True, null=True)
-    tracked = models.IntegerField(db_column='Tracked', blank=True, null=True)
-    peg = models.TextField(db_column='PEG', blank=True, null=True)
-    tm = models.ForeignKey('toxicitymeasure', models.DO_NOTHING, db_column='tm_id', blank=True, null=True)
-    npreq = models.ForeignKey('self', models.DO_NOTHING, db_column='npreq_id', blank=True, null=True)
-    npt = models.ForeignKey('nptype', models.DO_NOTHING, db_column='npt_id', blank=True, null=True)
-    profiletype = models.IntegerField(db_column='profiletype', choices=PROFILETYPE_CHOICES, blank=True, null=True)
-    
-
-    #nptype = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
-
-    # nc = models.ForeignKey(Nanocarrier, models.DO_NOTHING, db_column='NC_id', blank=True, null=True)
-    # tl = models.ForeignKey('Targetingligand', models.DO_NOTHING, db_column='TL_id', blank=True, null=True)
-    # agent = models.ForeignKey(Cellenteragent, models.DO_NOTHING, db_column='Agent_id', blank=True, null=True)
-    # linker = models.ForeignKey(Linker, models.DO_NOTHING, db_column='Linker_id', blank=True, null=True)
-    # linkerdesc = models.TextField(db_column='LinkerDesc', blank=True, null=True)
-    # shape = models.TextField(db_column='Shape', blank=True, null=True)
-    # dimx = models.DecimalField(db_column='Dimx', max_digits=4, decimal_places=0, blank=True, null=True)
-    # dimy = models.DecimalField(db_column='Dimy', max_digits=4, decimal_places=0, blank=True, null=True)
-    # dimz = models.DecimalField(db_column='Dimz', max_digits=4, decimal_places=0, blank=True, null=True)
-    # echarge = models.DecimalField(db_column='ECharge', max_digits=5, decimal_places=1, blank=True, null=True)
-    # ecdist = models.TextField(db_column='ECDist', blank=True, null=True)
-    # immuneresist = models.TextField(db_column='ImmuneResist', blank=True, null=True)
-    # specificity = models.DecimalField(db_column='Specificity', max_digits=6, decimal_places=2, blank=True, null=True)
-    # efficiency = models.DecimalField(db_column='Efficiency', max_digits=8, decimal_places=0, blank=True, null=True)
-    # effectspeed = models.TextField(db_column='EffectSpeed', blank=True, null=True)
-    # excretion = models.TextField(db_column='Excretion', blank=True, null=True)
-
-    class Meta:
-        db_table = 'nanoparticle'
 
 class NodeIntervention(models.Model):
     ni_id = models.AutoField(db_column='NI_id', primary_key=True, serialize=True)
@@ -1432,6 +1469,19 @@ class NodeSymptom(models.Model):
 
     class Meta:
         db_table = 'node_symptom'
+
+
+class Theory(models.Model):
+    theory_id = models.AutoField(db_column='Theory_id', primary_key=True, serialize=True)
+    theorytitle = models.CharField(db_column='TheoryTitle', max_length=40, blank=True, null=True)
+    theorydesc = models.TextField(db_column='TheoryDesc', blank=True, null=True)
+    parent_t = models.ForeignKey('self', models.DO_NOTHING, db_column='Parent_T_id', blank=True, null=True)
+    def __str__(self):
+        return self.theorytitle
+
+    class Meta:
+        db_table = 'theory'
+
 
 class NodeTheory(models.Model):
     nt_id = models.AutoField(primary_key=True, serialize=True)
@@ -1491,6 +1541,26 @@ class Organization(models.Model):
 
     class Meta:
         db_table = 'organization'
+
+
+class strategicdirection(models.Model):
+    sd_id = models.AutoField(db_column='sd_id', primary_key=True, serialize=True)
+    sdtitle = models.CharField(db_column='sdtitle', max_length=255, blank=True, null=True)
+    sdddesc = models.TextField(db_column='sddesc', blank=True, null=True)
+
+    class Meta:
+        db_table = 'strategicdirection'
+
+
+class orgsd(models.Model):
+    osd_id = models.AutoField(primary_key=True, serialize=True)
+    sd = models.ForeignKey(strategicdirection, models.DO_NOTHING, db_column='sd_id')
+    organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='Organization_id')
+    osdtitle = models.CharField(db_column='osdtitle', max_length=255, blank=True, null=True)
+    osdddesc = models.TextField(db_column='osddesc', blank=True, null=True)
+    priority = models.DecimalField(db_column='priority', max_digits=5, decimal_places=2, blank=True, null=True)
+    class Meta:
+        db_table = 'orgsd'
 
 
 class OrganizationCountry(models.Model):
@@ -1554,23 +1624,22 @@ class otot(models.Model):
     class Meta:
         db_table = 'otot'
 
-class service(models.Model):
-    serv_id = models.AutoField(db_column='serv_id', primary_key=True, serialize=True)
-    servtitle = models.CharField(db_column='servtitle', max_length=255, blank=True, null=True)
-    servdesc = models.TextField(db_column='servdesc', blank=True, null=True)
+class product(models.Model):
+    prod_id = models.AutoField(db_column='prod_id', primary_key=True, serialize=True)
+    prodtitle = models.CharField(db_column='prodtitle', max_length=255, blank=True, null=True)
+    proddesc = models.TextField(db_column='proddesc', blank=True, null=True)
 
     class Meta:
-        db_table = 'service'
+        db_table = 'product'
 
-class servorg(models.Model):
-    so_id = models.AutoField(db_column='so_id', primary_key=True, serialize=True)
-    serv_id = models.ForeignKey('service', models.DO_NOTHING, db_column='serv_id')
-    # ot_id = models.ForeignKey('Orgtype', models.DO_NOTHING, db_column='ot_id')
+class prodorg(models.Model):
+    po_id = models.AutoField(db_column='po_id', primary_key=True, serialize=True)
+    prod_id = models.ForeignKey('product', models.DO_NOTHING, db_column='prod_id')
     organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
     tat = models.DecimalField(db_column='tat', max_digits=4, decimal_places=0, blank=True, null=True)
 
     class Meta:
-        db_table = 'servorg'
+        db_table = 'prodorg'
 
 class benefittype(models.Model):
     bt_id = models.AutoField(db_column='bt_id', primary_key=True, serialize=True)
@@ -1671,7 +1740,7 @@ class PersPerscond(models.Model):
 class PersPerstyp(models.Model):
     pp_id = models.AutoField(primary_key=True, serialize=True)
     pt = models.ForeignKey('Perstype', models.DO_NOTHING, db_column='PT_id')
-    person = models.OneToOneField('Person', models.DO_NOTHING, db_column='Person_id')
+    person = models.ForeignKey('Person', models.DO_NOTHING, db_column='Person_id')
 
     class Meta:
         db_table = 'pers_perstyp'
@@ -1882,18 +1951,18 @@ class certorg(models.Model):
     class Meta:
         db_table = 'certorg'
 
-class certso(models.Model):
-    cso_id = models.AutoField(primary_key=True, serialize=True)
-    so = models.ForeignKey(servorg, models.DO_NOTHING, db_column='so_id', blank=True, null=True)
+class certpo(models.Model):
+    cpo_id = models.AutoField(primary_key=True, serialize=True)
+    po = models.ForeignKey(prodorg, models.DO_NOTHING, db_column='po_id', blank=True, null=True)
     cert = models.ForeignKey(certification, models.DO_NOTHING, db_column='cert_id', blank=True, null=True)
     score = models.IntegerField(db_column='score', blank=True, null=True)
     link = models.CharField(db_column='link', max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return  f"{self.certification.certtitle} - {self.servorg.service.servtitle}"
+        return  f"{self.certification.certtitle} - {self.prodorg.product.prodtitle}"
 
     class Meta:
-        db_table = 'certso'
+        db_table = 'certpo'
 
 class collabpers(models.Model):
     cp_id = models.AutoField(primary_key=True, serialize=True)
@@ -2117,20 +2186,51 @@ class Signature(models.Model):
 
 
 class StakeholderRole(models.Model):
-    role_id = models.AutoField(db_column='Role_id', primary_key=True, serialize=True)
+    role_id = models.AutoField(db_column='role_id', primary_key=True, serialize=True)
     shrole = models.CharField(db_column='SHRole', max_length=255, blank=True, null=True)
     shroledesc = models.TextField(db_column='SHRoleDesc', blank=True, null=True)
     prole = models.ForeignKey('self', models.DO_NOTHING, db_column='prole_id', blank=True, null=True)
+    eicmp = models.IntegerField(db_column='eicmp', blank=True, null=True) # ecosystem intelligence consult marketing priority
+
+    def __str__(self):
+        return self.shrole
 
     class Meta:
         db_table = 'stakeholderrole'
+
+
+class stakeholderdb:
+    ahdb_id = models.AutoField(db_column='ahdb_id', primary_key=True, serialize=True)
+    role = models.ForeignKey(StakeholderRole, models.DO_NOTHING, db_column='role_id', blank=True, null=True)
+    drawback = models.ForeignKey(Drawback, models.DO_NOTHING, db_column='drawback_id', blank=True, null=True)
+    
+    class Meta:
+        db_table = 'stakeholderdb'
+    
+    
+class orgdb:
+    odb_id = models.AutoField(db_column='odb_id', primary_key=True, serialize=True)
+    organization = models.ForeignKey(Organization, models.DO_NOTHING, db_column='organization_id', blank=True, null=True)
+    drawback = models.ForeignKey(Drawback, models.DO_NOTHING, db_column='drawback_id', blank=True, null=True)
+    
+    class Meta:
+        db_table = 'orgdb'
+
+
+class persdb:
+    pdb_id = models.AutoField(db_column='pdb_id', primary_key=True, serialize=True)
+    person = models.ForeignKey(Person, models.DO_NOTHING, db_column='person_id', blank=True, null=True)
+    drawback = models.ForeignKey(Drawback, models.DO_NOTHING, db_column='drawback_id', blank=True, null=True)
+    
+    class Meta:
+        db_table = 'persdb'
 
 
 class StakeholderOrg(models.Model):
     so_id = models.AutoField(primary_key=True, serialize=True)
     organization = models.ForeignKey(Organization, models.DO_NOTHING, db_column='Organization_id')
     project = models.ForeignKey('Project', models.DO_NOTHING, db_column='Project_id')
-    role = models.ForeignKey('StakeholderRole', models.DO_NOTHING, db_column='Role_id')
+    role = models.ForeignKey('StakeholderRole', models.DO_NOTHING, db_column='role_id')
 
     class Meta:
         db_table = 'stakeholderorg'
@@ -2204,17 +2304,6 @@ class TargetArticle(models.Model):
     class Meta:
         db_table = 'target_article'
 
-
-class Theory(models.Model):
-    theory_id = models.AutoField(db_column='Theory_id', primary_key=True, serialize=True)
-    theorytitle = models.CharField(db_column='TheoryTitle', max_length=40, blank=True, null=True)
-    theorydesc = models.TextField(db_column='TheoryDesc', blank=True, null=True)
-    parent_t = models.ForeignKey('self', models.DO_NOTHING, db_column='Parent_T_id', blank=True, null=True)
-    def __str__(self):
-        return self.theorytitle
-
-    class Meta:
-        db_table = 'theory'
 
 class TheoryLiterature(models.Model):
     tl_id = models.AutoField(primary_key=True, serialize=True)

@@ -50,6 +50,16 @@ def leia(request):
         return redirect('leia')
     return render(request, 'leia.html')
 
+def whoweare(request):
+    if request.method == 'POST':
+        return redirect('whoweare')
+    return render(request, 'whoweare.html')
+
+def lpmo(request):
+    if request.method == 'POST':
+        return redirect('lpmo')
+    return render(request, 'lpmo.html')
+
 def join_cofounder(request):
     contact_fields = {
         'Telephone number': 'tel',

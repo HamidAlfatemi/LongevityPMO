@@ -15,9 +15,11 @@ class Migration(migrations.Migration):
             name='toxicitymeasure',
             fields=[
                 ('tm_id', models.AutoField(db_column='tm_id', primary_key=True, serialize=False)),
-                ('tmtype', models.IntegerField(blank=True, choices=[(1, 'NOAEL'), (2, 'MTD'), (3, 'NTEL')], db_column='tmtype', null=True)),
-                ('tixicity', models.FloatField(blank=True, db_column='toxicity', null=True)),
-                ('unit', models.ForeignKey(blank=True, db_column='unit_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.toxicitymeasure')),
+                # ('tmtype', models.IntegerField(blank=True, choices=[(1, 'NOAEL'), (2, 'MTD'), (3, 'NTEL')], db_column='tmtype', null=True)),
+                ('tmtype', models.IntegerField(blank=True, choices=[(1, 'NOAEL (no Observed Adverse Effect Level)'), (2, 'NOEL (No Observed Effect Level)'), (3, 'MTD (maximum tolerated dose)'), (4, 'NTEL (no toxic effect level)'), (5, 'LD50 (Lethal Dose, 50%)'), (6, 'IC50 (inhibitory concentration 50%)'), (7, 'EC50 (Effective Concentration 50%)'), (8, 'ED50 (Effective Dose 50%)'), (9, 'TD50 (Toxic Dose 50%)'), (10, 'LOAEL (Lowest Observed Adverse Effect Level)')], db_column='tmtype', null=True)),
+                # ('tixicity', models.FloatField(blank=True, db_column='toxicity', null=True)),
+                # ('unit', models.ForeignKey(blank=True, db_column='unit_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.toxicitymeasure')),
+                ('unit', models.ForeignKey(blank=True, db_column='unit_id', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.unit')),
             ],
             options={
                 'db_table': 'toxicitymeasure',

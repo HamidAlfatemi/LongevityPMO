@@ -107,16 +107,16 @@ from .models import nodeicd11
 admin.site.register(nodeicd11)
 from .models import tissue
 admin.site.register(tissue)
-from .models import nodetissue
-admin.site.register(nodetissue)
-from .models import edgetissue
-admin.site.register(edgetissue)
+# from .models import nodetissue
+# admin.site.register(nodetissue)
+# from .models import edgetissue
+# admin.site.register(edgetissue)
 from .models import celltype
 admin.site.register(celltype)
-from .models import nodecelltype
-admin.site.register(nodecelltype)
-from .models import edgecelltype
-admin.site.register(edgecelltype)
+# from .models import nodecelltype
+# admin.site.register(nodecelltype)
+# from .models import edgecelltype
+# admin.site.register(edgecelltype)
 from .models import Contactinfo
 admin.site.register(Contactinfo)
 from .models import Person
@@ -125,3 +125,17 @@ from .models import Field
 admin.site.register(Field)
 from .models import PersonField
 admin.site.register(PersonField)
+# from .models import certpo
+# admin.site.register(certpo)
+# from .models import orgsd
+# admin.site.register(orgsd)
+# from .models import prodorg
+# admin.site.register(prodorg)
+# from .models import product
+# admin.site.register(product)
+# from .models import strategicdirection
+# admin.site.register(strategicdirection)
+from .models import StakeholderRole
+admin.site.register(StakeholderRole)
+from .models import nanoparticle
+admin.site.register(nanoparticle)

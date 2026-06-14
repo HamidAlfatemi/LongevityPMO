@@ -7,12 +7,6 @@
         <nav class="navbar">
             <ul class="menu">
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="#" id="aboutToggle">About</a>
-                    <ul class="submenu">
-                        <li><a href="{% url 'index' %}#about-lpmo">LPMO</a></li>
-                        <li><a href="{% url 'index' %}#about-sbha">SBHA</a></li>
-                    </ul>
-                </li>
 				<li><a href="#" id="sbhaToggle">SBHA</a>
                     <ul class="submenu">
                         <li><a href="{% url 'containerlist' %}">Select Containers and Nodes</a></li>
@@ -22,8 +16,10 @@
                         <li><a href="http://www.legendarypharma.com/furberchart.pdf" target="_blank" rel="noopener noreferrer">PDF Version</a></li>
                     </ul>
                 </li>
-				<li><a href="{% url 'onpdlanding' %}">ONPD</a></li>
 				<li><a href="{% url 'leia' %}">LEIA</a></li>
+				<li><a href="{% url 'onpdlanding' %}">ONPD</a></li>
+				<li><a href="{% url 'lpmo' %}">Longevity PMO</a></li>
+				<li><a href="{% url 'whoweare' %}">Who we are</a></li>
             </ul>
         </nav>
     </div>

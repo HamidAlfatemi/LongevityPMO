@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Longevity Ecosystem Intelligence & Advisory{% endblock %}
+{% load custom_filters %}
+{% load static %}
+
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who we are</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <h2>Who we are</h2>
+    </header>
+    <div>
+        <section id="cofounder-call" class="paragraph">
+            <p class="normaltext">
+            Longevity PMO is currently led by a growing founding team united by a shared interest in understanding and addressing the biological causes of aging. By combining scientific inquiry, systems thinking, and emerging technologies, we are laying the foundations for future research programs, knowledge platforms, and collaborative initiatives in longevity.
+            </p>
+
+            <div class="team-grid">
+
+                <div class="team-card">
+                    <img src="{% static 'Images/nasirian.jpg' %}" alt="Maryam Nasirian" class="team-photo">
+                    <h3>Maryam Nasirian</h3>
+                    <p class="team-role">Founder, Architect & Lead Developer</p>
+                </div>
+
+                <div class="team-card">
+
+                    <h3>cofounder 2</h3>
+                    <p class="team-role">Founder, ...</p>
+                </div>
+
+                <div class="team-card">
+
+                    <h3>cofounder 3</h3>
+                    <p class="team-role">Founder, ...</p>
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+{% endblock %}

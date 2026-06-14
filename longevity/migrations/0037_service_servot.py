@@ -11,26 +11,26 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='service',
-            fields=[
-                ('serv_id', models.AutoField(db_column='serv_id', primary_key=True, serialize=False)),
-                ('servtitle', models.CharField(blank=True, db_column='servtitle', max_length=255, null=True)),
-                ('servdesc', models.TextField(blank=True, db_column='servdesc', null=True)),
-            ],
-            options={
-                'db_table': 'service',
-            },
-        ),
-        migrations.CreateModel(
-            name='servot',
-            fields=[
-                ('sot_id', models.AutoField(db_column='sot_id', primary_key=True, serialize=False)),
-                ('ot_id', models.ForeignKey(db_column='ot_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.orgtype')),
-                ('serv_id', models.ForeignKey(db_column='serv_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.service')),
-            ],
-            options={
-                'db_table': 'servot',
-            },
-        ),
+        # migrations.CreateModel(
+            # name='service',
+            # fields=[
+                # ('serv_id', models.AutoField(db_column='serv_id', primary_key=True, serialize=False)),
+                # ('servtitle', models.CharField(blank=True, db_column='servtitle', max_length=255, null=True)),
+                # ('servdesc', models.TextField(blank=True, db_column='servdesc', null=True)),
+            # ],
+            # options={
+                # 'db_table': 'service',
+            # },
+        # ),
+        # migrations.CreateModel(
+            # name='servot',
+            # fields=[
+                # ('sot_id', models.AutoField(db_column='sot_id', primary_key=True, serialize=False)),
+                # ('ot_id', models.ForeignKey(db_column='ot_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.orgtype')),
+                # ('serv_id', models.ForeignKey(db_column='serv_id', on_delete=django.db.models.deletion.DO_NOTHING, to='longevity.service')),
+            # ],
+            # options={
+                # 'db_table': 'servot',
+            # },
+        # ),
     ]

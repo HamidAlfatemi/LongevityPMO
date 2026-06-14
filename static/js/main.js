@@ -304,7 +304,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         const hamburger = document.querySelector('.hamburger');
         const navbar = document.querySelector('.navbar');
-        if (!hamburger.contains(event.target) && !navbar.contains(event.target)) {
+        // Added later
+        if (!hamburger || !navbar) {
+            return;
+        }
+        // ###########
+		if (!hamburger.contains(event.target) && !navbar.contains(event.target)) {
             navbar.classList.remove('active');
         }
     });
